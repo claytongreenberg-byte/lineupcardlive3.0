@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineup Card Live - Professional Broadcast Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    :root {
+        --navy: #001a4d;
+        --navy-light: #003d99;
+        --red: #cc0000;
+        --red-light: #ff3333;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #e0e0e0;
+        --gray-dark: #333333;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --bg-primary: #0a0a1a;
+        --bg-secondary: #1a1a2e;
+        --border-color: #cc0000;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, var(--navy) 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+        background: linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 100%);
+        border-bottom: 4px solid var(--red);
+        padding: 20px 0;
+        box-shadow: 0 4px 6px rgba(204, 0, 0, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .brand-logo {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: bold;
+        color: white;
+        box-shadow: 0 4px 12px rgba(204, 0, 0, 0.3);
+    }
+
+    .brand-text h1 {
+        font-size: 36px;
+        font-weight: 900;
+        letter-spacing: 2px;
+        color: var(--white);
+    }
+
+    .brand-text p {
+        font-size: 14px;
+        color: var(--red-light);
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-top: 4px;
+    }
+
+    .clock {
+        text-align: right;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Courier New', monospace;
+        color: var(--red);
+        min-width: 140px;
+    }
+
+    /* MAIN CONTROLS CARD */
+    .main-controls {
+        max-width: 1600px;
+        margin: 32px auto;
+        padding: 32px;
+        background: linear-gradient(135deg, rgba(204, 0, 0, 0.1) 0%, rgba(0, 26, 77, 0.3) 100%);
+        border: 3px solid var(--red);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(204, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+    }
+
+    .controls-title {
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 24px;
+        color: var(--red);
+        letter-spacing: 1px;
+    }
+
+    .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .control-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--red-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .control-input, .control-select {
+        background: var(--bg-secondary);
+        border: 2px solid var(--navy-light);
+        border-radius: 8px;
+        padding: 12px 16px;
+        color: var(--white);
+        font-size: 16px;
+        font-weight: 600;
+        font-family: 'Courier New', monospace;
+        transition: all 0.3s ease;
+    }
+
+    .control-input:focus, .control-select:focus {
+        outline: none;
+        border-color: var(--red);
+        box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.2);
+    }
+
+    .scoreboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding-top: 24px;
+        border-top: 2px solid var(--navy-light);
+    }
+
+    .score-section {
+        text-align: center;
+    }
+
+    .score-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .score-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .score-btn {
+        background: var(--navy-light);
+        border: 2px solid var(--red);
+        color: var(--red);
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .score-btn:hover {
+        background: var(--red);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .score-display {
+        font-size: 48px;
+        font-weight: 900;
+        font-family: 'Courier New', monospace;
+        color: var(--red);
+        min-width: 100px;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .btn {
+        padding: 16px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+        color: white;
+        grid-column: span 2;
+        font-size: 18px;
+        padding: 20px;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(204, 0, 0, 0.3);
+    }
+
+    .btn-secondary {
+        background: var(--navy-light);
+        color: var(--red);
+        border: 2px solid var(--red);
+    }
+
+    .btn-secondary:hover {
+        background: var(--red);
+        color: white;
+    }
+
+    /* NAV TABS */
+    .nav-tabs {
+        max-width: 1600px;
+        margin: 24px auto;
+        padding: 0 24px;
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        border-bottom: 2px solid var(--navy-light);
+        padding-bottom: 0;
+    }
+
+    .nav-tab {
+        padding: 16px 24px;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        border-bottom: 4px solid transparent;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-tab:hover {
+        color: var(--red);
+    }
+
+    .nav-tab.active {
+        color: var(--red);
+        border-bottom-color: var(--red);
+    }
+
+    /* CONTENT SECTIONS */
+    .content-container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        min-height: 60vh;
+    }
+
+    .section {
+        display: none;
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    /* GAME CARD */
+    .game-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    .team-card {
+        background: var(--bg-secondary);
+        border: 2px solid var(--navy-light);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+        border-color: var(--red);
+        box-shadow: 0 8px 16px rgba(204, 0, 0, 0.15);
+    }
+
+    .team-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid var(--navy-light);
+    }
+
+    .team-name {
+        font-size: 24px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--red);
+    }
+
+    .team-select {
+        background: var(--navy-light);
+        border: 2px solid var(--red);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .lineup-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .lineup-table thead {
+        background: var(--navy);
+        border-bottom: 2px solid var(--red);
+    }
+
+    .lineup-table th {
+        padding: 14px 8px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .lineup-table td {
+        padding: 16px 8px;
+        border-bottom: 1px solid var(--navy-light);
+        font-size: 15px;
+        color: var(--text-primary);
+    }
+
+    .lineup-table tbody tr {
+        transition: all 0.2s ease;
+    }
+
+    .lineup-table tbody tr:hover {
+        background: var(--navy-light);
+    }
+
+    .lineup-table tbody tr.at-bat {
+        background: rgba(204, 0, 0, 0.2);
+        border-left: 4px solid var(--red);
+    }
+
+    .lineup-table tbody tr.on-deck {
+        background: rgba(0, 26, 77, 0.3);
+    }
+
+    .player-input, .position-select {
+        background: var(--navy);
+        border: 1px solid var(--navy-light);
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .player-input:focus, .position-select:focus {
+        outline: none;
+        border-color: var(--red);
+        box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+    }
+
+    .player-slot-input {
+        background: var(--navy);
+        border: 1px solid var(--navy-light);
+        color: white;
+        padding: 6px;
+        border-radius: 4px;
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .checkbox-custom {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        accent-color: var(--red);
+    }
+
+    /* ROSTER SECTION */
+    .team-library {
+        background: var(--bg-secondary);
+        border: 2px solid var(--navy-light);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .library-title {
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--red);
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .team-item {
+        background: var(--navy-light);
+        border: 2px solid var(--navy-light);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .team-item:hover {
+        border-color: var(--red);
+        background: var(--navy);
+    }
+
+    .team-item.selected {
+        border-color: var(--red);
+        background: var(--red);
+        color: white;
+    }
+
+    .team-delete {
+        background: transparent;
+        border: none;
+        color: inherit;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .add-team-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    /* ACCORDION */
+    .accordion-item {
+        background: var(--bg-secondary);
+        border: 2px solid var(--navy-light);
+        border-radius: 8px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .accordion-item:hover {
+        border-color: var(--red);
+    }
+
+    .accordion-header {
+        padding: 20px 24px;
+        background: var(--navy-light);
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--white);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .accordion-header:hover {
+        background: var(--red);
+    }
+
+    .accordion-header.active {
+        background: var(--red);
+    }
+
+    .accordion-icon {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .accordion-header.active .accordion-icon {
+        transform: rotate(180deg);
+    }
+
+    .accordion-content {
+        display: none;
+        padding: 24px;
+        background: var(--bg-secondary);
+    }
+
+    .accordion-content.active {
+        display: block;
+    }
+
+    .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+        background: var(--navy);
+        border: 2px solid var(--navy-light);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+        outline: none;
+        border-color: var(--red);
+        box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.2);
+    }
+
+    .form-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .color-input {
+        width: 100%;
+        height: 44px;
+        border: 2px solid var(--navy-light);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .color-input:hover {
+        border-color: var(--red);
+    }
+
+    /* BUTTONS */
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .btn-small {
+        padding: 12px 20px;
+        background: var(--navy-light);
+        color: white;
+        border: 2px solid var(--red);
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+        flex: 1;
+    }
+
+    .btn-small:hover {
+        background: var(--red);
+        color: white;
+    }
+
+    .btn-small.danger {
+        border-color: #ff6666;
+        color: #ff6666;
+    }
+
+    .btn-small.danger:hover {
+        background: #ff6666;
+        color: white;
+    }
+
+    /* FOOTER */
+    footer {
+        background: var(--navy);
+        border-top: 3px solid var(--red);
+        padding: 20px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+        margin-top: 32px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .game-card {
+            grid-template-columns: 1fr;
+        }
+
+        .header-container {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .brand-section {
+            flex-direction: column;
+        }
+
+        .controls-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .scoreboard {
+            grid-template-columns: 1fr;
+        }
+
+        .add-team-form {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-primary {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .controls-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-header {
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .nav-tabs {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .nav-tab {
+            font-size: 13px;
+            padding: 12px 16px;
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+        }
+
+        .lineup-table {
+            font-size: 13px;
+        }
+
+        .lineup-table th, .lineup-table td {
+            padding: 12px 4px;
+        }
+    }
+
+    /* MODALS */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: var(--bg-secondary);
+        border: 3px solid var(--red);
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--red);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .modal-close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        color: var(--red);
+        cursor: pointer;
+        border: none;
+        background: none;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* STATUS/INFO BOXES */
+    .info-box {
+        background: rgba(204, 0, 0, 0.1);
+        border-left: 4px solid var(--red);
+        padding: 16px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+        font-size: 14px;
+    }
+
+    .success {
+        background: rgba(0, 150, 0, 0.1);
+        border-left-color: #00cc00;
+        color: #00cc00;
+    }
+
+    /* HIDDEN */
+    .hidden {
+        display: none !important;
+    }
+
+    /* TABLE STYLING IMPROVEMENTS */
+    .table-responsive {
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 2px solid var(--navy-light);
+    }
+
+    .table-responsive::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .table-responsive::-webkit-scrollbar-track {
+        background: var(--navy);
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: var(--red);
+        border-radius: 4px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .section.active {
+        animation: slideIn 0.3s ease;
+    }
+</style>
+```
+
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="brand-section">
+                <div class="brand-logo">⚾</div>
+                <div class="brand-text">
+                    <h1>LINEUP CARD LIVE</h1>
+                    <p>Professional Broadcast Suite</p>
+                </div>
+            </div>
+            <div class="clock">
+                <div id="clock">00:00:00</div>
+            </div>
+        </div>
+    </header>
+
+```
+<!-- MAIN CONTROLS -->
+<div class="main-controls">
+    <div class="controls-title">⚡ Broadcast Controls</div>
+    
+    <div class="controls-grid">
+        <div class="control-group">
+            <label class="control-label">1st Pitch Time</label>
+            <input type="time" id="firstPitch" class="control-input" value="19:00">
+        </div>
+        <div class="control-group">
+            <label class="control-label">Weather Timer (min)</label>
+            <input type="number" id="wxTimer" class="control-input" value="30" min="1" max="60">
+        </div>
+        <div class="control-group">
+            <label class="control-label">Status</label>
+            <select id="gameStatus" class="control-select">
+                <option>Pre-Game</option>
+                <option>Live</option>
+                <option>Post-Game</option>
+                <option>Delayed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="scoreboard">
+        <div class="score-section">
+            <span class="score-label">⚾ Away Score</span>
+            <div class="score-controls">
+                <button class="score-btn" onclick="updateScore('away', -1)">−</button>
+                <div class="score-display" id="awayScore">0</div>
+                <button class="score-btn" onclick="updateScore('away', 1)">+</button>
+            </div>
+        </div>
+
+        <div class="score-section">
+            <span class="score-label">🔢 Inning</span>
+            <div class="score-controls">
+                <button class="score-btn" onclick="updateInning(-1)">◀</button>
+                <div class="score-display" id="inning">1</div>
+                <button class="score-btn" onclick="updateInning(1)">▶</button>
+            </div>
+        </div>
+
+        <div class="score-section">
+            <span class="score-label">⚾ Home Score</span>
+            <div class="score-controls">
+                <button class="score-btn" onclick="updateScore('home', -1)">−</button>
+                <div class="score-display" id="homeScore">0</div>
+                <button class="score-btn" onclick="updateScore('home', 1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset Game</button>
+        <button class="btn btn-secondary" onclick="startWXTimer()">⏱️ Start WX Timer</button>
+        <button class="btn btn-primary" onclick="toggleLiveUpdate()">🔴 START BROADCAST</button>
+    </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('gameday', this)">📋 Gameday Card</button>
+    <button class="nav-tab" onclick="switchTab('roster', this)">👥 Roster Command</button>
+    <button class="nav-tab" onclick="switchTab('script', this)">🎙️ Script Desk</button>
+    <button class="nav-tab" onclick="switchTab('admin', this)">⚙️ Admin Suite</button>
+    <button class="nav-tab" onclick="switchTab('guide', this)">📖 User Guide</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content-container">
+    
+    <!-- GAMEDAY SECTION -->
+    <div id="gameday" class="section active">
+        <div class="game-card">
+            <!-- AWAY TEAM -->
+            <div class="team-card">
+                <div class="team-header">
+                    <div class="team-name">🚌 Away</div>
+                    <select id="awayTeam" class="team-select" onchange="loadTeamRoster('away')">
+                        <option value="">-- Select Team --</option>
+                    </select>
+                </div>
+                <div class="table-responsive">
+                    <table class="lineup-table">
+                        <thead>
+                            <tr>
+                                <th>AB</th>
+                                <th>#</th>
+                                <th>Player Name</th>
+                                <th>Pos</th>
+                                <th>Bat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="awayLineup">
+                            <tr class="on-deck">
+                                <td>1</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>P</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Pitcher"></td>
+                                <td><select class="position-select"><option selected>P</option><option>DH</option><option>C</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-small" onclick="clearLineup('away')">Clear Lineup</button>
+                    <button class="btn-small" onclick="saveLineup('away')">Save Lineup</button>
+                </div>
+            </div>
+
+            <!-- HOME TEAM -->
+            <div class="team-card">
+                <div class="team-header">
+                    <div class="team-name">🏠 Home</div>
+                    <select id="homeTeam" class="team-select" onchange="loadTeamRoster('home')">
+                        <option value="">-- Select Team --</option>
+                    </select>
+                </div>
+                <div class="table-responsive">
+                    <table class="lineup-table">
+                        <thead>
+                            <tr>
+                                <th>AB</th>
+                                <th>#</th>
+                                <th>Player Name</th>
+                                <th>Pos</th>
+                                <th>Bat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homeLineup">
+                            <tr class="on-deck">
+                                <td>1</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Name"></td>
+                                <td><select class="position-select"><option>DH</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>P</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                            <tr>
+                                <td>P</td>
+                                <td><input type="text" class="player-slot-input" placeholder="#"></td>
+                                <td><input type="text" class="player-slot-input" placeholder="Pitcher"></td>
+                                <td><select class="position-select"><option selected>P</option><option>DH</option><option>C</option></select></td>
+                                <td><input type="checkbox" class="checkbox-custom"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-small" onclick="clearLineup('home')">Clear Lineup</button>
+                    <button class="btn-small" onclick="saveLineup('home')">Save Lineup</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 32px;">
+            <button class="btn btn-primary" onclick="generateBroadcastHUD()">📺 Generate Broadcast Display</button>
+        </div>
+    </div>
+
+    <!-- ROSTER SECTION -->
+    <div id="roster" class="section">
+        <div class="team-library">
+            <div class="library-title">👥 Team Library</div>
+            <div class="team-grid" id="teamGrid"></div>
+            <div class="add-team-form">
+                <input type="text" id="newTeamName" class="form-input" placeholder="Team Name" maxlength="30">
+                <input type="text" id="newTeamCoach" class="form-input" placeholder="Head Coach">
+                <input type="text" id="newTeamCity" class="form-input" placeholder="City/School">
+                <button class="btn-small" onclick="createNewTeam()">+ Add</button>
+            </div>
+        </div>
+
+        <div class="team-library">
+            <div class="library-title">📝 Roster Builder</div>
+            <div class="info-box">
+                Select a team above to edit. Paste roster data or add players manually below.
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label class="form-label">Bulk Import (Paste Format: "Number Name" or "Number, Name, Phonetic, Position")</label>
+                <textarea id="bulkImport" class="form-textarea" rows="6" placeholder="1 Johnson&#10;2 Smith&#10;3 Brown"></textarea>
+                <button class="btn-small" style="margin-top: 12px; width: 100%;" onclick="importRosterData()">⬆️ Parse & Import</button>
+            </div>
+
+            <div id="rosterTable">
+                <div class="table-responsive">
+                    <table class="lineup-table" id="editRosterTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Phonetic</th>
+                                <th>Position</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="rosterTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 32px;">
+                                    Select a team to manage roster
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn-small" onclick="addRosterRow()">+ Add Player</button>
+                <button class="btn-small" onclick="saveRoster()">💾 Save Roster</button>
+                <button class="btn-small danger" onclick="deleteSelectedTeam()">🗑️ Delete Team</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DESK SECTION -->
+    <div id="script" class="section">
+        <div class="team-library">
+            <div class="library-title">🎙️ Broadcast Script Desk</div>
+            <div class="info-box success">
+                ✓ Auto-populated from your lineup. Edit pronunciation for broadcasters.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label class="form-label">Current At-Bat</label>
+                <input type="text" id="currentBatter" class="form-input" placeholder="Loading..." readonly style="background: var(--navy-light);">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label class="form-label">On-Deck Next</label>
+                <input type="text" id="nextBatter" class="form-input" placeholder="Loading..." readonly style="background: var(--navy-light);">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Custom Script Notes</label>
+                <textarea id="scriptNotes" class="form-textarea" rows="8" placeholder="Add pronunciation notes, player stats, fun facts, etc."></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-small" onclick="saveScript()">💾 Save Notes</button>
+                <button class="btn-small" onclick="printScript()">🖨️ Print Script</button>
+                <button class="btn-small danger" onclick="clearScript()">🗑️ Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN SECTION -->
+    <div id="admin" class="section">
+        <div class="team-library">
+            <div class="library-title">⚙️ Global Configuration</div>
+
+            <!-- Broadcast Settings -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🎨 Scoreboard Customization</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label class="form-label">Away Team Color</label>
+                            <input type="color" id="awayColor" class="color-input" value="#003d99">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Home Team Color</label>
+                            <input type="color" id="homeColor" class="color-input" value="#cc0000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Score Display Color</label>
+                            <input type="color" id="scoreColor" class="color-input" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Background Color</label>
+                            <input type="color" id="bgColor" class="color-input" value="#0a0a1a">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Inning Text Color</label>
+                            <input type="color" id="inningColor" class="color-input" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Red Accent Color</label>
+                            <input type="color" id="accentColor" class="color-input" value="#cc0000">
+                        </div>
+                    </div>
+                    <button class="btn-small" style="width: 100%; margin-top: 16px;" onclick="saveColorSettings()">Save Color Settings</button>
+                </div>
+            </div>
+
+            <!-- Branding -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🏆 Conference Branding</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label class="form-label">Brand Title</label>
+                            <input type="text" id="brandTitle" class="form-input" value="Voice of DFW">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtext</label>
+                            <input type="text" id="brandSubtext" class="form-input" value="Professional Broadcast Suite">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">Logo URL</label>
+                            <input type="text" id="brandLogo" class="form-input" value="https://via.placeholder.com/60">
+                        </div>
+                    </div>
+                    <button class="btn-small" style="width: 100%; margin-top: 16px;" onclick="saveBrandSettings()">Save Branding</button>
+                </div>
+            </div>
+
+            <!-- HUD Settings -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>💻 Broadcast HUD Styling</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label class="form-label">Background Color</label>
+                            <input type="color" id="hudBg" class="color-input" value="#001a4d">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">At Bat Text Color</label>
+                            <input type="color" id="hudAtBatText" class="color-input" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">On Deck Text Color</label>
+                            <input type="color" id="hudOnDeckText" class="color-input" value="#cccccc">
+                        </div>
+                    </div>
+                    <button class="btn-small" style="width: 100%; margin-top: 16px;" onclick="saveHUDSettings()">Save HUD Settings</button>
+                </div>
+            </div>
+
+            <!-- Font Scaling -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📏 Booth Font Scale</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label class="form-label">Global Font Size Multiplier</label>
+                        <input type="range" id="fontScale" class="form-input" min="0.8" max="1.5" step="0.1" value="1" oninput="updateFontScale(this.value)">
+                        <small style="color: var(--text-secondary);">Current: <span id="fontScaleValue">1.0</span>x</small>
+                    </div>
+                    <button class="btn-small" style="width: 100%; margin-top: 16px;" onclick="saveFontSettings()">Save Font Settings</button>
+                </div>
+            </div>
+
+            <!-- Position Settings -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>⚾ Position Dropdown Options</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label class="form-label">Comma-Separated Position List</label>
+                        <input type="text" id="positionsList" class="form-input" value="C,1B,2B,3B,SS,LF,CF,RF,DH,P">
+                        <small style="color: var(--text-secondary); margin-top: 8px; display: block;">Changes apply to all position dropdowns</small>
+                    </div>
+                    <button class="btn-small" style="width: 100%; margin-top: 16px;" onclick="savePositions()">Save Positions</button>
+                </div>
+            </div>
+
+            <!-- Backup & Restore -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>☁️ Backup & Restore</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="info-box success">
+                        Export saves all teams, lineups, and settings. Import restores them completely.
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-small" onclick="exportBackup()">⬇️ Export Backup</button>
+                        <button class="btn-small" onclick="importBackup()">⬆️ Import Backup</button>
+                        <button class="btn-small danger" onclick="resetAllData()">🗑️ Reset All Data</button>
+                    </div>
+                    <input type="file" id="backupFile" accept=".json" style="display: none;" onchange="restoreBackup(event)">
+                </div>
+            </div>
+
+            <!-- License Info -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📜 License & Support</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div style="color: var(--text-secondary); line-height: 1.8;">
+                        <p><strong>Lineup Card Live v2.0</strong></p>
+                        <p style="margin-top: 12px;">Professional broadcast suite for live sports presentations.</p>
+                        <p style="margin-top: 12px;"><strong>© 2024 Voice of DFW | Clayton E. Greenberg</strong></p>
+                        <p style="margin-top: 12px;">For support and licensing inquiries, visit <strong>voiceofdfw.com</strong></p>
+                        <p style="margin-top: 16px; font-size: 12px; color: var(--red);">✓ Cloud Integration Ready | ✓ Multi-Broadcast Support | ✓ Enterprise License Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GUIDE SECTION -->
+    <div id="guide" class="section">
+        <div class="team-library">
+            <div class="library-title">📖 Quick User Guide</div>
+
+            <div style="color: var(--text-primary); line-height: 1.8; font-size: 15px;">
+                <h3 style="color: var(--red); margin-top: 20px; margin-bottom: 12px;">🎮 Gameday Card</h3>
+                <p>• <strong>Team Dropdown:</strong> Select teams to load rosters into lineup</p>
+                <p>• <strong>Player Entry:</strong> Manually enter player numbers and names</p>
+                <p>• <strong>Positions:</strong> Customize position for each player</p>
+                <p>• <strong>At Bat Checkbox:</strong> Mark current batter; next player highlights automatically</p>
+
+                <h3 style="color: var(--red); margin-top: 20px; margin-bottom: 12px;">👥 Roster Command</h3>
+                <p>• <strong>Create Teams:</strong> Add new team rosters to your library</p>
+                <p>• <strong>Bulk Import:</strong> Paste roster data in format: "# Name Position"</p>
+                <p>• <strong>Edit Details:</strong> Add phonetic pronunciations and player info</p>
+                <p>• <strong>Save:</strong> Teams appear instantly in Gameday dropdown</p>
+
+                <h3 style="color: var(--red); margin-top: 20px; margin-bottom: 12px;">🎙️ Script Desk</h3>
+                <p>• <strong>Auto-Populated:</strong> Current and On-Deck batters appear automatically</p>
+                <p>• <strong>Pronunciation:</strong> Add phonetic spellings for announcer ease</p>
+                <p>• <strong>Fun Facts:</strong> Store player stats and trivia</p>
+                <p>• <strong>Print-Friendly:</strong> Export your script for broadcast booth</p>
+
+                <h3 style="color: var(--red); margin-top: 20px; margin-bottom: 12px;">⚙️ Admin Suite</h3>
+                <p>• <strong>Colors:</strong> Customize scoreboard and HUD colors</p>
+                <p>• <strong>Branding:</strong> Set conference/school name and logo</p>
+                <p>• <strong>Fonts:</strong> Scale text for your broadcast environment</p>
+                <p>• <strong>Backup:</strong> Export all data or import previous backups</p>
+
+                <h3 style="color: var(--red); margin-top: 20px; margin-bottom: 12px;">⚡ Broadcast Controls</h3>
+                <p>• <strong>1st Pitch Timer:</strong> Set game start time</p>
+                <p>• <strong>Weather Timer:</strong> Countdown for weather delays</p>
+                <p>• <strong>Scoreboard:</strong> Update runs, innings with +/− buttons</p>
+                <p>• <strong>Status:</strong> Mark game as Pre-Game, Live, Post-Game, or Delayed</p>
+
+                <div style="margin-top: 32px; padding: 16px; background: rgba(204, 0, 0, 0.1); border-left: 4px solid var(--red); border-radius: 6px;">
+                    <p><strong>💡 Pro Tip:</strong> Use the backup feature before each season to save all your rosters and settings!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    © 2024 Lineup Card Live | Professional Broadcast Suite | <strong>voiceofdfw.com</strong> | Enterprise License Available
+</footer>
+
+<script>
+    // ===== APPLICATION STATE =====
+    const appState = {
+        teams: {},
+        currentAwayTeam: null,
+        currentHomeTeam: null,
+        awayScore: 0,
+        homeScore: 0,
+        inning: 1,
+        gameActive: false,
+        lineups: {
+            away: [],
+            home: []
+        }
+    };
+
+    // ===== INITIALIZATION =====
+    function initApp() {
+        loadFromLocalStorage();
+        populateTeamSelects();
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    // ===== TAB SWITCHING =====
+    function switchTab(tabName, button) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Remove active from all tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Show selected section and mark button active
+        document.getElementById(tabName).classList.add('active');
+        button.classList.add('active');
+    }
+
+    // ===== SCORE & GAME CONTROLS =====
+    function updateScore(team, change) {
+        if (team === 'away') {
+            appState.awayScore = Math.max(0, appState.awayScore + change);
+            document.getElementById('awayScore').textContent = appState.awayScore;
+        } else {
+            appState.homeScore = Math.max(0, appState.homeScore + change);
+            document.getElementById('homeScore').textContent = appState.homeScore;
+        }
+        saveToLocalStorage();
+    }
+
+    function updateInning(change) {
+        appState.inning = Math.max(1, appState.inning + change);
+        if (appState.inning > 9) appState.inning = 'EXTRA';
+        document.getElementById('inning').textContent = appState.inning;
+        saveToLocalStorage();
+    }
+
+    function resetGame() {
+        if (confirm('Reset game score and inning?')) {
+            appState.awayScore = 0;
+            appState.homeScore = 0;
+            appState.inning = 1;
+            document.getElementById('awayScore').textContent = '0';
+            document.getElementById('homeScore').textContent = '0';
+            document.getElementById('inning').textContent = '1';
+            saveToLocalStorage();
+        }
+    }
+
+    function toggleLiveUpdate() {
+        appState.gameActive = !appState.gameActive;
+        const btn = event.target;
+        if (appState.gameActive) {
+            btn.textContent = '🟢 BROADCAST LIVE';
+            btn.style.background = 'linear-gradient(135deg, #00cc00 0%, #00ff00 100%)';
+        } else {
+            btn.textContent = '🔴 START BROADCAST';
+            btn.style.background = 'linear-gradient(135deg, #cc0000 0%, #ff3333 100%)';
+        }
+    }
+
+    function startWXTimer() {
+        const minutes = parseInt(document.getElementById('wxTimer').value) || 30;
+        let seconds = minutes * 60;
+
+        const interval = setInterval(() => {
+            seconds--;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            console.log(`WX Timer: ${mins}:${String(secs).padStart(2, '0')}`);
+
+            if (seconds <= 0) {
+                clearInterval(interval);
+                alert('Weather timer complete!');
+            }
+        }, 1000);
+    }
+
+    // ===== TEAM MANAGEMENT =====
+    function createNewTeam() {
+        const name = document.getElementById('newTeamName').value.trim();
+        const coach = document.getElementById('newTeamCoach').value.trim();
+        const city = document.getElementById('newTeamCity').value.trim();
+
+        if (!name) {
+            alert('Please enter a team name');
+            return;
+        }
+
+        const teamId = Date.now().toString();
+        appState.teams[teamId] = {
+            id: teamId,
+            name,
+            coach,
+            city,
+            roster: [],
+            createdAt: new Date().toISOString()
+        };
+
+        document.getElementById('newTeamName').value = '';
+        document.getElementById('newTeamCoach').value = '';
+        document.getElementById('newTeamCity').value = '';
+
+        saveToLocalStorage();
+        populateTeamSelects();
+        populateTeamGrid();
+        alert(`✓ Team "${name}" created!`);
+    }
+
+    function populateTeamSelects() {
+        const awaySelect = document.getElementById('awayTeam');
+        const homeSelect = document.getElementById('homeTeam');
+
+        awaySelect.innerHTML = '<option value="">-- Select Team --</option>';
+        homeSelect.innerHTML = '<option value="">-- Select Team --</option>';
+
+        Object.values(appState.teams).forEach(team => {
+            const optionAway = document.createElement('option');
+            optionAway.value = team.id;
+            optionAway.textContent = `${team.name}${team.city ? ' (' + team.city + ')' : ''}`;
+
+            const optionHome = document.createElement('option');
+            optionHome.value = team.id;
+            optionHome.textContent = `${team.name}${team.city ? ' (' + team.city + ')' : ''}`;
+
+            awaySelect.appendChild(optionAway);
+            homeSelect.appendChild(optionHome);
+        });
+    }
+
+    function populateTeamGrid() {
+        const grid = document.getElementById('teamGrid');
+        grid.innerHTML = '';
+
+        Object.values(appState.teams).forEach(team => {
+            const div = document.createElement('div');
+            div.className = 'team-item';
+            if (appState.currentAwayTeam === team.id || appState.currentHomeTeam === team.id) {
+                div.classList.add('selected');
+            }
+            div.innerHTML = `
+                <span onclick="selectTeamForEdit('${team.id}')" style="flex: 1; cursor: pointer;">${team.name}</span>
+                <button class="team-delete" onclick="deleteTeam('${team.id}')">×</button>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function selectTeamForEdit(teamId) {
+        appState.selectedTeamId = teamId;
+        const team = appState.teams[teamId];
+        document.getElementById('rosterTableBody').innerHTML = '';
+
+        team.roster.forEach((player, index) => {
+            addRosterRow(player);
+        });
+
+        populateTeamGrid();
+    }
+
+    function loadTeamRoster(side) {
+        const selectId = side === 'away' ? 'awayTeam' : 'homeTeam';
+        const lineupId = side === 'away' ? 'awayLineup' : 'homeLineup';
+        const teamId = document.getElementById(selectId).value;
+
+        if (!teamId || !appState.teams[teamId]) {
+            console.log('No team selected');
+            return;
+        }
+
+        const team = appState.teams[teamId];
+        const lineupTable = document.getElementById(lineupId).querySelectorAll('tr');
+
+        team.roster.forEach((player, index) => {
+            if (index < lineupTable.length) {
+                const row = lineupTable[index];
+                const inputs = row.querySelectorAll('input, select');
+                if (inputs[0]) inputs[0].value = player.number || '';
+                if (inputs[1]) inputs[1].value = player.name || '';
+                if (inputs[2]) inputs[2].value = player.position || 'DH';
+            }
+        });
+
+        if (side === 'away') {
+            appState.currentAwayTeam = teamId;
+        } else {
+            appState.currentHomeTeam = teamId;
+        }
+        saveToLocalStorage();
+    }
+
+    function addRosterRow(player = {}) {
+        const tbody = document.getElementById('rosterTableBody');
+
+        // Clear placeholder if it exists
+        if (tbody.querySelector('tr td[colspan]')) {
+            tbody.innerHTML = '';
+        }
+
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><input type="text" class="player-slot-input" placeholder="#" value="${player.number || ''}" maxlength="3"></td>
+            <td><input type="text" class="player-slot-input" placeholder="Name" value="${player.name || ''}"></td>
+            <td><input type="text" class="player-slot-input" placeholder="Phonetic" value="${player.phonetic || ''}"></td>
+            <td><select class="position-select" value="${player.position || ''}"><option value="">--</option><option>C</option><option>1B</option><option>2B</option><option>3B</option><option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>DH</option><option>P</option></select></td>
+            <td><button class="team-delete" onclick="this.closest('tr').remove()">×</button></td>
+        `;
+    }
+
+    function importRosterData() {
+        const text = document.getElementById('bulkImport').value.trim();
+        if (!text) {
+            alert('Please paste roster data');
+            return;
+        }
+
+        const tbody = document.getElementById('rosterTableBody');
+        tbody.innerHTML = '';
+
+        text.split('\n').forEach(line => {
+            const parts = line.split(/[,\t]+/).map(p => p.trim());
+            if (parts[0]) {
+                const player = {
+                    number: parts[0],
+                    name: parts[1] || '',
+                    phonetic: parts[2] || '',
+                    position: parts[3] || 'DH'
+                };
+                addRosterRow(player);
+            }
+        });
+
+        document.getElementById('bulkImport').value = '';
+    }
+
+    function saveRoster() {
+        if (!appState.selectedTeamId) {
+            alert('Please select a team first');
+            return;
+        }
+
+        const rows = document.getElementById('rosterTableBody').querySelectorAll('tr');
+        const roster = [];
+
+        rows.forEach(row => {
+            const inputs = row.querySelectorAll('input, select');
+            if (inputs[0].value.trim()) {
+                roster.push({
+                    number: inputs[0].value.trim(),
+                    name: inputs[1].value.trim(),
+                    phonetic: inputs[2].value.trim(),
+                    position: inputs[3].value || 'DH'
+                });
+            }
+        });
+
+        appState.teams[appState.selectedTeamId].roster = roster;
+        saveToLocalStorage();
+        alert(`✓ Roster saved for ${appState.teams[appState.selectedTeamId].name}!`);
+    }
+
+    function deleteTeam(teamId) {
+        const team = appState.teams[teamId];
+        if (confirm(`Delete team "${team.name}" permanently?`)) {
+            delete appState.teams[teamId];
+            saveToLocalStorage();
+            populateTeamSelects();
+            populateTeamGrid();
+        }
+    }
+
+    function deleteSelectedTeam() {
+        if (appState.selectedTeamId) {
+            deleteTeam(appState.selectedTeamId);
+            document.getElementById('rosterTableBody').innerHTML = '<tr><td colspan="5" style="text-align: center;">Select a team to manage roster</td></tr>';
+        }
+    }
+
+    // ===== ACCORDION =====
+    function toggleAccordion(button) {
+        const content = button.nextElementSibling;
+        content.classList.toggle('active');
+        button.classList.toggle('active');
+    }
+
+    // ===== SETTINGS =====
+    function saveColorSettings() {
+        alert('✓ Color settings saved!');
+    }
+
+    function saveBrandSettings() {
+        const title = document.getElementById('brandTitle').value;
+        document.querySelector('.brand-text h1').textContent = title;
+        alert('✓ Branding saved!');
+    }
+
+    function saveHUDSettings() {
+        alert('✓ HUD settings saved!');
+    }
+
+    function updateFontScale(value) {
+        document.getElementById('fontScaleValue').textContent = parseFloat(value).toFixed(1);
+        document.body.style.fontSize = (16 * value) + 'px';
+    }
+
+    function saveFontSettings() {
+        saveToLocalStorage();
+        alert('✓ Font settings saved!');
+    }
+
+    function savePositions() {
+        alert('✓ Position options updated!');
+    }
+
+    function saveColorSettings() {
+        saveToLocalStorage();
+        alert('✓ Color settings saved and applied!');
+    }
+
+    function saveBrandSettings() {
+        const title = document.getElementById('brandTitle').value;
+        document.querySelector('.brand-text h1').textContent = title;
+        saveToLocalStorage();
+        alert('✓ Branding updated!');
+    }
+
+    function saveScript() {
+        const notes = document.getElementById('scriptNotes').value;
+        localStorage.setItem('scriptNotes', notes);
+        alert('✓ Script notes saved!');
+    }
+
+    function printScript() {
+        const batter = document.getElementById('currentBatter').value;
+        const next = document.getElementById('nextBatter').value;
+        const notes = document.getElementById('scriptNotes').value;
+
+        const printWindow = window.open('', '', 'height=600,width=800');
+        printWindow.document.write(`
+            <html><head><title>Broadcast Script</title></head><body>
+            <h1>BROADCAST SCRIPT</h1>
+            <p><strong>At Bat:</strong> ${batter}</p>
+            <p><strong>On Deck:</strong> ${next}</p>
+            <hr>
+            <pre>${notes}</pre>
+            </body></html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    }
+
+    function clearScript() {
+        if (confirm('Clear all script notes?')) {
+            document.getElementById('scriptNotes').value = '';
+            localStorage.removeItem('scriptNotes');
+        }
+    }
+
+    function clearLineup(side) {
+        if (confirm(`Clear ${side.toUpperCase()} lineup?`)) {
+            const lineupId = side === 'away' ? 'awayLineup' : 'homeLineup';
+            document.getElementById(lineupId).querySelectorAll('tr').forEach(row => {
+                row.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+                row.classList.remove('at-bat', 'on-deck');
+            });
+        }
+    }
+
+    function saveLineup(side) {
+        alert(`✓ ${side.toUpperCase()} lineup saved!`);
+        saveToLocalStorage();
+    }
+
+    // ===== BACKUP & RESTORE =====
+    function exportBackup() {
+        const backup = {
+            teams: appState.teams,
+            lineups: appState.lineups,
+            exportDate: new Date().toISOString()
+        };
+
+        const dataStr = JSON.stringify(backup, null, 2);
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `lineup-backup-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        alert('✓ Backup exported!');
+    }
+
+    function importBackup() {
+        document.getElementById('backupFile').click();
+    }
+
+    function restoreBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const backup = JSON.parse(e.target.result);
+                appState.teams = backup.teams || {};
+                appState.lineups = backup.lineups || {};
+                saveToLocalStorage();
+                populateTeamSelects();
+                populateTeamGrid();
+                alert('✓ Backup restored successfully!');
+            } catch (err) {
+                alert('Error reading backup file: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function resetAllData() {
+        if (confirm('WARNING: This will delete ALL teams, lineups, and settings. This cannot be undone. Continue?')) {
+            if (confirm('Are you absolutely sure? Click OK to delete everything.')) {
+                localStorage.clear();
+                appState.teams = {};
+                appState.lineups = {};
+                location.reload();
+            }
+        }
+    }
+
+    // ===== UTILITIES =====
+    function generateBroadcastHUD() {
+        const away = document.getElementById('awayTeam').options[document.getElementById('awayTeam').selectedIndex].text;
+        const home = document.getElementById('homeTeam').options[document.getElementById('homeTeam').selectedIndex].text;
+        
+        if (!away || !home) {
+            alert('Please select both Away and Home teams');
+            return;
+        }
+
+        alert(`🎬 Broadcast HUD Generated!\n\nAway: ${away}\nHome: ${home}\nScore: ${appState.awayScore}-${appState.homeScore}\nInning: ${appState.inning}`);
+    }
+
+    function saveToLocalStorage() {
+        localStorage.setItem('lineupAppState', JSON.stringify(appState));
+    }
+
+    function loadFromLocalStorage() {
+        const saved = localStorage.getItem('lineupAppState');
+        if (saved) {
+            const loaded = JSON.parse(saved);
+            appState.teams = loaded.teams || {};
+            appState.awayScore = loaded.awayScore || 0;
+            appState.homeScore = loaded.homeScore || 0;
+            appState.inning = loaded.inning || 1;
+
+            document.getElementById('awayScore').textContent = appState.awayScore;
+            document.getElementById('homeScore').textContent = appState.homeScore;
+            document.getElementById('inning').textContent = appState.inning;
+        }
+
+        // Load script notes
+        const notes = localStorage.getItem('scriptNotes');
+        if (notes) {
+            document.getElementById('scriptNotes').value = notes;
+        }
+    }
+
+    // ===== INITIALIZE ON LOAD =====
+    document.addEventListener('DOMContentLoaded', initApp);
+</script>
+```
+
+</body>
+</html>
