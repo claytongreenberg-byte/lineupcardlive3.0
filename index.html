@@ -1,139 +1,491 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lineup Card Live 3.0</title>
-    <style>
-        :root {
-            --primary: #004d40;
-            --accent: #ffc107;
-            --bg: #f4f4f9;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-        
-        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-        input, select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; flex: 1; }
-        button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        button:hover { opacity: 0.9; }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon4.png">
+  <title>Lineup Card Live | Voice of DFW Suite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 
-        .lineup-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .lineup-table th { background: var(--primary); color: white; padding: 12px; text-align: left; }
-        .lineup-table td { padding: 12px; border-bottom: 1px solid #ddd; }
-        .delete-btn { background: #d32f2f; padding: 5px 10px; font-size: 0.8em; }
-        
-        .field-view { margin-top: 30px; text-align: center; background: #2e7d32; color: white; padding: 20px; border-radius: 8px; position: relative; height: 300px; }
-        .player-badge { background: var(--accent); color: black; padding: 4px 8px; border-radius: 12px; font-weight: bold; position: absolute; font-size: 0.9em; }
-    </style>
+  <style>
+    /* ===== FONTS ===== */
+    @font-face {font-family:Barlow;font-style:normal;font-weight:700;src:url(/cf-fonts/s/barlow/5.0.11/latin/700/normal.woff2);unicode-range:U+0000-00FF;}
+    @font-face {font-family:Barlow;font-style:normal;font-weight:700;src:url(/cf-fonts/s/barlow/5.0.11/vietnamese/700/normal.woff2);unicode-range:U+0102-0103;}
+    @font-face {font-family:Barlow;font-style:normal;font-weight:700;src:url(/cf-fonts/s/barlow/5.0.11/latin-ext/700/normal.woff2);unicode-range:U+0100-02AF;}
+    @font-face {font-family:Oswald;font-style:normal;font-weight:500;src:url(/cf-fonts/v/oswald/5.0.18/latin/wght/normal.woff2);}
+    @font-face {font-family:Share Tech Mono;font-style:normal;font-weight:400;src:url(/cf-fonts/s/share-tech-mono/5.0.11/latin/400/normal.woff2);}
+
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --primary-blue: #002d62;
+      --accent-gold: #ffb81c;
+      --espn-red: #cc0000;
+      --bg: #f4f4f9;
+      --surface: #ffffff;
+      --text: #0a1128;
+      --border: #d1d9e6;
+      --on-deck: #eef2ff;
+      --touch-target: 48px;
+      --font-base: 17px;
+      --font-lg: 22px;
+      --font-xl: 28px;
+      --hud-height: 44px;
+      --footer-height: 40px;
+    }
+    body.dark-mode {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --border: #334155;
+      --primary-blue: #1e3a8a;
+      --on-deck: #1e293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      overscroll-behavior: none;
+      padding-top: env(safe-area-inset-top);
+      font-size: var(--font-base);
+    }
+
+    input, select, textarea {
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      font-size: var(--font-base);
+      min-height: var(--touch-target);
+      border-radius: 8px;
+    }
+    body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+      background: #0f172a;
+      border-color: #475569;
+      color: #e2e8f0;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--accent-gold);
+      z-index: 1000;
+      flex-shrink: 0;
+      gap: 15px;
+      flex-wrap: wrap;
+      min-height: 70px;
+    }
+    .brand-section { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .logo-main { height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+    .brand-text h1 { font-family: 'Oswald'; font-size: 22px; line-height: 1; white-space: nowrap; }
+    .brand-text p { font-size: 10px; color: var(--accent-gold); text-transform: uppercase; white-space: nowrap; }
+
+    .clock-section { display: flex; gap: 16px; justify-content: center; flex-shrink: 0; }
+    .stat-box { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+    .stat-label { font-family: 'Oswald'; font-size: 11px; color: var(--accent-gold); text-transform: uppercase; }
+    .stat-value { font-family: 'Share Tech Mono'; font-size: var(--font-xl); line-height: 1; min-height: 36px; }
+
+    .tool-section { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.35);
+      color: #fff;
+      padding: 10px 18px;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Oswald';
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: 0.2s;
+      min-height: var(--touch-target);
+      min-width: var(--touch-target);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--espn-red); border-color: #fff; }
+    .btn-danger { background: var(--espn-red); border-color: #fff; }
+    .btn-sm { padding: 8px 14px; font-size: 13px; min-height: 40px; }
+
+    .btn-reset {
+      background: none; border: none; color: var(--text);
+      font-size: 20px; cursor: pointer; margin-left: 6px;
+      padding: 0 4px; vertical-align: middle; display: inline-block;
+    }
+    @keyframes spin-reset { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+    .btn-reset.spinning { animation: spin-reset 0.5s ease; }
+
+    .theme-toggle-wrap { display: flex; background: rgba(0,0,0,0.3); border-radius: 40px; padding: 3px; }
+    .tgl-btn { background: none; border: none; padding: 8px 14px; cursor: pointer; font-size: 18px; border-radius: 30px; transition: 0.2s; color: #fff; min-height: 44px; }
+    .tgl-btn.active { background: var(--accent-gold); color: #000; }
+
+    /* ===== NAVIGATION ===== */
+    nav { background: #001a35; display: flex; padding: 0 16px; flex-shrink: 0; overflow-x: auto; gap: 4px; }
+    .nav-link {
+      padding: 14px 20px; cursor: pointer; font-family: 'Oswald'; text-transform: uppercase;
+      font-size: 18px; color: rgba(255,255,255,0.5); border: none; background: none;
+      transition: 0.2s; white-space: nowrap; min-height: 52px; display: flex; align-items: center; gap: 6px;
+    }
+    .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); box-shadow: inset 0 -4px 0 var(--accent-gold); }
+
+    /* ===== MAIN CONTENT ===== */
+    #main-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    main { flex: 1; padding: 16px 20px 0 20px; display: flex; flex-direction: column; overflow: hidden; }
+    .view-pane { display: none; flex: 1; overflow: hidden; }
+    .view-pane.active { display: flex; flex-direction: column; }
+
+    /* ===== GAMEDAY CARD ===== */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+    .lineup-card {
+      background: var(--surface); border-radius: 12px; border: 1px solid var(--border);
+      display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .card-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 16px 10px; border-bottom: 2px solid var(--border); flex-shrink: 0; gap: 10px;
+    }
+    .card-head.visitor { background: #e0f0ff; border-bottom-color: #1d4ed8; }
+    .card-head.home    { background: #ffe8e8; border-bottom-color: #b91c1c; }
+
+    .team-name-input {
+      font-family: 'Oswald'; font-size: var(--font-lg); font-weight: 700;
+      border-radius: 8px; padding: 12px 14px; width: 100%;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      background: #fff; color: #000; border: 2px solid var(--border);
+    }
+    .card-head select.team-name-input { flex: 1 1 auto; }
+    .card-head .btn { flex-shrink: 0; padding: 8px 14px; font-size: 14px; min-height: var(--touch-target); }
+
+    .coach-bar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--on-deck); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .coach-label { font-size: 14px; font-weight: 700; text-transform: uppercase; }
+    .coach-input { flex: 1; padding: 10px 12px; border-radius: 6px; font-size: var(--font-base); }
+
+    .lineup-scroll-area { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
+    .lineup-table { width: 100%; border-collapse: collapse; font-size: var(--font-base); }
+    .lineup-table thead th {
+      position: sticky; top: 0; background: var(--surface); z-index: 5;
+      padding: 10px 6px; font-size: 13px; text-transform: uppercase; color: #64748b; border-bottom: 2px solid var(--border);
+    }
+    body.dark-mode .lineup-table thead th { background: #1e293b; }
+    .lineup-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .lineup-table input, .lineup-table select { width: 100%; padding: 8px 6px; border-radius: 6px; font-size: var(--font-base); min-height: 40px; }
+
+    /* Batter highlight */
+    .row-batting {
+      background: #fff7d6 !important;
+      box-shadow: 0 0 0 3px #facc15 inset !important;
+      border-left: 8px solid var(--accent-gold) !important;
+      color: #000 !important;
+    }
+    .row-ondeck {
+      background: rgba(0,0,0,0.06);
+      box-shadow: inset 0 0 14px rgba(0,0,0,0.1);
+    }
+    body.dark-mode .row-ondeck { background: rgba(255,255,255,0.08); box-shadow: inset 0 0 14px rgba(255,255,255,0.15); }
+
+    .at-bat-btn { background: var(--primary-blue); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-family: 'Oswald'; font-size: 14px; min-height: 40px; }
+    .dh-for-cell { display: flex; flex-direction: column; gap: 4px; }
+    .dh-for-input { width: 100%; }
+
+    /* ===== ROSTER COMMAND ===== */
+    .roster-container { display: grid; grid-template-columns: 260px 1fr; gap: 16px; flex: 1; min-height: 0; }
+    .roster-sidebar { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); padding: 14px; display: flex; flex-direction: column; }
+    .team-list-item { padding: 10px 12px; border-radius: 8px; margin-bottom: 4px; cursor: pointer; display: flex; justify-content: space-between; background: #e5e7eb; font-size: var(--font-base); min-height: 44px; align-items: center; }
+    body.dark-mode .team-list-item { background: #0f172a; }
+    .team-list-item.active { background: var(--accent-gold); color: #000; font-weight: 700; }
+    .roster-workspace { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); padding: 14px; display: flex; flex-direction: column; overflow: hidden; }
+    .parse-area { width: 100%; min-height: 80px; margin-bottom: 10px; padding: 10px; border-radius: 8px; font-family: 'Share Tech Mono'; resize: vertical; font-size: var(--font-base); }
+
+    /* ===== SCRIPT DESK ===== */
+    .script-container { flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+    .script-toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+    .script-area { flex: 1; width: 100%; border-radius: 10px; padding: 12px; font-family: 'Share Tech Mono'; resize: none; font-size: var(--font-base); }
+
+    /* ===== HUD & FOOTER ===== */
+    .broadcast-hud {
+      height: var(--hud-height); background: #000; color: #0ef;
+      font-family: 'Share Tech Mono'; font-size: 18px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; padding: 4px; letter-spacing: 0.5px;
+    }
+    footer {
+      height: var(--footer-height); background: #020617; color: #9ca3af;
+      display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px;
+    }
+    .footer-logo { height: 28px; width: 28px; object-fit: contain; border-radius: 6px; border: 1px solid var(--accent-gold); background: #fff; }
+    footer a { color: #ff0000 !important; font-weight: 600; }
+
+    .clock-footer { font-family: 'Share Tech Mono'; font-weight: 700; padding: 4px 12px; letter-spacing: 1px; line-height: 1; font-size: 16px; border-radius: 6px; }
+    .clock-footer.clock-espn-red    { background: #111; color: #fff; border-bottom: 3px solid var(--espn-red); }
+    .clock-footer.clock-modern-blue { background: #1e3a8a; color: #fff; border-bottom: 3px solid var(--accent-gold); }
+    .clock-footer.clock-classic     { background: #333; color: #00ff00; border-bottom: 3px solid #00ff00; }
+    .clock-footer.clock-minimal     { background: #f4f4f4; color: #111; border: none; }
+    .clock-footer.clock-neon        { background: #000; color: #0ff; border-bottom: 3px solid #0ff; text-shadow: 0 0 8px #0ff; }
+    .clock-footer.clock-bold        { background: #fff; color: #000; font-weight: 900; border-top: 3px solid var(--espn-red); }
+    .clock-footer.clock-split       { background: #222; color: #fff; border: 2px solid #555; font-family: 'Courier New', monospace; }
+    .clock-footer.clock-led         { background: #000; color: #0f0; border: 2px solid #333; font-family: 'Courier New', monospace; }
+    .clock-footer.clock-pill        { background: linear-gradient(135deg, #2b2b2b, #444); color: #fff; border-radius: 22px; }
+    .clock-footer.clock-custom      { }
+
+    body.dark-mode .card-head.visitor { background: #102a4e; border-bottom-color: #3b82f6; }
+    body.dark-mode .card-head.home    { background: #4a1010; border-bottom-color: #ef4444; }
+    body.dark-mode .team-name-input { background: #1e293b; color: #fff; border-color: var(--accent-gold); }
+    body.dark-mode .lineup-card, body.dark-mode .roster-workspace, body.dark-mode .roster-sidebar, body.dark-mode .script-container, body.dark-mode main { background: #1e293b !important; border-color: #334155 !important; }
+    body.dark-mode th { color: #e2e8f0 !important; }
+
+    @supports (height: 100dvh) { body { height: 100dvh; } }
+    @media only screen and (max-width: 1366px) {
+      header { min-height: 60px; padding: 10px 16px; }
+      .brand-text h1 { font-size: 20px; }
+      :root { --hud-height: 38px; --footer-height: 34px; --font-base: 16px; }
+      .broadcast-hud { font-size: 15px; }
+      .footer-logo { height: 24px; width: 24px; }
+    }
+
+    .wx-warning { color: #ff4444 !important; font-weight: bold; }
+    .touch-press { opacity: 0.5 !important; transform: scale(0.92) !important; transition: opacity 0.05s, transform 0.05s !important; }
+  </style>
 </head>
-<body>
+<body class="light-mode">
 
-<div class="container">
-    <h1>Lineup Card Live</h1>
-    
-    <div class="input-group">
-        <input type="text" id="playerName" placeholder="Player Name">
-        <select id="playerPosition">
-            <option value="P">Pitcher (P)</option>
-            <option value="C">Catcher (C)</option>
-            <option value="1B">1st Base (1B)</option>
-            <option value="2B">2nd Base (2B)</option>
-            <option value="3B">3rd Base (3B)</option>
-            <option value="SS">Shortstop (SS)</option>
-            <option value="LF">Left Field (LF)</option>
-            <option value="CF">Center Field (CF)</option>
-            <option value="RF">Right Field (RF)</option>
-            <option value="DH">Designated Hitter (DH)</option>
-        </select>
-        <button onclick="addPlayer()">Add to Lineup</button>
+  <header>
+    <div class="brand-section">
+      <img src="logos/logo.jpg" class="logo-main" id="conf-logo" alt="Logo">
+      <div class="brand-text">
+        <h1 id="conf-brand">LINEUP CARD LIVE</h1>
+        <p id="conf-subtext">PROFESSIONAL BROADCAST SUITE</p>
+      </div>
     </div>
 
-    <table class="lineup-table">
-        <thead>
-            <tr>
-                <th>Order</th>
-                <th>Player</th>
-                <th>Position</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="lineupBody">
-            </tbody>
-    </table>
-
-    <div class="field-view" id="fieldView">
-        <p>Field Overview</p>
+    <div class="clock-section">
+      <div class="stat-box">
+        <span class="stat-label">⚾ 1st Pitch</span>
+        <span class="stat-value" id="clock-pitch">--:--</span>
+        <button class="btn btn-sm" onclick="markPitch()">MARK</button>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">⛈️ WX</span>
+        <span class="stat-value" id="clock-wx">--:--</span>
+        <div style="display:flex; gap:6px; margin-top:4px">
+          <button class="btn btn-sm" id="wx-toggle" onclick="toggleWx()">START</button>
+          <button class="btn btn-sm" onclick="resetWx()">RESET</button>
         </div>
-</div>
+      </div>
+    </div>
 
-<script>
-    let lineup = [];
+    <div class="tool-section">
+      <button class="btn btn-danger btn-sm" onclick="masterReset()">RESET GAME</button>
+      <div class="theme-toggle-wrap">
+        <button class="tgl-btn active" id="t-light" onclick="setTheme('light')">☀️</button>
+        <button class="tgl-btn" id="t-dark" onclick="setTheme('dark')">🌙</button>
+      </div>
+    </div>
+  </header>
 
-    function addPlayer() {
-        const name = document.getElementById('playerName').value;
-        const pos = document.getElementById('playerPosition').value;
+  <nav>
+    <button class="nav-link active" onclick="navTo('v-gameday', this)">📋 Gameday Card</button>
+    <button class="nav-link" onclick="navTo('v-roster', this)">👥 Roster Command</button>
+    <button class="nav-link" onclick="navTo('v-script', this)">🎙️ Script Desk</button>
+    <button class="nav-link" onclick="navTo('v-admin', this)">⚙️ Admin Suite</button>
+    <button class="nav-link" onclick="navTo('v-guide', this)">📖 User Guide</button>
+  </nav>
 
-        if (!name) return alert("Please enter a player name.");
+  <div id="main-container">
+    <main>
+      <!-- Gameday Card -->
+      <div id="v-gameday" class="view-pane active">
+        <div class="card-grid">
+          <!-- Visitor -->
+          <div class="lineup-card">
+            <div class="card-head visitor">
+              <div style="display:flex; gap:8px; width:100%;">
+                <select class="team-name-input" id="away-team-name" style="flex:1;" onchange="loadTeamToLineup('away', this.value)">
+                  <option value="">-- Select Team --</option>
+                </select>
+                <button class="btn" style="padding:8px 14px; font-size:13px;" onclick="createNewTeam()">+</button>
+              </div>
+              <button class="btn" onclick="clearSide('away')">CLEAR</button>
+              <button class="btn" onclick="resetCard('away')" title="Reset lineup & team selection">↺</button>
+            </div>
+            <div class="coach-bar">
+              <span class="coach-label">Head Coach</span>
+              <input type="text" id="away-coach" class="coach-input" placeholder="Enter head coach name..." oninput="updateCoach('away', this.value)">
+            </div>
+            <div class="lineup-scroll-area">
+              <table class="lineup-table">
+                <thead>
+                  <tr>
+                    <th style="width:35px; text-align:center">AB</th>
+                    <th>#/PLAYER NAME</th>
+                    <th style="width:140px; text-align:center">POS</th>
+                    <th style="width:55px">AT BAT</th>
+                  </tr>
+                </thead>
+                <tbody id="away-rows"></tbody>
+              </table>
+            </div>
+          </div>
 
-        const player = { id: Date.now(), name, pos };
-        lineup.push(player);
-        
-        document.getElementById('playerName').value = '';
-        renderLineup();
-    }
+          <!-- Home -->
+          <div class="lineup-card">
+            <div class="card-head home">
+              <div style="display:flex; gap:8px; width:100%;">
+                <select class="team-name-input" id="home-team-name" style="flex:1;" onchange="loadTeamToLineup('home', this.value)">
+                  <option value="">-- Select Team --</option>
+                </select>
+                <button class="btn" style="padding:8px 14px; font-size:13px;" onclick="createNewTeam()">+</button>
+              </div>
+              <button class="btn" onclick="clearSide('home')">CLEAR</button>
+              <button class="btn" onclick="resetCard('home')" title="Reset lineup & team selection">↺</button>
+            </div>
+            <div class="coach-bar">
+              <span class="coach-label">Head Coach</span>
+              <input type="text" id="home-coach" class="coach-input" placeholder="Enter head coach name..." oninput="updateCoach('home', this.value)">
+            </div>
+            <div class="lineup-scroll-area">
+              <table class="lineup-table">
+                <thead>
+                  <tr>
+                    <th style="width:35px; text-align:center">AB</th>
+                    <th>#/PLAYER NAME</th>
+                    <th style="width:140px; text-align:center">POS</th>
+                    <th style="width:55px">AT BAT</th>
+                  </tr>
+                </thead>
+                <tbody id="home-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    function removePlayer(id) {
-        lineup = lineup.filter(p => p.id !== id);
-        renderLineup();
-    }
+      <!-- Roster Command -->
+      <div id="v-roster" class="view-pane">
+        <div class="roster-container">
+          <div class="roster-sidebar">
+            <h3 style="font-family:'Oswald'; border-bottom:2px solid var(--border); padding-bottom:10px;">TEAM LIBRARY</h3>
+            <div id="team-list" style="flex:1; overflow-y:auto;"></div>
+          </div>
+          <div class="roster-workspace">
+            <button class="btn btn-danger" style="padding:10px 20px; font-size:15px; margin-bottom:15px;" onclick="createNewTeam()">+ ADD TEAM</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:var(--on-deck); padding:15px; border-radius:8px; flex-wrap:wrap; gap:10px;">
+              <input type="text" id="edit-team-name" class="team-name-input" style="color:var(--text); border:2px solid var(--border); flex:1; min-width:200px; margin-right:15px;" placeholder="ENTER TEAM NAME HERE...">
+              <button class="btn" style="background:var(--primary-blue); padding:12px 30px; font-size:16px;" onclick="saveTeam()">SAVE TO CLOUD</button>
+            </div>
 
-    function renderLineup() {
-        const tbody = document.getElementById('lineupBody');
-        const field = document.getElementById('fieldView');
-        tbody.innerHTML = '';
-        
-        // Update Table
-        lineup.forEach((player, index) => {
-            const row = `<tr>
-                <td>${index + 1}</td>
-                <td>${player.name}</td>
-                <td>${player.pos}</td>
-                <td><button class="delete-btn" onclick="removePlayer(${player.id})">Remove</button></td>
-            </tr>`;
-            tbody.innerHTML += row;
+            <div style="background:rgba(0,0,0,0.05); padding:15px; border-radius:8px; margin-bottom:15px;">
+              <p style="font-size:15px; font-weight:800; margin-bottom:8px;">ROSTER ENGINE: Paste text OR Upload CSV/TXT</p>
+              <textarea id="parser" class="parse-area" placeholder="Example:
+2, Derek Jeter, SS, JEE-ter, Yankees Legend
+7, Mickey Mantle, CF, MAN-tle, Hall of Fame"></textarea>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items: center;">
+                <button class="btn" style="background:#222" onclick="window.processParse()">⚡ PARSE TEXT</button>
+                <button class="btn" style="background:var(--primary-blue)" onclick="document.getElementById('roster-upload').click()">📂 UPLOAD DOCUMENT</button>
+                <input type="file" id="roster-upload" hidden accept=".csv,.txt" onchange="window.uploadRosterFile(this)">
+                <button class="btn" style="background:#666" onclick="window.addPlayerRow()">+ BLANK ROW</button>
+                <button class="btn" style="background:var(--espn-red)" onclick="document.getElementById('edit-rows').innerHTML=''">❌ CLEAR WORKSPACE</button>
+              </div>
+            </div>
+            <div id="edit-rows" style="overflow-y:auto; max-height: 40vh;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Desk -->
+      <div id="v-script" class="view-pane">
+        <div class="script-container">
+          <div class="script-toolbar">
+            <button class="btn btn-danger" onclick="window.print()">🖨️ PRINT SCRIPT</button>
+            <button class="btn" style="background:var(--primary-blue)" onclick="document.getElementById('txt-in').click()">📂 LOAD FILE</button>
+            <input type="file" id="txt-in" hidden onchange="uploadTxt(this)">
+            <button class="btn" style="background:#666" onclick="document.querySelector('.script-area').value=''; updateScript('')">❌ CLEAR ALL</button>
+          </div>
+          <textarea class="script-area" placeholder="Type or paste scripts here for full-screen booth visibility..." oninput="updateScript(this.value)"></textarea>
+        </div>
+      </div>
+
+      <!-- Admin Suite (unchanged from previous working version) -->
+      <div id="v-admin" class="view-pane">
+        <!-- ... same Admin Suite HTML ... -->
+      </div>
+
+      <!-- User Guide -->
+      <div id="v-guide" class="view-pane">
+        <div class="lineup-card" style="padding:25px; overflow-y:auto; max-height: calc(100vh - 220px); height:auto;">
+          <h2 style="font-family:'Oswald'; margin-bottom:18px;">📘 QUICK USER GUIDE</h2>
+          <div style="line-height:1.6; font-size:15px;">
+            <h3 style="font-family:'Oswald'; margin-top:18px;">🎮 Gameday Card</h3>
+            <ul style="margin-left:18px;">
+              <li><b>Team Dropdown:</b> Select a team to load its roster into the lineup.</li>
+              <li><b>Player Slots:</b> Choose a player from the dropdown; name & position fill automatically.</li>
+              <li><b>Positions:</b> The POS dropdown lets you change the position. Selecting <b>DH</b> shows a "DH For" field.</li>
+              <li><b>DH For Row:</b> The 10th row is permanently labeled <b>DH For</b> – select your DH here.</li>
+              <li><b>Pitcher Row:</b> The 11th row is for the starting pitcher.</li>
+              <li><b>At Bat / On Deck:</b> Click <b>⬆ AB</b> to mark a batter; next batter highlights automatically.</li>
+            </ul>
+            <h3 style="font-family:'Oswald'; margin-top:18px;">👥 Roster Command</h3>
+            <ul style="margin-left:18px;">
+              <li>Create, edit, and save teams. Rosters appear instantly in the lineup dropdown.</li>
+            </ul>
+            <h3 style="font-family:'Oswald'; margin-top:18px;">⏱️ Clocks & Scorebug</h3>
+            <ul style="margin-left:18px;">
+              <li><b>WX Timer:</b> START a 30‑min countdown (turns red ≤5 min). RESET hides it.</li>
+              <li><b>Scorebug:</b> Adjust runs and innings (1‑9, then EXTRA) with the button controls.</li>
+              <li><b>Customize the Scoreboard:</b> Go to <b>⚙️ Admin Suite → Scoreboard Customization</b>.
+                  You can change the team‑name colours, score colour, background, inning‑text colour, and the red accent border.
+                  Changes apply instantly and are saved automatically.</li>
+            </ul>
+            <p style="margin-top:25px; font-style:italic;">For support, visit <a href="https://voiceofdfw.com" target="_blank" rel="noopener noreferrer">VoiceofDFW.com</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="broadcast-hud" id="broadcast-hud">AT BAT: -- | ON DECK: --</div>
+
+  <footer>
+    <img src="logos/logoalt.png" class="footer-logo" alt="Logo">
+    <span>&copy; 2026 Clayton E. Greenberg | <a href="https://voiceofdfw.com" target="_blank" rel="noopener noreferrer">VoiceofDFW.com</a></span>
+    <div class="clock-footer clock-espn-red" id="clock-wall-footer">00:00:00</div>
+  </footer>
+
+  <script src="lineup.js?v=20260514" type="module"></script>
+
+  <script>
+    (function() {
+      const touchElements = document.querySelectorAll(
+        '.btn, .btn-sm, .btn-reset, .at-bat-btn, .tgl-btn, .nav-link'
+      );
+      touchElements.forEach(el => {
+        el.addEventListener('touchstart', function() {
+          this.classList.add('touch-press');
+        }, {passive: true});
+        el.addEventListener('touchend', function() {
+          this.classList.remove('touch-press');
         });
-
-        // Update Field Visualization (Simple logic)
-        field.innerHTML = '<p>Field Overview</p>';
-        lineup.forEach((player) => {
-            const badge = document.createElement('div');
-            badge.className = 'player-badge';
-            badge.innerText = `${player.pos}: ${player.name}`;
-            
-            // Simple positioning logic based on position string
-            const positions = {
-                'P': {top: '180px', left: '45%'},
-                'C': {top: '250px', left: '45%'},
-                '1B': {top: '150px', left: '70%'},
-                '2B': {top: '80px', left: '60%'},
-                'SS': {top: '80px', left: '30%'},
-                '3B': {top: '150px', left: '20%'},
-                'LF': {top: '30px', left: '15%'},
-                'CF': {top: '15px', left: '45%'},
-                'RF': {top: '30px', left: '75%'},
-                'DH': {top: '260px', left: '10%'}
-            };
-
-            const coords = positions[player.pos] || {top: '0px', left: '0px'};
-            badge.style.top = coords.top;
-            badge.style.left = coords.left;
-            field.appendChild(badge);
+        el.addEventListener('touchcancel', function() {
+          this.classList.remove('touch-press');
         });
-    }
-</script>
-
+      });
+    })();
+  </script>
 </body>
 </html>
