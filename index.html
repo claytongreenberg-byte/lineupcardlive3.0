@@ -110,6 +110,27 @@
     .view-pane.active { display: block; }
 
     .gameday-container { display: flex; flex-direction: column; height: 100%; gap: 16px; }
+
+    .scorebug-bar {
+      background: #f8f9fb;
+      border: 2px solid var(--accent-red);
+      border-radius: 12px;
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-light);
+      flex-wrap: wrap;
+    }
+    .scorebug-bar.hidden { display: none; }
+    .scorebug-bar .score-group { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .scorebug-bar .score-group span:first-child { color: var(--accent-red); font-weight: 700; }
+    .scorebug-bar button { background: transparent; border: 1px solid var(--border-light); color: var(--text-light); padding: 2px 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+    .scorebug-bar button:active { background: var(--accent-red); color: white; border-color: var(--accent-red); }
+    .scorebug-bar .reset-scorebug { color: var(--accent-red); background: none; border: none; font-size: 0.7rem; cursor: pointer; margin-left: auto; }
+
     .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; min-height: 0; }
     .lineup-card { background: var(--surface-light); border-radius: 24px; border: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--card-shadow); }
     .card-head { padding: 14px 16px; border-bottom: 2px solid var(--border-light); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: rgba(0,0,0,0.02); }
@@ -141,45 +162,9 @@
 
     select, input { background: var(--surface-light); border: 1px solid var(--border-light); padding: 10px 8px; border-radius: 12px; font-size: 0.85rem; width: 100%; min-height: 44px; color: var(--text-light); }
 
-    .combo-wrapper {
-      position: relative;
-      width: 100%;
-    }
-    .combo-wrapper input {
-      width: 100%;
-      padding-right: 30px;
-    }
-    .combo-wrapper::after {
-      content: "▼";
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      font-size: 0.7rem;
-      color: var(--text-light);
-      opacity: 0.6;
-    }
-
-    .scorebug {
-      background: #f8f9fb;
-      border: 2px solid var(--accent-red);
-      border-radius: 12px;
-      padding: 6px 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-light);
-      flex-wrap: nowrap;
-    }
-    .scorebug.hidden { display: none; }
-    .score-group { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-    .score-group span:first-child { color: var(--accent-red); font-weight: 700; }
-    .scorebug button { background: transparent; border: 1px solid var(--border-light); color: var(--text-light); padding: 2px 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
-    .scorebug button:active { background: var(--accent-red); color: white; border-color: var(--accent-red); }
-    .scorebug .reset-scorebug { color: var(--accent-red); background: none; border: none; font-size: 0.7rem; cursor: pointer; margin-left: auto; }
+    .combo-wrapper { position: relative; width: 100%; }
+    .combo-wrapper input { width: 100%; padding-right: 30px; }
+    .combo-wrapper::after { content: "▼"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.7rem; color: var(--text-light); opacity: 0.6; }
 
     .broadcast-hud {
       background: #020617;
@@ -249,6 +234,7 @@
       .brand-text h1 { font-size: 1.3rem; }
       footer { flex-wrap: wrap; justify-content: center; }
       .footer-logo { position: static; transform: none; margin: 0 auto; }
+      .scorebug-bar { font-size: 0.75rem; gap: 10px; }
     }
 
     .lineup-table td:first-child { white-space: nowrap; }
@@ -282,6 +268,7 @@
   </div>
 
   <div class="tool-section">
+    <button class="btn-icon" id="globalScorebugToggle" title="Scorebug">⚾</button>
     <button class="reset-pill" onclick="confirmResetGame()">↺ RESET GAME</button>
     <div class="theme-toggle">
       <button class="theme-btn active" id="lightModeBtn">☀️</button>
@@ -301,15 +288,14 @@
 <div id="main-container"><main>
   <div id="gameday" class="view-pane active">
     <div class="gameday-container">
+      <div class="scorebug-bar" id="globalScorebug"></div>
       <div class="card-grid">
         <div class="lineup-card">
           <div class="card-head visitor">
             <span class="team-label">AWAY</span>
             <div class="team-select-wrapper"><select id="visitorTeamSelect" class="team-select"></select></div>
-            <button class="btn-sm" onclick="toggleScorebug('visitor')">⚾</button>
             <button class="btn-sm" id="clearVisitorBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="visitorScorebug"></div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
@@ -321,10 +307,8 @@
           <div class="card-head home">
             <span class="team-label">HOME</span>
             <div class="team-select-wrapper"><select id="homeTeamSelect" class="team-select"></select></div>
-            <button class="btn-sm" onclick="toggleScorebug('home')">⚾</button>
             <button class="btn-sm" id="clearHomeBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="homeScorebug"></div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
@@ -362,7 +346,7 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select teams. Type player names or choose from roster suggestions. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>⚾</strong> toggles scorebug.</p>
+      <p><strong>Gameday Card:</strong> Select teams. Type player names or choose from roster suggestions. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. ⚾ toggles scorebug.</p>
       <p><strong>Roster Command:</strong> Build teams. Add players manually, paste CSV, or upload file. Columns: #, Name, Pos, Pronunciation, Notes.</p>
       <p><strong>Admin Suite:</strong> Customize branding, team dropdown colours, footer clock style, HUD appearance, audio.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
@@ -388,8 +372,9 @@
   (function(){
     let teams = {};
     let game = {
-      visitor: { teamId: "", lineup: [], battingIdx: -1, onDeck: 0, runs: 0, inning: 1, outs: 0 },
-      home: { teamId: "", lineup: [], battingIdx: -1, onDeck: 0, runs: 0, inning: 1, outs: 0 }
+      visitor: { teamId: "", lineup: [], battingIdx: -1, onDeck: 0, runs: 0 },
+      home: { teamId: "", lineup: [], battingIdx: -1, onDeck: 0, runs: 0 },
+      inning: 1, outs: 0
     };
     let wxInterval, wxSeconds = 0, pitchCountdownInterval, countdownTarget = null;
     let customPositions = ["P","C","1B","2B","3B","SS","LF","CF","RF","DH","NA","PR","CR","X"];
@@ -402,7 +387,8 @@
       homeTeamSelectBg: "#f8f9fb", homeTeamSelectText: "#0f172a", homeTeamSelectBorder: "#1d4ed8",
       clockStyle: "espn-red", clockBg: "", clockText: "", clockSize: 14,
       theme: "light", audioVolume: 0.5, audioMuted: false,
-      hudFontSize: "1rem", hudTextColor: "#0ef", hudBgColor: "#020617"
+      hudFontSize: "1rem", hudTextColor: "#0ef", hudBgColor: "#020617",
+      lastBackup: null
     };
 
     let audioCtx = null, masterGain = null;
@@ -434,8 +420,10 @@
       else { game.visitor.lineup = createEmptyLineup(); game.home.lineup = createEmptyLineup(); }
       if (!game.visitor.lineup || game.visitor.lineup.length!==11) game.visitor.lineup = createEmptyLineup();
       if (!game.home.lineup || game.home.lineup.length!==11) game.home.lineup = createEmptyLineup();
-      game.visitor.runs = game.visitor.runs || 0; game.visitor.inning = game.visitor.inning || 1; game.visitor.outs = game.visitor.outs || 0;
-      game.home.runs = game.home.runs || 0; game.home.inning = game.home.inning || 1; game.home.outs = game.home.outs || 0;
+      game.visitor.runs = game.visitor.runs || 0;
+      game.home.runs = game.home.runs || 0;
+      game.inning = game.inning || 1;
+      game.outs = game.outs || 0;
       document.getElementById("scriptTextarea").value = localStorage.getItem("vdw_script") || "";
     }
 
@@ -523,6 +511,7 @@
       }
       applyTeamSelectStyle(side);
       updateHUD();
+      updateScorebugDisplay();
     }
 
     window.updateCombined = (side, idx, val) => {
@@ -543,8 +532,12 @@
     };
 
     window.loadTeamToSide = (side, teamId) => {
+      if (!teamId) return;
       const team = teams[teamId];
-      if(!team) return;
+      if (!team) return;
+      if (game[side].lineup.some(p => p.name)) {
+        if (!confirm(`Loading a team will replace the current ${side.toUpperCase()} lineup. Continue?`)) return;
+      }
       game[side].lineup = team.players.slice(0,11).map(p=>({ number:p.number, name:p.name, pos:p.pos, pronounce:p.pronounce||'', notes:p.notes||'' }));
       game[side].teamId = teamId;
       renderLineupTable(side);
@@ -600,28 +593,34 @@
     }
     function resetWx(){ if(wxInterval) clearInterval(wxInterval); wxSeconds=0; document.getElementById("wxTimerDisplay").innerText="--:--"; document.getElementById("wxTimerDisplay").classList.remove("red-flash"); }
 
-    window.adjustScore = (side, field, delta) => {
-      game[side][field] = Math.max(0, (game[side][field]||0) + delta);
-      updateScorebugDisplay(side); saveAll();
-    };
-    window.resetScorebug = (side) => {
-      game[side].runs=0; game[side].inning=1; game[side].outs=0;
-      updateScorebugDisplay(side); saveAll();
-    };
-    function updateScorebugDisplay(side) {
-      const bug = document.getElementById(`${side}Scorebug`);
+    function updateScorebugDisplay() {
+      const bug = document.getElementById("globalScorebug");
       if (bug.classList.contains('hidden')) return;
       bug.innerHTML = `
-        <div class="score-group"><span>RUNS</span> <span>${game[side].runs||0}</span><button onclick="adjustScore('${side}','runs',1)">+</button><button onclick="adjustScore('${side}','runs',-1)">−</button></div>
-        <div class="score-group"><span>INN</span> <span>${game[side].inning||1}</span><button onclick="adjustScore('${side}','inning',1)">+</button><button onclick="adjustScore('${side}','inning',-1)">−</button></div>
-        <div class="score-group"><span>OUTS</span> <span>${game[side].outs||0}</span><button onclick="adjustScore('${side}','outs',1)">+</button><button onclick="adjustScore('${side}','outs',-1)">−</button></div>
-        <button class="reset-scorebug" onclick="resetScorebug('${side}')">↺</button>
+        <div class="score-group"><span>V-RUNS</span> <span>${game.visitor.runs||0}</span><button onclick="adjustScore('visitor','runs',1)">+</button><button onclick="adjustScore('visitor','runs',-1)">−</button></div>
+        <div class="score-group"><span>H-RUNS</span> <span>${game.home.runs||0}</span><button onclick="adjustScore('home','runs',1)">+</button><button onclick="adjustScore('home','runs',-1)">−</button></div>
+        <div class="score-group"><span>INN</span> <span>${game.inning||1}</span><button onclick="adjustInningOuts('inning',1)">+</button><button onclick="adjustInningOuts('inning',-1)">−</button></div>
+        <div class="score-group"><span>OUTS</span> <span>${game.outs||0}</span><button onclick="adjustInningOuts('outs',1)">+</button><button onclick="adjustInningOuts('outs',-1)">−</button></div>
+        <button class="reset-scorebug" onclick="resetScorebug()">↺</button>
       `;
     }
-    window.toggleScorebug = (side) => {
-      const bug = document.getElementById(`${side}Scorebug`);
-      bug.classList.toggle('hidden');
-      updateScorebugDisplay(side);
+
+    window.adjustScore = (side, field, delta) => {
+      game[side][field] = Math.max(0, (game[side][field]||0) + delta);
+      updateScorebugDisplay(); saveAll();
+    };
+    window.adjustInningOuts = (field, delta) => {
+      game[field] = Math.max(0, (game[field]||0) + delta);
+      updateScorebugDisplay(); saveAll();
+    };
+    window.resetScorebug = () => {
+      game.visitor.runs=0; game.home.runs=0;
+      game.inning=1; game.outs=0;
+      updateScorebugDisplay(); saveAll();
+    };
+    window.toggleScorebug = () => {
+      document.getElementById("globalScorebug").classList.toggle('hidden');
+      updateScorebugDisplay();
     };
 
     window.confirmResetGame = () => {
@@ -629,8 +628,7 @@
         game.visitor.lineup=createEmptyLineup(); game.home.lineup=createEmptyLineup();
         game.visitor.teamId=""; game.home.teamId="";
         game.visitor.runs=0; game.home.runs=0;
-        game.visitor.inning=1; game.home.inning=1;
-        game.visitor.outs=0; game.home.outs=0;
+        game.inning=1; game.outs=0;
         game.visitor.battingIdx=-1; game.home.battingIdx=-1;
         document.getElementById("firstPitchDisplay").innerText="--:--";
         document.getElementById("firstPitchDisplay").classList.remove("red-flash");
@@ -638,6 +636,19 @@
         renderLineupTable("visitor"); renderLineupTable("home");
         renderTeamDropdowns(); saveAll();
       }
+    };
+
+    window.printBothLineups = () => {
+      const vTeam = teams[game.visitor.teamId]?.name || 'VISITOR';
+      const hTeam = teams[game.home.teamId]?.name || 'HOME';
+      let html = `<html><head><title>Lineup Card</title><style>body{font-family:monospace;padding:20px} table{border-collapse:collapse;width:100%} th,td{border:1px solid black;padding:6px}</style></head><body><h2>${vTeam}</h2><table><tr><th>Order</th><th>Player</th><th>Pos</th></tr>`;
+      game.visitor.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number} ${p.name}</td><td>${p.pos}</td></tr>`);
+      html += `</table><h2>${hTeam}</h2><table><tr><th>Order</th><th>Player</th><th>Pos</th></tr>`;
+      game.home.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number} ${p.name}</td><td>${p.pos}</td></tr>`);
+      html += `</table></body></html>`;
+      const w = window.open();
+      w.document.write(html);
+      w.print();
     };
 
     window.renderTeamList = () => {
@@ -724,6 +735,7 @@
 
     function renderAdmin() {
       const p=document.getElementById("adminPanel");
+      const lastBackup = settings.lastBackup ? new Date(settings.lastBackup).toLocaleString() : 'Never';
       p.innerHTML = `
         <h2>⚙️ ADMIN</h2>
         <label>Brand: <input id="adminBrand" value="${settings.brand}"></label>
@@ -761,10 +773,12 @@
         <h3>Audio</h3>
         <label>Volume: <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="${settings.audioVolume}"></label>
         <label><input type="checkbox" id="muteCheck" ${settings.audioMuted?'checked':''}> Mute</label>
-        <button class="btn-sm" id="saveAdminBtn">APPLY</button>
-        <button class="btn-sm" id="exportBackupBtn">📦 EXPORT</button>
+        <div style="margin:20px 0; background:var(--primary-gold); color:#0a1c3a; padding:8px; border-radius:8px;">
+          <strong>⏰ Backup Reminder:</strong> Last export: ${lastBackup}. <button class="btn-sm" id="exportBackupBtn">📦 EXPORT BACKUP</button>
+        </div>
         <button class="btn-sm" id="importBackupBtn">📂 IMPORT</button>
         <input type="file" id="importBackupFile" hidden>
+        <button class="btn-sm" id="saveAdminBtn">APPLY</button>
       `;
       document.getElementById("saveAdminBtn").onclick = () => {
         settings.brand=document.getElementById("adminBrand").value;
@@ -789,42 +803,74 @@
         settings.audioMuted=document.getElementById("muteCheck").checked;
         saveAll(); applySettings();
       };
+      document.getElementById("exportBackupBtn").onclick = () => {
+        const backup = { teams, game, script: document.getElementById("scriptTextarea").value, settings };
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], {type:"application/json"}));
+        a.download = "lineup_backup.json";
+        a.click();
+        settings.lastBackup = Date.now();
+        saveAll();
+        renderAdmin();
+      };
+      document.getElementById("importBackupBtn").onclick = () => document.getElementById("importBackupFile").click();
+      document.getElementById("importBackupFile").onchange = e => {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const d = JSON.parse(ev.target.result);
+          if (d.teams) teams = d.teams;
+          if (d.game) game = d.game;
+          if (d.script) document.getElementById("scriptTextarea").value = d.script;
+          if (d.settings) settings = d.settings;
+          saveAll();
+          applySettings();
+          renderTeamList();
+          renderTeamDropdowns();
+          renderLineupTable("visitor");
+          renderLineupTable("home");
+          renderAdmin();
+          alert("Backup restored");
+        };
+        reader.readAsText(file);
+      };
     }
 
     loadData(); applySettings(); renderTeamList(); renderTeamDropdowns();
     renderLineupTable("visitor"); renderLineupTable("home"); renderAdmin();
 
-    document.getElementById("markPitchBtn").onclick=markPitch;
-    document.getElementById("setCountdownBtn").onclick=setCountdown;
-    document.getElementById("wxStartBtn").onclick=startWx;
-    document.getElementById("wxResetBtn").onclick=resetWx;
-    document.getElementById("visitorTeamSelect").onchange=e=>loadTeamToSide("visitor",e.target.value);
-    document.getElementById("homeTeamSelect").onchange=e=>loadTeamToSide("home",e.target.value);
-    document.getElementById("clearVisitorBtn").onclick=()=>{ game.visitor.lineup=createEmptyLineup(); game.visitor.teamId=""; renderLineupTable("visitor"); saveAll(); };
-    document.getElementById("clearHomeBtn").onclick=()=>{ game.home.lineup=createEmptyLineup(); game.home.teamId=""; renderLineupTable("home"); saveAll(); };
-    document.getElementById("addTeamBtn").onclick=()=>{ const id=Date.now().toString(); teams[id]={id,name:"New Team",players:Array(11).fill({number:"",name:"",pos:"P",pronounce:"",notes:""}),selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8"}; saveAll(); renderTeamList(); renderTeamDropdowns(); };
-    document.getElementById("lightModeBtn").onclick=()=>{ settings.theme="light"; saveAll(); applySettings(); };
-    document.getElementById("darkModeBtn").onclick=()=>{ settings.theme="dark"; saveAll(); applySettings(); };
-    document.querySelectorAll(".nav-link").forEach(b=>b.onclick=()=>{
-      document.querySelectorAll(".view-pane").forEach(p=>p.classList.remove("active"));
+    document.getElementById("markPitchBtn").onclick = markPitch;
+    document.getElementById("setCountdownBtn").onclick = setCountdown;
+    document.getElementById("wxStartBtn").onclick = startWx;
+    document.getElementById("wxResetBtn").onclick = resetWx;
+    document.getElementById("globalScorebugToggle").onclick = toggleScorebug;
+    document.getElementById("visitorTeamSelect").onchange = e => loadTeamToSide("visitor", e.target.value);
+    document.getElementById("homeTeamSelect").onchange = e => loadTeamToSide("home", e.target.value);
+    document.getElementById("clearVisitorBtn").onclick = () => { game.visitor.lineup = createEmptyLineup(); game.visitor.teamId = ""; renderLineupTable("visitor"); saveAll(); };
+    document.getElementById("clearHomeBtn").onclick = () => { game.home.lineup = createEmptyLineup(); game.home.teamId = ""; renderLineupTable("home"); saveAll(); };
+    document.getElementById("addTeamBtn").onclick = () => { const id = Date.now().toString(); teams[id] = { id, name: "New Team", players: Array(11).fill({ number: "", name: "", pos: "P", pronounce: "", notes: "" }), selectBg: "#f8f9fb", selectText: "#0f172a", selectBorder: "#1d4ed8" }; saveAll(); renderTeamList(); renderTeamDropdowns(); };
+    document.getElementById("lightModeBtn").onclick = () => { settings.theme = "light"; saveAll(); applySettings(); };
+    document.getElementById("darkModeBtn").onclick = () => { settings.theme = "dark"; saveAll(); applySettings(); };
+    document.querySelectorAll(".nav-link").forEach(b => b.onclick = () => {
+      document.querySelectorAll(".view-pane").forEach(p => p.classList.remove("active"));
       document.getElementById(b.dataset.view).classList.add("active");
-      document.querySelectorAll(".nav-link").forEach(n=>n.classList.remove("active"));
+      document.querySelectorAll(".nav-link").forEach(n => n.classList.remove("active"));
       b.classList.add("active");
     });
-    document.getElementById("printScriptBtn").onclick=()=>window.print();
-    document.getElementById("loadScriptBtn").onclick=()=>document.getElementById("scriptFileInput").click();
-    document.getElementById("scriptFileInput").onchange=e=>{
-      const f=e.target.files[0]; if(!f) return;
-      const reader=new FileReader();
-      reader.onload=ev=>{ document.getElementById("scriptTextarea").value=ev.target.result; saveAll(); };
+    document.getElementById("printScriptBtn").onclick = () => window.print();
+    document.getElementById("loadScriptBtn").onclick = () => document.getElementById("scriptFileInput").click();
+    document.getElementById("scriptFileInput").onchange = e => {
+      const f = e.target.files[0]; if (!f) return;
+      const reader = new FileReader();
+      reader.onload = ev => { document.getElementById("scriptTextarea").value = ev.target.result; saveAll(); };
       reader.readAsText(f);
     };
-    document.getElementById("clearScriptBtn").onclick=()=>{ document.getElementById("scriptTextarea").value=""; saveAll(); };
+    document.getElementById("clearScriptBtn").onclick = () => { document.getElementById("scriptTextarea").value = ""; saveAll(); };
 
-    setInterval(()=>{ document.getElementById("footerClock").innerText = new Date().toLocaleTimeString(); }, 1000);
+    setInterval(() => { document.getElementById("footerClock").innerText = new Date().toLocaleTimeString(); }, 1000);
 
-    document.addEventListener("keydown", e=>{
-      if(e.code==="Space" && document.activeElement===document.body){ e.preventDefault(); markPitch(); }
+    document.addEventListener("keydown", e => {
+      if (e.code === "Space" && document.activeElement === document.body) { e.preventDefault(); markPitch(); }
     });
   })();
 </script>
