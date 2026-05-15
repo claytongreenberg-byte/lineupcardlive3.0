@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="180x180" href="_logos/apple-touch-icon4.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Lineup Card Live | Broadcast Command</title>
   <style>
@@ -47,6 +48,7 @@
       background: var(--bg-light);
       color: var(--text-light);
       height: 100vh;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -68,53 +70,56 @@
     header {
       background: var(--primary-navy);
       color: white;
-      padding: 10px 24px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 2px solid var(--primary-gold);
       flex-shrink: 0;
       flex-wrap: nowrap;
-      gap: 16px;
-      min-height: 72px;
+      gap: 12px;
+      min-height: 68px;
     }
 
-    .brand-section { display: flex; align-items: center; gap: 16px; }
-    .logo-main { height: 56px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); background: var(--primary-gold); border-radius: 8px; padding: 4px; }
-    .brand-text h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.3px; }
-    .brand-text p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-gold); }
+    .brand-section { display: flex; align-items: center; gap: 14px; }
+    .logo-main { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); background: var(--primary-gold); border-radius: 8px; padding: 4px; }
+    .brand-text h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.1; }
+    .brand-text p { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-gold); line-height: 1.1; }
 
-    .timers-area { display: flex; gap: 16px; align-items: center; }
-    .timer-pill { background: rgba(0,0,0,0.35); border: 2px solid var(--accent-red); border-radius: 40px; padding: 8px 18px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    .timers-area { display: flex; gap: 12px; align-items: center; }
+    .timer-pill { background: rgba(0,0,0,0.35); border: 2px solid var(--accent-red); border-radius: 40px; padding: 6px 14px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
     .timer-label { font-weight: 600; color: var(--primary-gold); }
-    .timer-value { font-family: monospace; font-weight: 700; min-width: 45px; }
+    .timer-value { font-family: monospace; font-weight: 700; min-width: 40px; }
     .timer-value.red-flash { color: red; animation: flash 0.5s infinite; }
     @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-    .btn-icon { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; min-height: 40px; }
+    .btn-icon { background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; min-height: 36px; }
     .btn-icon.green { background: #2e7d32; color: white; }
-    .reset-pill { background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 800; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.5px; white-space: nowrap; }
+    .reset-pill { background: var(--accent-red); color: white; border: none; padding: 8px 16px; border-radius: 40px; font-weight: 800; font-size: 0.75rem; cursor: pointer; letter-spacing: 0.5px; white-space: nowrap; }
     .reset-pill:active { background: #a01830; }
 
-    .tool-section { display: flex; gap: 12px; align-items: center; }
-    .theme-toggle { background: rgba(0,0,0,0.4); border-radius: 40px; padding: 4px; display: flex; }
-    .theme-btn { background: none; border: none; padding: 6px 14px; border-radius: 32px; cursor: pointer; font-size: 1rem; }
+    .tool-section { display: flex; gap: 8px; align-items: center; }
+    .header-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; cursor: pointer; white-space: nowrap; min-height: 36px; }
+    .header-btn:active { background: var(--primary-gold); color: #0a1c3a; }
+
+    .theme-toggle { background: rgba(0,0,0,0.4); border-radius: 40px; padding: 3px; display: flex; }
+    .theme-btn { background: none; border: none; padding: 5px 12px; border-radius: 32px; cursor: pointer; font-size: 0.9rem; }
     .theme-btn.active { background: var(--primary-gold); color: #0a1c3a; }
 
     nav {
-      background: #2d3748;
+      background: #374151;
       display: flex;
-      padding: 0 16px;
-      gap: 4px;
+      padding: 0 12px;
+      gap: 2px;
       flex-shrink: 0;
       overflow-x: auto;
       align-items: center;
     }
     .nav-link {
-      padding: 12px 20px;
+      padding: 10px 16px;
       background: none;
       border: none;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       color: rgba(255,255,255,0.7);
       cursor: pointer;
@@ -123,119 +128,155 @@
     }
     .nav-link.active { color: white; border-bottom-color: var(--primary-gold); }
 
-    /* Scorebug inside nav */
     #navScorebug {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       color: white;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       white-space: nowrap;
+      padding: 4px 8px;
     }
     #navScorebug.hidden { display: none; }
-    #navScorebug .score-group { display: flex; align-items: center; gap: 4px; }
+    #navScorebug .score-group { display: flex; align-items: center; gap: 5px; }
+    #navScorebug .team-name-display { color: var(--primary-gold); font-weight: 700; }
+    #navScorebug .score-value { color: white; font-weight: 700; font-size: 0.85rem; }
+    #navScorebug .score-label { color: #9ca3af; font-size: 0.7rem; text-transform: uppercase; }
     #navScorebug button {
-      background: rgba(255,255,255,0.2);
-      border: none;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
       color: white;
-      width: var(--touch-target);
-      height: var(--touch-target);
-      border-radius: 12px;
-      font-size: 1.2rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 0.9rem;
       font-weight: bold;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
     }
-    #navScorebug button:active { background: var(--accent-red); }
+    #navScorebug button:active { background: var(--accent-red); border-color: var(--accent-red); }
     #navScorebug .reset-scorebug {
       background: none;
       border: none;
       color: var(--primary-gold);
-      font-size: 1rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      padding: 0 8px;
+      padding: 0 6px;
+      width: auto;
+      height: auto;
     }
 
     #main-container { flex: 1; overflow: hidden; }
-    main { height: 100%; padding: 16px; overflow-y: auto; }
+    main { height: 100%; padding: 14px; overflow-y: auto; overflow-x: hidden; }
     .view-pane { display: none; height: 100%; }
     .view-pane.active { display: block; }
 
-    .gameday-container { display: flex; flex-direction: column; height: 100%; gap: 16px; }
-    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; min-height: 0; }
-    .lineup-card { background: var(--surface-light); border-radius: 24px; border: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--card-shadow); }
-    .card-head { padding: 14px 16px; border-bottom: 2px solid var(--border-light); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: rgba(0,0,0,0.02); }
-    .card-head.visitor { border-left: 5px solid #3b82f6; }
-    .card-head.home { border-left: 5px solid var(--accent-red); }
+    .gameday-container { display: flex; flex-direction: column; height: 100%; gap: 14px; }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+    .lineup-card {
+      background: var(--surface-light);
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .card-head {
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--border-light);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: nowrap;
+      background: rgba(0,0,0,0.02);
+    }
+    .card-head.visitor { border-left: 4px solid #3b82f6; }
+    .card-head.home { border-left: 4px solid var(--accent-red); }
 
-    .team-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; margin-right: -8px; }
+    .team-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; margin-right: -6px; white-space: nowrap; }
     .team-select-wrapper { position: relative; flex: 2; }
-    .team-select-wrapper::after { content: "▼"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.7rem; color: var(--team-select-border); }
-    .team-select { width: 100%; padding: 12px; border-radius: 16px; font-weight: 600; font-size: 0.95rem; background: var(--team-select-bg); color: var(--team-select-text); border: 2px solid var(--team-select-border); min-height: 48px; appearance: none; -webkit-appearance: none; }
+    .team-select-wrapper::after { content: "▼"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.65rem; color: var(--team-select-border); }
+    .team-select { width: 100%; padding: 10px; border-radius: 14px; font-weight: 600; font-size: 0.9rem; background: var(--team-select-bg); color: var(--team-select-text); border: 2px solid var(--team-select-border); min-height: 44px; appearance: none; -webkit-appearance: none; }
 
-    .lineup-scroll { flex: 1; overflow-y: auto; }
-    .lineup-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    .lineup-table th { text-align: left; padding: 10px 6px; background: rgba(198, 28, 56, 0.85); color: white; position: sticky; top: 0; font-weight: 700; border-bottom: 2px solid var(--border-light); backdrop-filter: blur(4px); }
-    .lineup-table td { padding: 6px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; color: var(--text-light); }
+    .lineup-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .lineup-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .lineup-table th { text-align: left; padding: 8px 5px; background: rgba(198, 28, 56, 0.85); color: white; position: sticky; top: 0; z-index: 2; font-weight: 700; border-bottom: 2px solid var(--border-light); backdrop-filter: blur(4px); }
+    .lineup-table td { padding: 5px 5px; border-bottom: 1px solid var(--border-light); vertical-align: middle; color: var(--text-light); }
     body.dark-mode .lineup-table td,
     body.dark-mode .lineup-table input,
     body.dark-mode .lineup-table select { color: var(--text-dark); }
 
-    .row-current { background: rgba(230,180,34,0.35) !important; border-left: 6px solid var(--primary-gold); }
+    .row-current { background: rgba(230,180,34,0.35) !important; border-left: 5px solid var(--primary-gold); }
     .row-current td { font-weight: 700; }
-    .row-ondeck { background: rgba(100,116,139,0.12); }
+    .row-ondeck { background: rgba(100,116,139,0.10); }
 
-    .atbat-btn { background: transparent; border: 2px solid #2c5282; color: #2c5282; padding: 8px 14px; border-radius: 40px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: 0.1s; min-width: 70px; }
-    .atbat-btn:hover { background: #2c5282; color: white; }
+    .atbat-btn {
+      background: transparent;
+      border: 2px solid #3b82f6;
+      color: #3b82f6;
+      padding: 6px 10px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.1s;
+      min-width: 65px;
+    }
+    .atbat-btn:hover { background: #3b82f6; color: white; }
     .atbat-btn:active { transform: scale(0.96); }
+    body.dark-mode .atbat-btn { border-color: #60a5fa; color: #60a5fa; }
+    body.dark-mode .atbat-btn:hover { background: #60a5fa; color: #0f172a; }
 
-    .drag-handle { cursor: grab; font-size: 1.2rem; margin-right: 4px; user-select: none; }
+    .drag-handle { cursor: grab; font-size: 1.1rem; margin-right: 3px; user-select: none; }
 
-    select, input { background: var(--surface-light); border: 1px solid var(--border-light); padding: 10px 8px; border-radius: 12px; font-size: 0.85rem; width: 100%; min-height: 44px; color: var(--text-light); }
+    select, input { background: var(--surface-light); border: 1px solid var(--border-light); padding: 8px 6px; border-radius: 10px; font-size: 0.82rem; width: 100%; min-height: 40px; color: var(--text-light); }
 
     .combo-wrapper { position: relative; width: 100%; }
-    .combo-wrapper input { width: 100%; padding-right: 30px; }
-    .combo-wrapper::after { content: "▼"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.7rem; color: var(--text-light); opacity: 0.6; }
+    .combo-wrapper input { width: 100%; padding-right: 26px; }
+    .combo-wrapper::after { content: "▼"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.6rem; color: var(--text-light); opacity: 0.6; }
 
     .broadcast-hud {
       background: #020617;
       color: #0ef;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      padding: 10px 20px;
+      padding: 8px 16px;
       text-align: center;
       letter-spacing: 1px;
       border-top: 2px solid var(--primary-gold);
+      flex-shrink: 0;
     }
 
-    .roster-layout { display: grid; grid-template-columns: 280px 1fr; gap: 20px; height: 100%; }
-    .team-sidebar { background: var(--surface-light); border-radius: 24px; padding: 16px; overflow-y: auto; }
-    .team-item { padding: 12px; border-radius: 14px; margin-bottom: 8px; cursor: pointer; background: rgba(0,0,0,0.04); font-weight: 600; }
+    .roster-layout { display: grid; grid-template-columns: 260px 1fr; gap: 16px; height: 100%; }
+    .team-sidebar { background: var(--surface-light); border-radius: 20px; padding: 14px; overflow-y: auto; }
+    .team-item { padding: 10px; border-radius: 12px; margin-bottom: 6px; cursor: pointer; background: rgba(0,0,0,0.04); font-weight: 600; }
     .team-item.active { background: var(--primary-gold); color: #0a1c3a; }
-    .roster-workspace { background: var(--surface-light); border-radius: 24px; padding: 16px; overflow-y: auto; }
-    .player-row { display: grid; grid-template-columns: 60px 1fr 80px 1fr 1fr 40px; gap: 8px; margin-bottom: 8px; align-items: center; }
-    .script-area { width: 100%; height: 70vh; font-family: monospace; padding: 16px; border-radius: 20px; border: 1px solid var(--border-light); background: var(--surface-light); font-size: 1rem; }
-    .admin-panel { background: var(--surface-light); border-radius: 24px; padding: 20px; max-width: 750px; }
+    .roster-workspace { background: var(--surface-light); border-radius: 20px; padding: 14px; overflow-y: auto; }
+    .player-row { display: grid; grid-template-columns: 55px 1fr 75px 1fr 1fr 36px; gap: 6px; margin-bottom: 6px; align-items: center; }
+    .script-area { width: 100%; height: 70vh; font-family: monospace; padding: 14px; border-radius: 16px; border: 1px solid var(--border-light); background: var(--surface-light); font-size: 0.95rem; }
+    .admin-panel { background: var(--surface-light); border-radius: 20px; padding: 18px; max-width: 720px; }
 
     footer {
       background: var(--primary-navy);
-      padding: 8px 16px;
+      padding: 6px 16px;
+      padding-bottom: calc(6px + env(safe-area-inset-bottom));
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #94a3b8;
       flex-shrink: 0;
-      gap: 12px;
+      gap: 10px;
     }
-    .footer-logo { height: 32px; width: auto; background: var(--primary-gold); border-radius: 8px; padding: 3px; }
-    .footer-left, .footer-right { display: flex; align-items: center; gap: 12px; }
+    .footer-logo { height: 28px; width: auto; background: var(--primary-gold); border-radius: 6px; padding: 2px; }
+    .footer-left, .footer-right { display: flex; align-items: center; gap: 10px; }
     footer a { color: var(--accent-red); text-decoration: none; font-weight: 600; }
     .footer-text { color: var(--accent-red); font-weight: 600; }
     .author-name { color: var(--accent-red); font-weight: 600; }
@@ -243,29 +284,32 @@
     .clock-footer {
       font-family: 'Share Tech Mono', monospace;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 3px 10px;
       letter-spacing: 1px;
-      font-size: 14px;
-      border-radius: 6px;
+      font-size: 13px;
+      border-radius: 5px;
     }
-    .clock-footer.clock-espn-red    { background: #111; color: #fff; border-bottom: 3px solid var(--accent-red); }
-    .clock-footer.clock-modern-blue { background: #1e3a8a; color: #fff; border-bottom: 3px solid var(--primary-gold); }
-    .clock-footer.clock-classic     { background: #333; color: #00ff00; border-bottom: 3px solid #00ff00; }
+    .clock-footer.clock-espn-red    { background: #111; color: #fff; border-bottom: 2px solid var(--accent-red); }
+    .clock-footer.clock-modern-blue { background: #1e3a8a; color: #fff; border-bottom: 2px solid var(--primary-gold); }
+    .clock-footer.clock-classic     { background: #333; color: #00ff00; border-bottom: 2px solid #00ff00; }
     .clock-footer.clock-minimal     { background: #f4f4f4; color: #111; border: 1px solid #ccc; }
-    .clock-footer.clock-neon        { background: #000; color: #0ff; border-bottom: 3px solid #0ff; text-shadow: 0 0 8px #0ff; }
-    .clock-footer.clock-bold        { background: #fff; color: #000; font-weight: 900; border-top: 3px solid var(--accent-red); }
+    .clock-footer.clock-neon        { background: #000; color: #0ff; border-bottom: 2px solid #0ff; text-shadow: 0 0 6px #0ff; }
+    .clock-footer.clock-bold        { background: #fff; color: #000; font-weight: 900; border-top: 2px solid var(--accent-red); }
     .clock-footer.clock-split       { background: #222; color: #fff; border: 2px solid #555; font-family: 'Courier New', monospace; }
     .clock-footer.clock-led         { background: #000; color: #0f0; border: 2px solid #333; font-family: 'Courier New', monospace; }
-    .clock-footer.clock-pill        { background: linear-gradient(135deg, #2b2b2b, #444); color: #fff; border-radius: 22px; }
+    .clock-footer.clock-pill        { background: linear-gradient(135deg, #2b2b2b, #444); color: #fff; border-radius: 20px; }
 
-    .btn-sm { background: rgba(0,0,0,0.1); border: 1px solid var(--border-light); padding: 8px 14px; border-radius: 40px; cursor: pointer; font-weight: 600; }
+    .btn-sm { background: rgba(0,0,0,0.06); border: 1px solid var(--border-light); padding: 7px 12px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
     .btn-danger { background: var(--accent-red); color: white; }
 
     @media (max-width: 900px) {
       .card-grid { grid-template-columns: 1fr; }
       .roster-layout { grid-template-columns: 1fr; }
-      .logo-main { height: 44px; }
-      .brand-text h1 { font-size: 1.3rem; }
+      .logo-main { height: 40px; }
+      .brand-text h1 { font-size: 1.2rem; }
+      header { gap: 8px; }
+      .timer-pill { padding: 5px 10px; font-size: 0.75rem; }
+      #navScorebug { gap: 8px; font-size: 0.7rem; }
     }
 
     .lineup-table td:first-child { white-space: nowrap; }
@@ -299,9 +343,9 @@
   </div>
 
   <div class="tool-section">
-    <button class="btn-icon" id="globalScorebugToggle" title="Scorebug">⚾</button>
-    <button class="btn-sm" onclick="printBothLineups()" title="Print Rosters">🖨️</button>
-    <button class="reset-pill" onclick="confirmResetGame()">↺ RESET GAME</button>
+    <button class="header-btn" id="globalScorebugToggle">📺 SCOREBOARD</button>
+    <button class="header-btn" onclick="printBothLineups()">🖨️ PRINT CARDS</button>
+    <button class="reset-pill" onclick="confirmResetGame()">↺ RESET</button>
     <div class="theme-toggle">
       <button class="theme-btn active" id="lightModeBtn">☀️</button>
       <button class="theme-btn" id="darkModeBtn">🌙</button>
@@ -315,7 +359,7 @@
   <button class="nav-link" data-view="script">🎙️ SCRIPT</button>
   <button class="nav-link" data-view="admin">⚙️ ADMIN</button>
   <button class="nav-link" data-view="guide">📘 GUIDE</button>
-  <div id="navScorebug" class="hidden"></div>
+  <div id="navScorebug"></div>
 </nav>
 
 <div id="main-container"><main>
@@ -330,7 +374,7 @@
           </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
-              <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
+              <thead><tr><th style="width:70px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
               <tbody id="visitorLineupBody"></tbody>
             </table>
           </div>
@@ -343,7 +387,7 @@
           </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
-              <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
+              <thead><tr><th style="width:70px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
               <tbody id="homeLineupBody"></tbody>
             </table>
           </div>
@@ -354,14 +398,14 @@
 
   <div id="roster" class="view-pane">
     <div class="roster-layout">
-      <div class="team-sidebar"><h3>🏆 TEAM LIBRARY</h3><div id="teamListContainer"></div><button class="btn-sm" id="addTeamBtn" style="margin-top:20px; width:100%;">+ NEW TEAM</button></div>
+      <div class="team-sidebar"><h3>🏆 TEAM LIBRARY</h3><div id="teamListContainer"></div><button class="btn-sm" id="addTeamBtn" style="margin-top:16px; width:100%;">+ NEW TEAM</button></div>
       <div class="roster-workspace" id="rosterWorkspace"></div>
     </div>
   </div>
 
   <div id="script" class="view-pane">
-    <div style="background:var(--surface-light); border-radius:24px; padding:20px; height:100%; display:flex; flex-direction:column;">
-      <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+    <div style="background:var(--surface-light); border-radius:20px; padding:18px; height:100%; display:flex; flex-direction:column;">
+      <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
         <button class="btn-sm" id="printScriptBtn">🖨️ PRINT</button>
         <button class="btn-sm" id="loadScriptBtn">📂 LOAD TXT</button>
         <button class="btn-sm btn-danger" id="clearScriptBtn">CLEAR</button>
@@ -376,9 +420,9 @@
   </div>
 
   <div id="guide" class="view-pane">
-    <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
+    <div style="background:var(--surface-light); border-radius:20px; padding:20px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select teams. Type player names or choose from roster suggestions. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. ⚾ toggles scorebug. 🖨️ prints both rosters.</p>
+      <p><strong>Gameday Card:</strong> Select teams. Type player names or choose from roster suggestions. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCOREBOARD</strong> toggles scorebug. <strong>PRINT CARDS</strong> prints both rosters.</p>
       <p><strong>Roster Command:</strong> Build teams. Add players manually, paste CSV, or upload file. Columns: #, Name, Pos, Pronunciation, Notes.</p>
       <p><strong>Admin Suite:</strong> Customize branding, team dropdown colours, footer clock style, HUD appearance, audio.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
@@ -417,9 +461,9 @@
       fontScale: 100,
       awayTeamSelectBg: "#f8f9fb", awayTeamSelectText: "#0f172a", awayTeamSelectBorder: "#1d4ed8",
       homeTeamSelectBg: "#f8f9fb", homeTeamSelectText: "#0f172a", homeTeamSelectBorder: "#1d4ed8",
-      clockStyle: "espn-red", clockBg: "", clockText: "", clockSize: 14,
+      clockStyle: "espn-red", clockBg: "", clockText: "", clockSize: 13,
       theme: "light", audioVolume: 0.5, audioMuted: false,
-      hudFontSize: "1rem", hudTextColor: "#0ef", hudBgColor: "#020617",
+      hudFontSize: "0.9rem", hudTextColor: "#0ef", hudBgColor: "#020617",
       lastBackup: null
     };
 
@@ -468,7 +512,7 @@
       applyTeamSelectStyle('visitor'); applyTeamSelectStyle('home');
       const clk = document.getElementById("footerClock");
       clk.className = 'clock-footer clock-' + (settings.clockStyle||'espn-red');
-      clk.style.background = settings.clockBg || ''; clk.style.color = settings.clockText || ''; clk.style.fontSize = (settings.clockSize||14)+'px';
+      clk.style.background = settings.clockBg || ''; clk.style.color = settings.clockText || ''; clk.style.fontSize = (settings.clockSize||13)+'px';
       const hud = document.getElementById("hudDisplay");
       hud.style.fontSize = settings.hudFontSize; hud.style.color = settings.hudTextColor; hud.style.background = settings.hudBgColor;
       if (settings.theme==='dark') { document.body.classList.add('dark-mode'); document.getElementById('lightModeBtn').classList.remove('active'); document.getElementById('darkModeBtn').classList.add('active'); }
@@ -627,14 +671,13 @@
 
     function updateScorebugDisplay() {
       const bug = document.getElementById("navScorebug");
-      if (bug.classList.contains('hidden')) return;
       const awayName = teams[game.visitor.teamId]?.name || 'AWAY';
       const homeName = teams[game.home.teamId]?.name || 'HOME';
       bug.innerHTML = `
-        <div class="score-group"><span>${awayName}</span> <span>${game.visitor.runs||0}</span><button onclick="adjustScore('visitor','runs',1)">+</button><button onclick="adjustScore('visitor','runs',-1)">−</button></div>
-        <div class="score-group"><span>${homeName}</span> <span>${game.home.runs||0}</span><button onclick="adjustScore('home','runs',1)">+</button><button onclick="adjustScore('home','runs',-1)">−</button></div>
-        <div class="score-group"><span>INN</span> <span>${game.inning||1}</span><button onclick="adjustInningOuts('inning',1)">+</button><button onclick="adjustInningOuts('inning',-1)">−</button></div>
-        <div class="score-group"><span>OUTS</span> <span>${game.outs||0}</span><button onclick="adjustInningOuts('outs',1)">+</button><button onclick="adjustInningOuts('outs',-1)">−</button></div>
+        <div class="score-group"><span class="team-name-display">${awayName}</span> <span class="score-value">${game.visitor.runs||0}</span><button onclick="adjustScore('visitor','runs',1)">+</button><button onclick="adjustScore('visitor','runs',-1)">−</button></div>
+        <div class="score-group"><span class="team-name-display">${homeName}</span> <span class="score-value">${game.home.runs||0}</span><button onclick="adjustScore('home','runs',1)">+</button><button onclick="adjustScore('home','runs',-1)">−</button></div>
+        <div class="score-group"><span class="score-label">INN</span> <span class="score-value">${game.inning||1}</span><button onclick="adjustInningOuts('inning',1)">+</button><button onclick="adjustInningOuts('inning',-1)">−</button></div>
+        <div class="score-group"><span class="score-label">OUTS</span> <span class="score-value">${game.outs||0}</span><button onclick="adjustInningOuts('outs',1)">+</button><button onclick="adjustInningOuts('outs',-1)">−</button></div>
         <button class="reset-scorebug" onclick="resetScorebug()">↺</button>
       `;
     }
@@ -692,18 +735,18 @@
       const t=teams[id];
       const ws=document.getElementById("rosterWorkspace");
       ws.innerHTML = `
-        <input id="editTeamName" value="${t.name}" style="width:100%; margin-bottom:12px;">
-        <div style="display:grid; grid-template-columns:60px 1fr 80px 1fr 1fr 40px; gap:4px; font-size:0.7rem; font-weight:600;">
+        <input id="editTeamName" value="${t.name}" style="width:100%; margin-bottom:10px;">
+        <div style="display:grid; grid-template-columns:55px 1fr 75px 1fr 1fr 36px; gap:4px; font-size:0.65rem; font-weight:600;">
           <span>#</span><span>Name</span><span>Pos</span><span>Pronunciation</span><span>Notes</span><span></span>
         </div>
         <div id="rosterEditGrid"></div>
-        <textarea id="parseRosterText" rows="3" placeholder="Paste CSV: number,name,pos,pronunciation,notes" style="width:100%; margin-top:12px;"></textarea>
-        <div style="margin:12px 0;">
+        <textarea id="parseRosterText" rows="3" placeholder="Paste CSV: number,name,pos,pronunciation,notes" style="width:100%; margin-top:10px;"></textarea>
+        <div style="margin:10px 0;">
           <label>Dropdown BG: <input type="color" id="teamBgCol" value="${t.selectBg||'#f8f9fb'}"></label>
           <label>Text: <input type="color" id="teamTxtCol" value="${t.selectText||'#0f172a'}"></label>
           <label>Border: <input type="color" id="teamBdrCol" value="${t.selectBorder||'#1d4ed8'}"></label>
         </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button class="btn-sm" id="saveTeamBtn">💾 SAVE</button>
           <button class="btn-sm" id="addPlayerRow">➕ ADD</button>
           <button class="btn-sm" id="parseRosterBtn">📝 PARSE</button>
@@ -715,7 +758,7 @@
       const grid=document.getElementById("rosterEditGrid");
       t.players.forEach(p=>{
         const d=document.createElement("div"); d.className="player-row";
-        d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}" placeholder="Pronounce"><input class="pnotes" value="${p.notes||''}" placeholder="Notes"><button class="delRowBtn" style="background:#c41e3a;">✖</button>`;
+        d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}" placeholder="Pronounce"><input class="pnotes" value="${p.notes||''}" placeholder="Notes"><button class="delRowBtn" style="background:#c41e3a; color:white; border:none; border-radius:6px; cursor:pointer;">✖</button>`;
         d.querySelector(".delRowBtn").onclick=()=>d.remove();
         grid.appendChild(d);
       });
@@ -729,7 +772,7 @@
       };
       document.getElementById("addPlayerRow").onclick=()=>{
         const d=document.createElement("div"); d.className="player-row";
-        d.innerHTML=`<input class="pnum" placeholder="#"><input class="pname" placeholder="Name"><select class="ppos">${customPositions.map(p=>`<option>${p}</option>`).join('')}</select><input class="ppron" placeholder="Pronounce"><input class="pnotes" placeholder="Notes"><button class="delRowBtn">✖</button>`;
+        d.innerHTML=`<input class="pnum" placeholder="#"><input class="pname" placeholder="Name"><select class="ppos">${customPositions.map(p=>`<option>${p}</option>`).join('')}</select><input class="ppron" placeholder="Pronounce"><input class="pnotes" placeholder="Notes"><button class="delRowBtn" style="background:#c41e3a; color:white; border:none; border-radius:6px;">✖</button>`;
         d.querySelector(".delRowBtn").onclick=()=>d.remove();
         grid.appendChild(d);
       };
@@ -740,7 +783,7 @@
         grid.innerHTML="";
         players.forEach(p=>{
           const d=document.createElement("div"); d.className="player-row";
-          d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn">✖</button>`;
+          d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn" style="background:#c41e3a; color:white; border:none; border-radius:6px;">✖</button>`;
           d.querySelector(".delRowBtn").onclick=()=>d.remove();
           grid.appendChild(d);
         });
@@ -758,7 +801,7 @@
           grid.innerHTML="";
           players.forEach(p=>{
             const d=document.createElement("div"); d.className="player-row";
-            d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn">✖</button>`;
+            d.innerHTML=`<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn" style="background:#c41e3a; color:white; border:none; border-radius:6px;">✖</button>`;
             d.querySelector(".delRowBtn").onclick=()=>d.remove();
             grid.appendChild(d);
           });
@@ -807,7 +850,7 @@
         <h3>Audio</h3>
         <label>Volume: <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="${settings.audioVolume}"></label>
         <label><input type="checkbox" id="muteCheck" ${settings.audioMuted?'checked':''}> Mute</label>
-        <div style="margin:20px 0; background:var(--primary-gold); color:#0a1c3a; padding:8px; border-radius:8px;">
+        <div style="margin:16px 0; background:var(--primary-gold); color:#0a1c3a; padding:8px; border-radius:8px;">
           <strong>⏰ Backup Reminder:</strong> Last export: ${lastBackup}. <button class="btn-sm" id="exportBackupBtn">📦 EXPORT BACKUP</button>
         </div>
         <button class="btn-sm" id="importBackupBtn">📂 IMPORT</button>
@@ -872,6 +915,7 @@
 
     loadData(); applySettings(); renderTeamList(); renderTeamDropdowns();
     renderLineupTable("visitor"); renderLineupTable("home"); renderAdmin();
+    updateScorebugDisplay();
 
     document.getElementById("markPitchBtn").onclick = markPitch;
     document.getElementById("setCountdownBtn").onclick = setCountdown;
