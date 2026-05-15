@@ -13,14 +13,14 @@
     }
 
     :root {
-      --primary-navy: #1a3456;  /* lighter navy */
+      --primary-navy: #1f3a5e;     /* professional dark blue */
       --primary-gold: #e6b422;
       --accent-red: #c41e3a;
       --bg-light: #f4f6fa;
       --surface-light: #f0f2f5;
       --text-light: #0f172a;
       --border-light: #dce3ec;
-      --bg-dark: #0a0f1c;
+      --bg-dark: #0f172a;
       --surface-dark: #1e293b;
       --text-dark: #f1f5f9;
       --border-dark: #334155;
@@ -29,7 +29,7 @@
       --team-select-bg: #ffffff;
       --team-select-text: #000000;
       --team-select-border: #1d4ed8;
-      --card-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      --card-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
 
     body.dark-mode {
@@ -115,7 +115,7 @@
     }
 
     .timer-pill {
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.35);
       border: 2px solid var(--accent-red);
       border-radius: 40px;
       padding: 8px 18px;
@@ -183,9 +183,9 @@
       color: #0a1c3a;
     }
 
-    /* ===== NAVIGATION ===== */
+    /* ===== NAVIGATION (module row) ===== */
     nav {
-      background: #07152e;
+      background: #2d3748;   /* professional grey */
       display: flex;
       padding: 0 16px;
       gap: 4px;
@@ -200,7 +200,7 @@
       font-weight: 700;
       font-size: 0.85rem;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.7);
       cursor: pointer;
       white-space: nowrap;
       border-bottom: 3px solid transparent;
@@ -264,12 +264,13 @@
     .lineup-table th {
       text-align: left;
       padding: 10px 6px;
-      background: var(--accent-red);
+      background: rgba(198, 28, 56, 0.85);  /* transparent professional red */
       color: white;
       position: sticky;
       top: 0;
       font-weight: 700;
       border-bottom: 2px solid var(--border-light);
+      backdrop-filter: blur(4px);
     }
 
     .lineup-table td {
@@ -295,7 +296,7 @@
     .row-ondeck { background: rgba(100,116,139,0.12); }
 
     .atbat-btn {
-      background: linear-gradient(145deg, #1e3a5f, #163250); /* lighter than before */
+      background: linear-gradient(145deg, #1e3a5f, #163250);
       border: none;
       color: white;
       padding: 8px 14px;
@@ -322,19 +323,38 @@
       color: var(--text-light);
     }
 
-    /* Scorebug */
+    /* Scorebug mini controls */
     .scorebug {
-      background: rgba(0,0,0,0.7);
-      border-radius: 24px;
-      padding: 8px 16px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 16px;
+      padding: 10px 16px;
       color: white;
       display: flex;
-      gap: 16px;
+      gap: 20px;
       align-items: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
     }
 
     .scorebug.hidden { display: none; }
+
+    .scorebug .score-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scorebug button {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .scorebug button:active { background: var(--accent-red); }
 
     /* Broadcast HUD */
     .broadcast-hud {
@@ -361,7 +381,7 @@
 
     /* Footer */
     footer {
-      background: #0a1424;
+      background: #112240;  /* lighter than before */
       padding: 8px 24px;
       display: flex;
       align-items: center;
@@ -412,6 +432,11 @@
     @media (max-width: 900px) {
       .card-grid { grid-template-columns: 1fr; }
       .roster-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ensure DH For row order cell doesn't wrap */
+    .lineup-table td:first-child {
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -470,7 +495,24 @@
             <button class="btn-sm" onclick="toggleScorebug('visitor')">📊</button>
             <button class="btn-sm" id="clearVisitorBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="visitorScorebug"></div>
+          <div class="scorebug hidden" id="visitorScorebug">
+            <div class="score-group">
+              <span>R</span><span id="visitorRunsBug">0</span>
+              <button onclick="adjustScore('visitor','runs',1)">+1</button>
+              <button onclick="adjustScore('visitor','runs',-1)">-1</button>
+            </div>
+            <div class="score-group">
+              <span>INN</span><span id="visitorInningBug">1</span>
+              <button onclick="adjustScore('visitor','inning',1)">+</button>
+              <button onclick="adjustScore('visitor','inning',-1)">-</button>
+            </div>
+            <div class="score-group">
+              <span>OUTS</span><span id="visitorOutsBug">0</span>
+              <button onclick="adjustScore('visitor','outs',1)">+</button>
+              <button onclick="adjustScore('visitor','outs',-1)">-</button>
+            </div>
+            <button class="btn-sm" onclick="resetScorebug('visitor')">↺ Reset</button>
+          </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
@@ -485,7 +527,24 @@
             <button class="btn-sm" onclick="toggleScorebug('home')">📊</button>
             <button class="btn-sm" id="clearHomeBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="homeScorebug"></div>
+          <div class="scorebug hidden" id="homeScorebug">
+            <div class="score-group">
+              <span>R</span><span id="homeRunsBug">0</span>
+              <button onclick="adjustScore('home','runs',1)">+1</button>
+              <button onclick="adjustScore('home','runs',-1)">-1</button>
+            </div>
+            <div class="score-group">
+              <span>INN</span><span id="homeInningBug">1</span>
+              <button onclick="adjustScore('home','inning',1)">+</button>
+              <button onclick="adjustScore('home','inning',-1)">-</button>
+            </div>
+            <div class="score-group">
+              <span>OUTS</span><span id="homeOutsBug">0</span>
+              <button onclick="adjustScore('home','outs',1)">+</button>
+              <button onclick="adjustScore('home','outs',-1)">-</button>
+            </div>
+            <button class="btn-sm" onclick="resetScorebug('home')">↺ Reset</button>
+          </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
@@ -527,13 +586,10 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select a team from the dropdown. Type player names directly (format: <code># Name</code>) or choose from the roster suggestions. Drag ☰ to reorder. Click <strong>AT BAT</strong> to highlight the batter. The HUD bar below shows current batter & on-deck.</p>
-      <p><strong>Roster Command:</strong> Build teams here. Add players manually or paste CSV. Save team – it appears on Gameday. You can also set per‑team dropdown colours and add college/notes.</p>
-      <p><strong>Script Desk:</strong> Write broadcast notes. Print or load from file.</p>
-      <p><strong>Admin Suite:</strong> Customize brand, logos, font size, positions, team dropdown colours, footer clock style, audio volume, and backup/restore.</p>
-      <p><strong>Timers:</strong> ⏺ marks current time (green). ⏳ sets countdown – display turns red and alarm sounds at zero. WX timer runs 30 minutes with alarm.</p>
-      <p><strong>Scorebug:</strong> Click 📊 on a lineup card to show/hide runs/inning display.</p>
-      <p><strong>Keyboard Shortcuts:</strong> <kbd>Space</kbd> = mark pitch, <kbd>Ctrl+S</kbd> = save roster.</p>
+      <p><strong>Gameday Card:</strong> Select a team. Type player names or choose from roster. Drag ☰ to reorder. Click <strong>AT BAT</strong> to highlight. Use 📊 to show mini scorebug with runs, inning, outs controls and reset.</p>
+      <p><strong>Roster Command:</strong> Build teams. Add players, set dropdown colours, and export/import CSV.</p>
+      <p><strong>Script Desk:</strong> Write and save broadcast notes.</p>
+      <p><strong>Admin Suite:</strong> Customize branding, colors, clock style, audio, and backup/restore.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
     </div>
   </div>
@@ -557,7 +613,7 @@
 <script>
   (function(){
     // ========== STATE ==========
-    let teams = {}; // {id: {name, players:[{number,name,pos,pronounce,notes}], selectBg, selectText, selectBorder}}
+    let teams = {};
     let game = {
       visitor: { teamId: "", lineup: [], battingIdx: 0, onDeck: 1, runs: 0, inning: 1, outs: 0 },
       home: { teamId: "", lineup: [], battingIdx: 0, onDeck: 1, runs: 0, inning: 1, outs: 0 }
@@ -663,6 +719,34 @@
         `⚾ AT BAT: V-${vBat.number} ${vBat.name} (OD: ${vOD.number} ${vOD.name}) | H-${hBat.number} ${hBat.name} (OD: ${hOD.number} ${hOD.name})`;
     }
 
+    function updateScorebugDisplay(side) {
+      const bug = document.getElementById(`${side}Scorebug`);
+      if (bug.classList.contains('hidden')) return;
+      document.getElementById(`${side}RunsBug`).innerText = game[side].runs;
+      document.getElementById(`${side}InningBug`).innerText = game[side].inning;
+      document.getElementById(`${side}OutsBug`).innerText = game[side].outs;
+    }
+
+    window.adjustScore = (side, field, delta) => {
+      game[side][field] = Math.max(0, game[side][field] + delta);
+      updateScorebugDisplay(side);
+      saveAll();
+    };
+
+    window.resetScorebug = (side) => {
+      game[side].runs = 0;
+      game[side].inning = 1;
+      game[side].outs = 0;
+      updateScorebugDisplay(side);
+      saveAll();
+    };
+
+    window.toggleScorebug = (side) => {
+      const bug = document.getElementById(`${side}Scorebug`);
+      bug.classList.toggle('hidden');
+      updateScorebugDisplay(side);
+    };
+
     // ========== RENDER ==========
     function renderTeamDropdowns() {
       const opts = '<option value="">-- SELECT TEAM --</option>' + Object.values(teams).map(t => `<option value="${t.id}">${t.name}</option>`).join('');
@@ -750,7 +834,7 @@
       saveAll();
     };
 
-    // Drag & drop
+    // Drag & drop (same)
     document.addEventListener('dragstart', e => {
       const row = e.target.closest('tr'); if(!row) return;
       e.dataTransfer.setData('text/plain', row.dataset.index);
@@ -772,7 +856,7 @@
       saveAll();
     });
 
-    // Timers
+    // Timers (same)
     function markPitch() {
       const d = new Date();
       document.getElementById("firstPitchDisplay").innerText = d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
@@ -832,16 +916,7 @@
       document.getElementById("wxTimerDisplay").classList.remove("red-flash");
     }
 
-    // Scorebug toggle
-    window.toggleScorebug = (side) => {
-      const bug = document.getElementById(`${side}Scorebug`);
-      bug.classList.toggle("hidden");
-      if (!bug.classList.contains("hidden")) {
-        bug.innerHTML = `R: ${game[side].runs} | Inning: ${game[side].inning} | Outs: ${game[side].outs}`;
-      }
-    };
-
-    // Roster management
+    // Roster (same with notes field)
     window.renderTeamList = () => {
       const c = document.getElementById("teamListContainer");
       c.innerHTML = Object.values(teams).map(t => `<div class="team-item" onclick="editTeam('${t.id}')">${t.name}</div>`).join('');
@@ -914,7 +989,7 @@
       };
     };
 
-    // Admin
+    // Admin (same)
     function renderAdmin() {
       const p = document.getElementById("adminPanel");
       p.innerHTML = `
