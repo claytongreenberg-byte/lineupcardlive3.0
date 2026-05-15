@@ -26,8 +26,8 @@
       --border-dark: #334155;
       --touch-target: 48px;
       --font-base: 17px;
-      --team-select-bg: #ffffff;
-      --team-select-text: #000000;
+      --team-select-bg: #f8f9fb;
+      --team-select-text: #0f172a;
       --team-select-border: #1d4ed8;
       --card-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
@@ -65,7 +65,6 @@
       z-index: 2000;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary-navy);
       color: white;
@@ -199,7 +198,6 @@
       color: #0a1c3a;
     }
 
-    /* ===== NAVIGATION ===== */
     nav {
       background: #2d3748;
       display: flex;
@@ -227,7 +225,6 @@
       border-bottom-color: var(--primary-gold);
     }
 
-    /* ===== MAIN ===== */
     #main-container { flex: 1; overflow: hidden; }
     main { height: 100%; padding: 16px; overflow-y: auto; }
 
@@ -261,8 +258,31 @@
     .card-head.visitor { border-left: 5px solid #3b82f6; }
     .card-head.home { border-left: 5px solid var(--accent-red); }
 
-    .team-select {
+    .team-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: -8px;
+    }
+
+    .team-select-wrapper {
+      position: relative;
       flex: 2;
+    }
+
+    .team-select-wrapper::after {
+      content: "▼";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 0.7rem;
+      color: var(--team-select-border);
+    }
+
+    .team-select {
+      width: 100%;
       padding: 12px;
       border-radius: 16px;
       font-weight: 600;
@@ -271,6 +291,8 @@
       color: var(--team-select-text);
       border: 2px solid var(--team-select-border);
       min-height: 48px;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     .lineup-scroll { flex: 1; overflow-y: auto; }
@@ -340,7 +362,6 @@
       color: var(--text-light);
     }
 
-    /* Scorebug mini */
     .scorebug {
       background: rgba(0,0,0,0.8);
       border-radius: 16px;
@@ -374,12 +395,19 @@
 
     .scorebug button:active { background: var(--accent-red); border-color: var(--accent-red); }
 
-    .diamond-icon {
+    .scorebug-icon {
       font-size: 1.2rem;
-      line-height: 1;
+      font-weight: bold;
+      display: inline-block;
+      transform: rotate(45deg);
+      border: 2px solid currentColor;
+      width: 18px;
+      height: 18px;
+      line-height: 14px;
+      text-align: center;
+      border-radius: 2px;
     }
 
-    /* Broadcast HUD */
     .broadcast-hud {
       background: #020617;
       color: #0ef;
@@ -392,7 +420,6 @@
       border-top: 2px solid var(--primary-gold);
     }
 
-    /* Roster, Script, Admin */
     .roster-layout { display: grid; grid-template-columns: 280px 1fr; gap: 20px; height: 100%; }
     .team-sidebar { background: var(--surface-light); border-radius: 24px; padding: 16px; overflow-y: auto; }
     .team-item { padding: 12px; border-radius: 14px; margin-bottom: 8px; cursor: pointer; background: rgba(0,0,0,0.04); font-weight: 600; }
@@ -402,7 +429,6 @@
     .script-area { width: 100%; height: 70vh; font-family: monospace; padding: 16px; border-radius: 20px; border: 1px solid var(--border-light); background: var(--surface-light); font-size: 1rem; }
     .admin-panel { background: var(--surface-light); border-radius: 24px; padding: 20px; max-width: 750px; }
 
-    /* Footer */
     footer {
       background: var(--primary-navy);
       padding: 8px 24px;
@@ -433,6 +459,7 @@
     .footer-text { color: var(--accent-red); font-weight: 600; }
     .author-name { color: var(--accent-red); font-weight: 600; }
 
+    /* ----- Footer Clock Presets ----- */
     .clock-footer {
       font-family: 'Share Tech Mono', monospace;
       font-weight: 700;
@@ -440,7 +467,19 @@
       letter-spacing: 1px;
       font-size: 14px;
       border-radius: 6px;
+      background: transparent;
+      color: inherit;
     }
+
+    .clock-footer.clock-espn-red    { background: #111; color: #fff; border-bottom: 3px solid var(--accent-red); }
+    .clock-footer.clock-modern-blue { background: #1e3a8a; color: #fff; border-bottom: 3px solid var(--primary-gold); }
+    .clock-footer.clock-classic     { background: #333; color: #00ff00; border-bottom: 3px solid #00ff00; }
+    .clock-footer.clock-minimal     { background: #f4f4f4; color: #111; border: 1px solid #ccc; }
+    .clock-footer.clock-neon        { background: #000; color: #0ff; border-bottom: 3px solid #0ff; text-shadow: 0 0 8px #0ff; }
+    .clock-footer.clock-bold        { background: #fff; color: #000; font-weight: 900; border-top: 3px solid var(--accent-red); }
+    .clock-footer.clock-split       { background: #222; color: #fff; border: 2px solid #555; font-family: 'Courier New', monospace; }
+    .clock-footer.clock-led         { background: #000; color: #0f0; border: 2px solid #333; font-family: 'Courier New', monospace; }
+    .clock-footer.clock-pill        { background: linear-gradient(135deg, #2b2b2b, #444); color: #fff; border-radius: 22px; }
 
     .btn-sm {
       background: rgba(0,0,0,0.1);
@@ -460,9 +499,7 @@
       .brand-text h1 { font-size: 1.3rem; }
     }
 
-    .lineup-table td:first-child {
-      white-space: nowrap;
-    }
+    .lineup-table td:first-child { white-space: nowrap; }
   </style>
 </head>
 <body class="light-mode">
@@ -516,13 +553,19 @@
         <!-- Visitor -->
         <div class="lineup-card">
           <div class="card-head visitor">
-            <select id="visitorTeamSelect" class="team-select"></select>
-            <button class="btn-sm" onclick="toggleScorebug('visitor')" title="Scorebug"><span class="diamond-icon">◆</span></button>
+            <span class="team-label">AWAY</span>
+            <div class="team-select-wrapper">
+              <select id="visitorTeamSelect" class="team-select"></select>
+            </div>
+            <button class="btn-sm" onclick="toggleScorebug('visitor')" title="Scorebug">
+              <span style="display:inline-block; transform:rotate(45deg); border:2px solid currentColor; width:16px; height:16px; line-height:12px; text-align:center; border-radius:2px;">⬥</span>
+              SCORE
+            </button>
             <button class="btn-sm" id="clearVisitorBtn">CLEAR</button>
           </div>
           <div class="scorebug hidden" id="visitorScorebug">
             <div class="score-group">
-              <span>R</span><span id="visitorRunsBug">0</span>
+              <span>RUNS</span><span id="visitorRunsBug">0</span>
               <button onclick="adjustScore('visitor','runs',1)">+</button>
               <button onclick="adjustScore('visitor','runs',-1)">−</button>
             </div>
@@ -548,13 +591,19 @@
         <!-- Home -->
         <div class="lineup-card">
           <div class="card-head home">
-            <select id="homeTeamSelect" class="team-select"></select>
-            <button class="btn-sm" onclick="toggleScorebug('home')" title="Scorebug"><span class="diamond-icon">◆</span></button>
+            <span class="team-label">HOME</span>
+            <div class="team-select-wrapper">
+              <select id="homeTeamSelect" class="team-select"></select>
+            </div>
+            <button class="btn-sm" onclick="toggleScorebug('home')" title="Scorebug">
+              <span style="display:inline-block; transform:rotate(45deg); border:2px solid currentColor; width:16px; height:16px; line-height:12px; text-align:center; border-radius:2px;">⬥</span>
+              SCORE
+            </button>
             <button class="btn-sm" id="clearHomeBtn">CLEAR</button>
           </div>
           <div class="scorebug hidden" id="homeScorebug">
             <div class="score-group">
-              <span>R</span><span id="homeRunsBug">0</span>
+              <span>RUNS</span><span id="homeRunsBug">0</span>
               <button onclick="adjustScore('home','runs',1)">+</button>
               <button onclick="adjustScore('home','runs',-1)">−</button>
             </div>
@@ -607,9 +656,9 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select teams. Type or dropdown player names. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. ◆ toggles mini scorebug.</p>
+      <p><strong>Gameday Card:</strong> Select teams using AWAY/HOME dropdowns. Type player names or pick from roster. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCORE</strong> toggles mini scorebug (◆ diamond icon).</p>
       <p><strong>Roster Command:</strong> Build teams. Add players, set per‑team colors, export/import CSV.</p>
-      <p><strong>Admin Suite:</strong> Customize branding, colors, clock, audio, HUD appearance.</p>
+      <p><strong>Admin Suite:</strong> Customize branding, team dropdown colours, footer clock style, HUD appearance, audio.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
     </div>
   </div>
@@ -625,7 +674,7 @@
        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23e6b422%22/%3E%3Ctext x=%2230%22 y=%2265%22 fill=%22%230a1c3a%22 font-size=%2240%22%3EV%3C/text%3E%3C/svg%3E'">
   <div class="footer-right">
     <span class="footer-text">PA Broadcast Command Center</span>
-    <span class="clock-footer" id="footerClock">00:00:00</span>
+    <span class="clock-footer clock-espn-red" id="footerClock">00:00:00</span>
   </div>
 </footer>
 
@@ -643,8 +692,8 @@
       brand: "LINEUP CARD LIVE", subtext: "BROADCAST COMMAND",
       logo: "_logos/lineup-card-live-logo.png", footerLogo: "_logos/Gold4.png",
       fontScale: 100,
-      awayTeamSelectBg: "#ffffff", awayTeamSelectText: "#000000", awayTeamSelectBorder: "#1d4ed8",
-      homeTeamSelectBg: "#ffffff", homeTeamSelectText: "#000000", homeTeamSelectBorder: "#1d4ed8",
+      awayTeamSelectBg: "#f8f9fb", awayTeamSelectText: "#0f172a", awayTeamSelectBorder: "#1d4ed8",
+      homeTeamSelectBg: "#f8f9fb", homeTeamSelectText: "#0f172a", homeTeamSelectBorder: "#1d4ed8",
       clockStyle: "espn-red", clockBg: "", clockText: "", clockSize: 14,
       theme: "light", audioVolume: 0.5, audioMuted: false,
       hudFontSize: "1rem", hudTextColor: "#0ef", hudBgColor: "#020617"
@@ -686,7 +735,7 @@
       const storedTeams = localStorage.getItem("vdw_teams");
       teams = storedTeams ? JSON.parse(storedTeams) : {
         demo: { id:"demo", name:"DFW STARS", players: Array(11).fill().map((_,i)=>({number:`${i+1}`,name:`Player ${i+1}`,pos:i===9?"DH":i===10?"P":"CF"})),
-          selectBg:"#ffffff",selectText:"#000000",selectBorder:"#1d4ed8" }
+          selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8" }
       };
       const storedGame = localStorage.getItem("vdw_game");
       if (storedGame) game = JSON.parse(storedGame);
@@ -706,15 +755,14 @@
       document.getElementById("mainLogo").src = settings.logo;
       document.getElementById("footerLogo").src = settings.footerLogo;
 
-      // Team dropdown styles applied per side
       applyTeamSelectStyle('visitor');
       applyTeamSelectStyle('home');
 
       const clk = document.getElementById("footerClock");
-      clk.className = 'clock-footer clock-' + settings.clockStyle;
-      clk.style.background = settings.clockBg || '';
-      clk.style.color = settings.clockText || '';
-      clk.style.fontSize = settings.clockSize + 'px';
+      clk.className = 'clock-footer clock-' + (settings.clockStyle || 'espn-red');
+      if (settings.clockBg) clk.style.background = settings.clockBg;
+      if (settings.clockText) clk.style.color = settings.clockText;
+      clk.style.fontSize = (settings.clockSize || 14) + 'px';
 
       const hud = document.getElementById("hudDisplay");
       hud.style.fontSize = settings.hudFontSize;
@@ -735,13 +783,12 @@
     function applyTeamSelectStyle(side) {
       const sel = document.getElementById(`${side}TeamSelect`);
       const prefix = side === 'visitor' ? 'away' : 'home';
-      sel.style.background = settings[`${prefix}TeamSelectBg`] || '#ffffff';
-      sel.style.color = settings[`${prefix}TeamSelectText`] || '#000000';
+      sel.style.background = settings[`${prefix}TeamSelectBg`] || '#f8f9fb';
+      sel.style.color = settings[`${prefix}TeamSelectText`] || '#0f172a';
       sel.style.borderColor = settings[`${prefix}TeamSelectBorder`] || '#1d4ed8';
     }
 
     function updateHUD() {
-      // Determine who is batting
       let batter = null, onDeck = null;
       if (game.visitor.battingIdx >= 0) {
         batter = game.visitor.lineup[game.visitor.battingIdx];
@@ -812,7 +859,6 @@
       playBeep(800, 0.1);
       game[side].battingIdx = idx;
       game[side].onDeck = (idx+1)%11;
-      // clear other side
       const other = side === 'visitor' ? 'home' : 'visitor';
       game[other].battingIdx = -1;
       game[other].onDeck = 0;
@@ -829,7 +875,6 @@
       saveAll();
     };
 
-    // Drag & drop
     document.addEventListener('dragstart', e => {
       const row = e.target.closest('tr'); if(!row) return;
       e.dataTransfer.setData('text/plain', row.dataset.index);
@@ -851,7 +896,6 @@
       saveAll();
     });
 
-    // Timers
     function markPitch() {
       const d = new Date();
       document.getElementById("firstPitchDisplay").innerText = d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
@@ -951,7 +995,6 @@
       }
     };
 
-    // Roster (unchanged)
     window.renderTeamList = () => {
       const c = document.getElementById("teamListContainer");
       c.innerHTML = Object.values(teams).map(t => `<div class="team-item" onclick="editTeam('${t.id}')">${t.name}</div>`).join('');
@@ -963,8 +1006,8 @@
         <input id="editTeamName" value="${t.name}" style="width:100%; margin-bottom:12px;">
         <div id="rosterEditGrid"></div>
         <div style="margin:12px 0;">
-          <label>Dropdown BG: <input type="color" id="teamBgCol" value="${t.selectBg||'#ffffff'}"></label>
-          <label>Text: <input type="color" id="teamTxtCol" value="${t.selectText||'#000000'}"></label>
+          <label>Dropdown BG: <input type="color" id="teamBgCol" value="${t.selectBg||'#f8f9fb'}"></label>
+          <label>Text: <input type="color" id="teamTxtCol" value="${t.selectText||'#0f172a'}"></label>
           <label>Border: <input type="color" id="teamBdrCol" value="${t.selectBorder||'#1d4ed8'}"></label>
         </div>
         <button class="btn-sm" id="saveTeamBtn">💾 SAVE</button>
@@ -998,9 +1041,31 @@
         d.querySelector(".delRowBtn").onclick = () => d.remove();
         grid.appendChild(d);
       };
+      document.getElementById("exportTeamCSV").onclick = () => {
+        const csv = ["number,name,pos,pronounce,notes", ...t.players.map(p => `${p.number},${p.name},${p.pos},${p.pronounce},${p.notes}`)].join('\n');
+        const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv])); a.download = t.name+".csv"; a.click();
+      };
+      document.getElementById("importTeamCSV").onchange = e => {
+        const file = e.target.files[0]; if(!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const lines = ev.target.result.split(/\r?\n/);
+          const players = lines.filter(l=>l).map(l => {
+            const parts = l.split(",");
+            return { number: parts[0]||"", name: parts[1]||"", pos: parts[2]||"", pronounce: parts[3]||"", notes: parts[4]||"" };
+          });
+          grid.innerHTML = "";
+          players.forEach(p => {
+            const d = document.createElement("div"); d.className = "player-row";
+            d.innerHTML = `<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn">✖</button>`;
+            d.querySelector(".delRowBtn").onclick = () => d.remove();
+            grid.appendChild(d);
+          });
+        };
+        reader.readAsText(file);
+      };
     };
 
-    // Admin
     function renderAdmin() {
       const p = document.getElementById("adminPanel");
       p.innerHTML = `
@@ -1070,7 +1135,6 @@
       };
     }
 
-    // Init
     loadData();
     applySettings();
     renderTeamList();
@@ -1087,7 +1151,7 @@
     document.getElementById("homeTeamSelect").onchange = e => loadTeamToSide("home", e.target.value);
     document.getElementById("clearVisitorBtn").onclick = () => { game.visitor.lineup = createEmptyLineup(); game.visitor.teamId = ""; renderLineupTable("visitor"); saveAll(); };
     document.getElementById("clearHomeBtn").onclick = () => { game.home.lineup = createEmptyLineup(); game.home.teamId = ""; renderLineupTable("home"); saveAll(); };
-    document.getElementById("addTeamBtn").onclick = () => { const id = Date.now().toString(); teams[id] = { id, name:"New Team", players:Array(11).fill({number:"",name:"",pos:"P"}) }; saveAll(); renderTeamList(); renderTeamDropdowns(); };
+    document.getElementById("addTeamBtn").onclick = () => { const id = Date.now().toString(); teams[id] = { id, name:"New Team", players:Array(11).fill({number:"",name:"",pos:"P"}), selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8" }; saveAll(); renderTeamList(); renderTeamDropdowns(); };
     document.getElementById("lightModeBtn").onclick = () => { settings.theme = "light"; saveAll(); applySettings(); };
     document.getElementById("darkModeBtn").onclick = () => { settings.theme = "dark"; saveAll(); applySettings(); };
     document.querySelectorAll(".nav-link").forEach(b => b.onclick = () => {
