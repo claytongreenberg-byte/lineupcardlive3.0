@@ -141,7 +141,18 @@
 
     select, input { background: var(--surface-light); border: 1px solid var(--border-light); padding: 10px 8px; border-radius: 12px; font-size: 0.85rem; width: 100%; min-height: 44px; color: var(--text-light); }
 
-    .scorebug { background: rgba(0,0,0,0.8); border-radius: 16px; padding: 10px 16px; color: white; display: flex; gap: 20px; align-items: center; font-size: 0.85rem; flex-wrap: wrap; }
+    .scorebug {
+      background: rgba(0,0,0,0.85);
+      border-radius: 12px;
+      padding: 8px 20px;
+      color: white;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      width: 100%;
+    }
     .scorebug.hidden { display: none; }
     .score-group { display: flex; align-items: center; gap: 6px; }
     .scorebug button { background: transparent; border: 2px solid rgba(255,255,255,0.6); color: white; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
@@ -179,7 +190,6 @@
       flex-shrink: 0;
       gap: 16px;
     }
-
     .footer-logo { height: 40px; width: auto; background: var(--primary-gold); border-radius: 8px; padding: 4px; position: absolute; left: 50%; transform: translateX(-50%); }
     .footer-left { display: flex; align-items: center; gap: 12px; }
     .footer-right { display: flex; align-items: center; gap: 16px; }
@@ -263,7 +273,6 @@
 </nav>
 
 <div id="main-container"><main>
-  <!-- Gameday Card (same as before with lighter dropdowns) -->
   <div id="gameday" class="view-pane active">
     <div class="gameday-container">
       <div class="card-grid">
@@ -271,15 +280,10 @@
           <div class="card-head visitor">
             <span class="team-label">AWAY</span>
             <div class="team-select-wrapper"><select id="visitorTeamSelect" class="team-select"></select></div>
-            <button class="btn-sm" onclick="toggleScorebug('visitor')">◆ SCORE</button>
+            <button class="btn-sm" onclick="toggleScorebug('visitor')">⚾ SCORE</button>
             <button class="btn-sm" id="clearVisitorBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="visitorScorebug">
-            <div class="score-group"><span>RUNS</span><span id="visitorRunsBug">0</span><button onclick="adjustScore('visitor','runs',1)">+</button><button onclick="adjustScore('visitor','runs',-1)">−</button></div>
-            <div class="score-group"><span>INN</span><span id="visitorInningBug">1</span><button onclick="adjustScore('visitor','inning',1)">+</button><button onclick="adjustScore('visitor','inning',-1)">−</button></div>
-            <div class="score-group"><span>OUTS</span><span id="visitorOutsBug">0</span><button onclick="adjustScore('visitor','outs',1)">+</button><button onclick="adjustScore('visitor','outs',-1)">−</button></div>
-            <button class="btn-sm" onclick="resetScorebug('visitor')">↺ Reset</button>
-          </div>
+          <div class="scorebug hidden" id="visitorScorebug"></div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
@@ -291,15 +295,10 @@
           <div class="card-head home">
             <span class="team-label">HOME</span>
             <div class="team-select-wrapper"><select id="homeTeamSelect" class="team-select"></select></div>
-            <button class="btn-sm" onclick="toggleScorebug('home')">◆ SCORE</button>
+            <button class="btn-sm" onclick="toggleScorebug('home')">⚾ SCORE</button>
             <button class="btn-sm" id="clearHomeBtn">CLEAR</button>
           </div>
-          <div class="scorebug hidden" id="homeScorebug">
-            <div class="score-group"><span>RUNS</span><span id="homeRunsBug">0</span><button onclick="adjustScore('home','runs',1)">+</button><button onclick="adjustScore('home','runs',-1)">−</button></div>
-            <div class="score-group"><span>INN</span><span id="homeInningBug">1</span><button onclick="adjustScore('home','inning',1)">+</button><button onclick="adjustScore('home','inning',-1)">−</button></div>
-            <div class="score-group"><span>OUTS</span><span id="homeOutsBug">0</span><button onclick="adjustScore('home','outs',1)">+</button><button onclick="adjustScore('home','outs',-1)">−</button></div>
-            <button class="btn-sm" onclick="resetScorebug('home')">↺ Reset</button>
-          </div>
+          <div class="scorebug hidden" id="homeScorebug"></div>
           <div class="lineup-scroll">
             <table class="lineup-table">
               <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:110px">POS</th><th style="width:80px">AB</th></tr></thead>
@@ -311,7 +310,6 @@
     </div>
   </div>
 
-  <!-- Roster, Script, Admin panes identical to previous but with updated admin -->
   <div id="roster" class="view-pane">
     <div class="roster-layout">
       <div class="team-sidebar"><h3>🏆 TEAM LIBRARY</h3><div id="teamListContainer"></div><button class="btn-sm" id="addTeamBtn" style="margin-top:20px; width:100%;">+ NEW TEAM</button></div>
@@ -338,8 +336,8 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select teams using AWAY/HOME dropdowns. Type player names or pick from roster. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCORE</strong> toggles mini scorebug.</p>
-      <p><strong>Roster Command:</strong> Build teams. Add players, set per‑team colors, export/import CSV.</p>
+      <p><strong>Gameday Card:</strong> Select teams. Type player names or pick from roster. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCORE</strong> toggles mini scorebug.</p>
+      <p><strong>Roster Command:</strong> Build teams. Add players manually, paste CSV, or upload file. Columns: #, Name, Pos, Pronunciation, Notes.</p>
       <p><strong>Admin Suite:</strong> Customize branding, team dropdown colours, footer clock style, HUD appearance, audio.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
     </div>
@@ -368,7 +366,7 @@
       home: { teamId: "", lineup: [], battingIdx: -1, onDeck: 0, runs: 0, inning: 1, outs: 0 }
     };
     let wxInterval, wxSeconds = 0, pitchCountdownInterval, countdownTarget = null;
-    let customPositions = ["P","C","1B","2B","3B","SS","LF","CF","RF","DH"];
+    let customPositions = ["P","C","1B","2B","3B","SS","LF","CF","RF","DH","NA","PR","CR","X"];
     let settings = JSON.parse(localStorage.getItem('vdw_settings') || '{}');
     if (!Object.keys(settings).length) settings = {
       brand: "LINEUP CARD LIVE", subtext: "BROADCAST COMMAND",
@@ -390,20 +388,11 @@
       }
       masterGain.gain.value = settings.audioMuted ? 0 : settings.audioVolume;
     }
-
-    function playBeep(freq, duration, type='square') {
-      initAudio();
-      const osc = audioCtx.createOscillator();
-      osc.type = type; osc.frequency.value = freq;
-      osc.connect(masterGain);
-      osc.start(); osc.stop(audioCtx.currentTime + duration);
-    }
-    function playAlarm() {
-      playBeep(1000, 0.2); setTimeout(() => playBeep(800, 0.2), 200); setTimeout(() => playBeep(1000, 0.2), 400);
-    }
+    function playBeep(freq, dur, type='square') { initAudio(); const o = audioCtx.createOscillator(); o.type = type; o.frequency.value = freq; o.connect(masterGain); o.start(); o.stop(audioCtx.currentTime + dur); }
+    function playAlarm() { playBeep(1000,0.2); setTimeout(()=>playBeep(800,0.2),200); setTimeout(()=>playBeep(1000,0.2),400); }
 
     function createEmptyLineup() {
-      return Array(11).fill().map((_,i) => ({ number:"", name:"", pos: i===9?"DH":i===10?"P":"CF" }));
+      return Array(11).fill().map((_,i) => ({ number:"", name:"", pos: i===9?"DH":i===10?"P":"CF", pronounce:"", notes:"" }));
     }
 
     function saveAll() {
@@ -416,15 +405,12 @@
     function loadData() {
       const storedTeams = localStorage.getItem("vdw_teams");
       teams = storedTeams ? JSON.parse(storedTeams) : {
-        demo: { id:"demo", name:"DFW STARS", players: Array(11).fill().map((_,i)=>({number:`${i+1}`,name:`Player ${i+1}`,pos:i===9?"DH":i===10?"P":"CF"})),
+        demo: { id:"demo", name:"DFW STARS", players: Array(11).fill().map((_,i)=>({number:`${i+1}`,name:`Player ${i+1}`,pos:i===9?"DH":i===10?"P":"CF",pronounce:"",notes:""})),
           selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8" }
       };
       const storedGame = localStorage.getItem("vdw_game");
       if (storedGame) game = JSON.parse(storedGame);
-      else {
-        game.visitor.lineup = createEmptyLineup();
-        game.home.lineup = createEmptyLineup();
-      }
+      else { game.visitor.lineup = createEmptyLineup(); game.home.lineup = createEmptyLineup(); }
       if (!game.visitor.lineup || game.visitor.lineup.length!==11) game.visitor.lineup = createEmptyLineup();
       if (!game.home.lineup || game.home.lineup.length!==11) game.home.lineup = createEmptyLineup();
       document.getElementById("scriptTextarea").value = localStorage.getItem("vdw_script") || "";
@@ -436,30 +422,14 @@
       document.getElementById("brandSubtext").innerText = settings.subtext;
       document.getElementById("mainLogo").src = settings.logo;
       document.getElementById("footerLogo").src = settings.footerLogo;
-
-      applyTeamSelectStyle('visitor');
-      applyTeamSelectStyle('home');
-
+      applyTeamSelectStyle('visitor'); applyTeamSelectStyle('home');
       const clk = document.getElementById("footerClock");
       clk.className = 'clock-footer clock-' + (settings.clockStyle || 'espn-red');
-      clk.style.background = settings.clockBg || '';
-      clk.style.color = settings.clockText || '';
-      clk.style.fontSize = (settings.clockSize || 14) + 'px';
-
+      clk.style.background = settings.clockBg || ''; clk.style.color = settings.clockText || ''; clk.style.fontSize = (settings.clockSize||14)+'px';
       const hud = document.getElementById("hudDisplay");
-      hud.style.fontSize = settings.hudFontSize;
-      hud.style.color = settings.hudTextColor;
-      hud.style.background = settings.hudBgColor;
-
-      if (settings.theme === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('lightModeBtn').classList.remove('active');
-        document.getElementById('darkModeBtn').classList.add('active');
-      } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('lightModeBtn').classList.add('active');
-        document.getElementById('darkModeBtn').classList.remove('active');
-      }
+      hud.style.fontSize = settings.hudFontSize; hud.style.color = settings.hudTextColor; hud.style.background = settings.hudBgColor;
+      if (settings.theme === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('lightModeBtn').classList.remove('active'); document.getElementById('darkModeBtn').classList.add('active'); }
+      else { document.body.classList.remove('dark-mode'); document.getElementById('lightModeBtn').classList.add('active'); document.getElementById('darkModeBtn').classList.remove('active'); }
     }
 
     function applyTeamSelectStyle(side) {
@@ -472,15 +442,9 @@
 
     function updateHUD() {
       let batter = null, onDeck = null;
-      if (game.visitor.battingIdx >= 0) {
-        batter = game.visitor.lineup[game.visitor.battingIdx];
-        onDeck = game.visitor.lineup[game.visitor.onDeck];
-      } else if (game.home.battingIdx >= 0) {
-        batter = game.home.lineup[game.home.battingIdx];
-        onDeck = game.home.lineup[game.home.onDeck];
-      }
-      document.getElementById("hudDisplay").innerHTML = 
-        `⚾ AT BAT: ${batter ? batter.number + ' ' + batter.name : '--'} | ON DECK: ${onDeck ? onDeck.number + ' ' + onDeck.name : '--'}`;
+      if (game.visitor.battingIdx >= 0) { batter = game.visitor.lineup[game.visitor.battingIdx]; onDeck = game.visitor.lineup[game.visitor.onDeck]; }
+      else if (game.home.battingIdx >= 0) { batter = game.home.lineup[game.home.battingIdx]; onDeck = game.home.lineup[game.home.onDeck]; }
+      document.getElementById("hudDisplay").innerHTML = `⚾ AT BAT: ${batter ? batter.number+' '+batter.name : '--'} | ON DECK: ${onDeck ? onDeck.number+' '+onDeck.name : '--'}`;
     }
 
     function renderTeamDropdowns() {
@@ -504,10 +468,14 @@
       if (team) {
         const datalist = document.createElement("datalist");
         datalist.id = datalistId;
-        datalist.innerHTML = team.players.map(p => `<option value="${p.number} ${p.name}">`).join('');
+        datalist.innerHTML = team.players.map(p => {
+          let extra = '';
+          if (p.pronounce || p.notes) extra = ` — ${p.pronounce||''} ${p.notes ? '| '+p.notes : ''}`;
+          return `<option value="${p.number} ${p.name}">${p.number} ${p.name}${extra}</option>`;
+        }).join('');
         tbody.parentElement.appendChild(datalist);
       }
-      const posMap = { "P":1, "C":2, "1B":3, "2B":4, "3B":5, "SS":6, "LF":7, "CF":8, "RF":9, "DH":10 };
+      const posMap = { "P":1, "C":2, "1B":3, "2B":4, "3B":5, "SS":6, "LF":7, "CF":8, "RF":9 };
       for (let i=0;i<11;i++) {
         const p = lineup[i];
         const row = tbody.insertRow();
@@ -520,7 +488,8 @@
           <td><input list="${datalistId}" value="${p.number} ${p.name}" placeholder="# Name" onchange="updateCombined('${side}',${i},this.value)"></td>
           <td><select onchange="updateCell('${side}',${i},'pos',this.value)">${customPositions.map(pos => {
             const num = posMap[pos] || '';
-            return `<option value="${pos}" ${p.pos===pos?'selected':''}>${pos}${num ? ' · ' + num : ''}</option>`;
+            const display = pos === 'DH' ? 'DH' : (num ? `${pos} · ${num}` : pos);
+            return `<option value="${pos}" ${p.pos===pos?'selected':''}>${display}</option>`;
           }).join('')}</select></td>
           <td>${i<9 ? `<button class="atbat-btn" onclick="markAtBat('${side}',${i})">AT BAT</button>` : ''}</td>
         `;
@@ -539,11 +508,9 @@
     window.markAtBat = (side, idx) => {
       if (navigator.vibrate) navigator.vibrate(20);
       playBeep(800, 0.1);
-      game[side].battingIdx = idx;
-      game[side].onDeck = (idx+1)%11;
+      game[side].battingIdx = idx; game[side].onDeck = (idx+1)%11;
       const other = side === 'visitor' ? 'home' : 'visitor';
-      game[other].battingIdx = -1;
-      game[other].onDeck = 0;
+      game[other].battingIdx = -1; game[other].onDeck = 0;
       renderLineupTable("visitor"); renderLineupTable("home");
       saveAll();
     };
@@ -551,7 +518,7 @@
     window.loadTeamToSide = (side, teamId) => {
       const team = teams[teamId];
       if (!team) return;
-      game[side].lineup = team.players.slice(0,11).map(p => ({ number: p.number, name: p.name, pos: p.pos }));
+      game[side].lineup = team.players.slice(0,11).map(p => ({ number: p.number, name: p.name, pos: p.pos, pronounce: p.pronounce||'', notes: p.notes||'' }));
       game[side].teamId = teamId;
       renderLineupTable(side);
       saveAll();
@@ -560,7 +527,6 @@
     document.addEventListener('dragstart', e => {
       const row = e.target.closest('tr'); if(!row) return;
       e.dataTransfer.setData('text/plain', row.dataset.index);
-      e.dataTransfer.effectAllowed = 'move';
     });
     document.addEventListener('dragover', e => e.preventDefault());
     document.addEventListener('drop', e => {
@@ -595,16 +561,8 @@
       const update = () => {
         const diff = countdownTarget - new Date();
         const display = document.getElementById("firstPitchDisplay");
-        if (diff <= 0) {
-          display.innerText = "00:00";
-          display.classList.add("red-flash");
-          clearInterval(pitchCountdownInterval);
-          playAlarm();
-        } else {
-          const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
-          display.innerText = `${m}:${s<10?'0'+s:s}`;
-          display.classList.remove("red-flash");
-        }
+        if (diff <= 0) { display.innerText = "00:00"; display.classList.add("red-flash"); clearInterval(pitchCountdownInterval); playAlarm(); }
+        else { const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000); display.innerText = `${m}:${s<10?'0'+s:s}`; display.classList.remove("red-flash"); }
       };
       update();
       pitchCountdownInterval = setInterval(update, 200);
@@ -615,16 +573,8 @@
       const display = document.getElementById("wxTimerDisplay");
       display.classList.remove("red-flash");
       const update = () => {
-        if (wxSeconds <= 0) {
-          display.innerText = "00:00";
-          display.classList.add("red-flash");
-          clearInterval(wxInterval);
-          playAlarm();
-        } else {
-          const m = Math.floor(wxSeconds/60), s = wxSeconds%60;
-          display.innerText = `${m}:${s<10?'0'+s:s}`;
-          wxSeconds--;
-        }
+        if (wxSeconds <= 0) { display.innerText = "00:00"; display.classList.add("red-flash"); clearInterval(wxInterval); playAlarm(); }
+        else { const m = Math.floor(wxSeconds/60), s = wxSeconds%60; display.innerText = `${m}:${s<10?'0'+s:s}`; wxSeconds--; }
       };
       update();
       wxInterval = setInterval(update, 1000);
@@ -649,9 +599,12 @@
     function updateScorebugDisplay(side) {
       const bug = document.getElementById(`${side}Scorebug`);
       if (bug.classList.contains('hidden')) return;
-      document.getElementById(`${side}RunsBug`).innerText = game[side].runs;
-      document.getElementById(`${side}InningBug`).innerText = game[side].inning;
-      document.getElementById(`${side}OutsBug`).innerText = game[side].outs;
+      bug.innerHTML = `
+        <div class="score-group"><span>RUNS</span><span>${game[side].runs}</span><button onclick="adjustScore('${side}','runs',1)">+</button><button onclick="adjustScore('${side}','runs',-1)">−</button></div>
+        <div class="score-group"><span>INN</span><span>${game[side].inning}</span><button onclick="adjustScore('${side}','inning',1)">+</button><button onclick="adjustScore('${side}','inning',-1)">−</button></div>
+        <div class="score-group"><span>OUTS</span><span>${game[side].outs}</span><button onclick="adjustScore('${side}','outs',1)">+</button><button onclick="adjustScore('${side}','outs',-1)">−</button></div>
+        <button class="btn-sm" onclick="resetScorebug('${side}')">↺ Reset</button>
+      `;
     }
     window.toggleScorebug = (side) => {
       const bug = document.getElementById(`${side}Scorebug`);
@@ -660,9 +613,8 @@
     };
 
     window.confirmResetGame = () => {
-      if (confirm("Reset entire gameday card? This clears lineups, scores, and timers.")) {
-        game.visitor.lineup = createEmptyLineup();
-        game.home.lineup = createEmptyLineup();
+      if (confirm("Reset entire gameday card?")) {
+        game.visitor.lineup = createEmptyLineup(); game.home.lineup = createEmptyLineup();
         game.visitor.teamId = ""; game.home.teamId = "";
         game.visitor.runs = 0; game.home.runs = 0;
         game.visitor.inning = 1; game.home.inning = 1;
@@ -678,30 +630,36 @@
     };
 
     window.renderTeamList = () => {
-      const c = document.getElementById("teamListContainer");
-      c.innerHTML = Object.values(teams).map(t => `<div class="team-item" onclick="editTeam('${t.id}')">${t.name}</div>`).join('');
+      document.getElementById("teamListContainer").innerHTML = Object.values(teams).map(t => `<div class="team-item" onclick="editTeam('${t.id}')">${t.name}</div>`).join('');
     };
     window.editTeam = (id) => {
       const t = teams[id];
       const ws = document.getElementById("rosterWorkspace");
       ws.innerHTML = `
         <input id="editTeamName" value="${t.name}" style="width:100%; margin-bottom:12px;">
+        <div style="display:grid; grid-template-columns:60px 1fr 80px 1fr 1fr 40px; gap:4px; font-size:0.7rem; font-weight:600;">
+          <span>#</span><span>Name</span><span>Pos</span><span>Pronunciation</span><span>Notes</span><span></span>
+        </div>
         <div id="rosterEditGrid"></div>
+        <textarea id="parseRosterText" rows="3" placeholder="Paste CSV: number,name,pos,pronunciation,notes" style="width:100%; margin-top:12px;"></textarea>
         <div style="margin:12px 0;">
           <label>Dropdown BG: <input type="color" id="teamBgCol" value="${t.selectBg||'#f8f9fb'}"></label>
           <label>Text: <input type="color" id="teamTxtCol" value="${t.selectText||'#0f172a'}"></label>
           <label>Border: <input type="color" id="teamBdrCol" value="${t.selectBorder||'#1d4ed8'}"></label>
         </div>
-        <button class="btn-sm" id="saveTeamBtn">💾 SAVE</button>
-        <button class="btn-sm" id="addPlayerRow">➕ ADD</button>
-        <button class="btn-sm" id="exportTeamCSV">📤 EXPORT CSV</button>
-        <input type="file" id="importTeamCSV" hidden accept=".csv">
-        <button class="btn-sm" onclick="document.getElementById('importTeamCSV').click()">📥 IMPORT CSV</button>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn-sm" id="saveTeamBtn">💾 SAVE</button>
+          <button class="btn-sm" id="addPlayerRow">➕ ADD</button>
+          <button class="btn-sm" id="parseRosterBtn">📝 PARSE</button>
+          <button class="btn-sm" id="exportTeamCSV">📤 EXPORT</button>
+          <input type="file" id="importTeamCSV" hidden accept=".csv">
+          <button class="btn-sm" onclick="document.getElementById('importTeamCSV').click()">📥 IMPORT</button>
+        </div>
       `;
       const grid = document.getElementById("rosterEditGrid");
       t.players.forEach(p => {
         const d = document.createElement("div"); d.className = "player-row";
-        d.innerHTML = `<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}" placeholder="Notes"><button class="delRowBtn" style="background:#c41e3a;">✖</button>`;
+        d.innerHTML = `<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}" placeholder="Pronounce"><input class="pnotes" value="${p.notes||''}" placeholder="Notes"><button class="delRowBtn" style="background:#c41e3a;">✖</button>`;
         d.querySelector(".delRowBtn").onclick = () => d.remove();
         grid.appendChild(d);
       });
@@ -723,6 +681,21 @@
         d.querySelector(".delRowBtn").onclick = () => d.remove();
         grid.appendChild(d);
       };
+      document.getElementById("parseRosterBtn").onclick = () => {
+        const text = document.getElementById("parseRosterText").value;
+        const lines = text.split(/\r?\n/);
+        const players = lines.filter(l=>l).map(l => {
+          const parts = l.split(",");
+          return { number: parts[0]||"", name: parts[1]||"", pos: parts[2]||"", pronounce: parts[3]||"", notes: parts[4]||"" };
+        });
+        grid.innerHTML = "";
+        players.forEach(p => {
+          const d = document.createElement("div"); d.className = "player-row";
+          d.innerHTML = `<input class="pnum" value="${p.number}"><input class="pname" value="${p.name}"><select class="ppos">${customPositions.map(pos=>`<option ${p.pos===pos?'selected':''}>${pos}</option>`).join('')}</select><input class="ppron" value="${p.pronounce||''}"><input class="pnotes" value="${p.notes||''}"><button class="delRowBtn">✖</button>`;
+          d.querySelector(".delRowBtn").onclick = () => d.remove();
+          grid.appendChild(d);
+        });
+      };
       document.getElementById("exportTeamCSV").onclick = () => {
         const csv = ["number,name,pos,pronounce,notes", ...t.players.map(p => `${p.number},${p.name},${p.pos},${p.pronounce},${p.notes}`)].join('\n');
         const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv])); a.download = t.name+".csv"; a.click();
@@ -732,10 +705,7 @@
         const reader = new FileReader();
         reader.onload = ev => {
           const lines = ev.target.result.split(/\r?\n/);
-          const players = lines.filter(l=>l).map(l => {
-            const parts = l.split(",");
-            return { number: parts[0]||"", name: parts[1]||"", pos: parts[2]||"", pronounce: parts[3]||"", notes: parts[4]||"" };
-          });
+          const players = lines.filter(l=>l).map(l => { const parts = l.split(","); return { number: parts[0]||"", name: parts[1]||"", pos: parts[2]||"", pronounce: parts[3]||"", notes: parts[4]||"" }; });
           grid.innerHTML = "";
           players.forEach(p => {
             const d = document.createElement("div"); d.className = "player-row";
@@ -817,13 +787,8 @@
       };
     }
 
-    loadData();
-    applySettings();
-    renderTeamList();
-    renderTeamDropdowns();
-    renderLineupTable("visitor");
-    renderLineupTable("home");
-    renderAdmin();
+    loadData(); applySettings(); renderTeamList(); renderTeamDropdowns();
+    renderLineupTable("visitor"); renderLineupTable("home"); renderAdmin();
 
     document.getElementById("markPitchBtn").onclick = markPitch;
     document.getElementById("setCountdownBtn").onclick = setCountdown;
@@ -833,7 +798,7 @@
     document.getElementById("homeTeamSelect").onchange = e => loadTeamToSide("home", e.target.value);
     document.getElementById("clearVisitorBtn").onclick = () => { game.visitor.lineup = createEmptyLineup(); game.visitor.teamId = ""; renderLineupTable("visitor"); saveAll(); };
     document.getElementById("clearHomeBtn").onclick = () => { game.home.lineup = createEmptyLineup(); game.home.teamId = ""; renderLineupTable("home"); saveAll(); };
-    document.getElementById("addTeamBtn").onclick = () => { const id = Date.now().toString(); teams[id] = { id, name:"New Team", players:Array(11).fill({number:"",name:"",pos:"P"}), selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8" }; saveAll(); renderTeamList(); renderTeamDropdowns(); };
+    document.getElementById("addTeamBtn").onclick = () => { const id = Date.now().toString(); teams[id] = { id, name:"New Team", players:Array(11).fill({number:"",name:"",pos:"P",pronounce:"",notes:""}), selectBg:"#f8f9fb",selectText:"#0f172a",selectBorder:"#1d4ed8" }; saveAll(); renderTeamList(); renderTeamDropdowns(); };
     document.getElementById("lightModeBtn").onclick = () => { settings.theme = "light"; saveAll(); applySettings(); };
     document.getElementById("darkModeBtn").onclick = () => { settings.theme = "dark"; saveAll(); applySettings(); };
     document.querySelectorAll(".nav-link").forEach(b => b.onclick = () => {
@@ -852,14 +817,10 @@
     };
     document.getElementById("clearScriptBtn").onclick = () => { document.getElementById("scriptTextarea").value = ""; saveAll(); };
 
-    setInterval(() => {
-      document.getElementById("footerClock").innerText = new Date().toLocaleTimeString();
-    }, 1000);
+    setInterval(() => { document.getElementById("footerClock").innerText = new Date().toLocaleTimeString(); }, 1000);
 
     document.addEventListener("keydown", e => {
-      if (e.code === "Space" && document.activeElement === document.body) {
-        e.preventDefault(); markPitch();
-      }
+      if (e.code === "Space" && document.activeElement === document.body) { e.preventDefault(); markPitch(); }
     });
   })();
 </script>
