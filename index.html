@@ -13,7 +13,7 @@
     }
 
     :root {
-      --primary-navy: #0a1c3a;
+      --primary-navy: #0e2648;
       --primary-gold: #e6b422;
       --accent-red: #c41e3a;
       --bg-light: #f4f6fa;
@@ -316,6 +316,7 @@
       padding: 6px 6px;
       border-bottom: 1px solid var(--border-light);
       vertical-align: middle;
+      color: var(--text-light);
     }
 
     .row-current {
@@ -364,6 +365,13 @@
       font-size: 0.85rem;
       width: 100%;
       min-height: 44px;
+      color: var(--text-light);
+    }
+
+    body.dark-mode .lineup-table td,
+    body.dark-mode .lineup-table input,
+    body.dark-mode .lineup-table select {
+      color: var(--text-dark);
     }
 
     .roster-layout {
@@ -428,33 +436,48 @@
     }
 
     footer {
-      background: #020617;
-      padding: 6px 16px;
+      background: #0a1424;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: #94a3b8;
       flex-shrink: 0;
       gap: 12px;
     }
 
     .footer-logo {
-      height: 28px;
+      height: 32px;
       width: auto;
       background: var(--primary-gold);
       border-radius: 6px;
       padding: 2px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    .footer-text {
-      color: var(--accent-red);
-      font-weight: 600;
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     footer a {
       color: var(--accent-red);
       text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-text {
+      color: var(--accent-red);
       font-weight: 600;
     }
 
@@ -553,7 +576,7 @@
           </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
-              <thead><tr><th style="width:70px">ORDER</th><th style="width:60px">#</th><th>PLAYER</th><th style="width:100px">POS</th><th style="width:100px">DH FOR</th><th style="width:70px">AB</th></tr></thead>
+              <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
               <tbody id="visitorLineupBody"></tbody>
             </table>
           </div>
@@ -567,7 +590,7 @@
           </div>
           <div class="lineup-scroll">
             <table class="lineup-table">
-              <thead><tr><th style="width:70px">ORDER</th><th style="width:60px">#</th><th>PLAYER</th><th style="width:100px">POS</th><th style="width:100px">DH FOR</th><th style="width:70px">AB</th></tr></thead>
+              <thead><tr><th style="width:80px">ORDER</th><th>PLAYER (# / NAME)</th><th style="width:100px">POS</th><th style="width:70px">AB</th></tr></thead>
               <tbody id="homeLineupBody"></tbody>
             </table>
           </div>
@@ -616,7 +639,7 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select a team from the dropdown or create one in Roster Command. For each row (1-9 batters, DH, Pitcher) you can type a player name directly or pick from the roster. Drag the ☰ handle to reorder. Click <strong>AT BAT</strong> to highlight the current batter. Use <strong>CLEAR</strong> to empty a side or the reset button to reload.</p>
+      <p><strong>Gameday Card:</strong> Select a team from the dropdown or create one in Roster Command. For each row (1-9 batters, DH, Pitcher) you can type a player name directly (format: <code># Name</code>) or pick from the roster. Drag the ☰ handle to reorder. Click <strong>AT BAT</strong> to highlight the current batter. Use <strong>CLEAR</strong> to empty a side.</p>
       <p><strong>Roster Command:</strong> Build your team roster here. Add players manually or paste CSV. Save the team, and it will appear in the Gameday dropdowns. Each team stores 11 slots (9 batters + DH + P).</p>
       <p><strong>Script Desk:</strong> Write and save broadcast notes. Print or load from a file. The teleprompter view (⚙️ Admin) shows your script fullscreen with adjustable scroll speed.</p>
       <p><strong>Admin Suite:</strong> Customize brand name, logo, font size, position abbreviations, team dropdown colors, footer clock style (9 presets + custom colors), and export/import all data.</p>
@@ -629,11 +652,15 @@
 </main></div>
 
 <footer>
+  <div class="footer-left">
+    <span>© <a href="https://voiceofdfw.com" target="_blank">VoiceofDFW</a></span>
+  </div>
   <img src="logos/Gold4.png" class="footer-logo" id="footerLogo" alt="VODFW"
        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23e6b422%22/%3E%3Ctext x=%2230%22 y=%2265%22 fill=%22%230a1c3a%22 font-size=%2240%22%3EV%3C/text%3E%3C/svg%3E'">
-  <span>© <a href="https://voiceofdfw.com" target="_blank">VoiceofDFW</a></span>
-  <span class="footer-text">PA Broadcast Command Center</span>
-  <span class="clock-footer" id="footerClock">00:00:00</span>
+  <div class="footer-right">
+    <span class="footer-text">PA Broadcast Command Center</span>
+    <span class="clock-footer" id="footerClock">00:00:00</span>
+  </div>
 </footer>
 
 <script>
@@ -758,31 +785,24 @@
         row.setAttribute('data-index', i);
         if(i === battingIdx) row.classList.add("row-current");
         else if(i === onDeckIdx) row.classList.add("row-ondeck");
-        // Order
+        // Order column
         const orderCell = row.insertCell(0);
         orderCell.innerHTML = `<span class="drag-handle">☰</span> ${i<9 ? (i+1) : (i===9 ? 'DH For' : 'P')}`;
-        // Number
-        const numCell = row.insertCell(1);
-        const numInput = document.createElement("input");
-        numInput.value = p.number || '';
-        numInput.placeholder = "#";
-        numInput.addEventListener("input", (e) => { p.number = e.target.value; saveAll(); });
-        numCell.appendChild(numInput);
-        // Player name with datalist
-        const nameCell = row.insertCell(2);
-        const nameInput = document.createElement("input");
-        nameInput.setAttribute("list", datalistId);
-        nameInput.value = `${p.number} ${p.name}`.trim();
-        nameInput.placeholder = "Name";
-        nameInput.addEventListener("input", (e) => {
+        // Player (# / Name) combined
+        const playerCell = row.insertCell(1);
+        const playerInput = document.createElement("input");
+        playerInput.setAttribute("list", datalistId);
+        playerInput.value = `${p.number} ${p.name}`.trim();
+        playerInput.placeholder = "# Name";
+        playerInput.addEventListener("input", (e) => {
           const parts = e.target.value.trim().split(" ");
           p.number = parts[0] || "";
           p.name = parts.slice(1).join(" ") || "";
           saveAll();
         });
-        nameCell.appendChild(nameInput);
+        playerCell.appendChild(playerInput);
         // Position
-        const posCell = row.insertCell(3);
+        const posCell = row.insertCell(2);
         const posSelect = document.createElement("select");
         customPositions.forEach(pos => {
           const opt = document.createElement("option");
@@ -792,19 +812,8 @@
         });
         posSelect.addEventListener("change", (e) => { p.pos = e.target.value; saveAll(); });
         posCell.appendChild(posSelect);
-        // DH For (only for DH row)
-        const dhCell = row.insertCell(4);
-        if(i === 9) {
-          const dhInput = document.createElement("input");
-          dhInput.value = p.dhFor || '';
-          dhInput.placeholder = "DH For";
-          dhInput.addEventListener("input", (e) => { p.dhFor = e.target.value; saveAll(); });
-          dhCell.appendChild(dhInput);
-        } else {
-          dhCell.innerHTML = '';
-        }
         // AB button (only for batters 1-9)
-        const abCell = row.insertCell(5);
+        const abCell = row.insertCell(3);
         if(i < 9) {
           const abBtn = document.createElement("button");
           abBtn.innerText = "AT BAT";
@@ -1065,10 +1074,10 @@
     function printBothLineups() {
       const vTeam = teams[currentGame.visitor.teamId]?.name || 'VISITOR';
       const hTeam = teams[currentGame.home.teamId]?.name || 'HOME';
-      let html = `<html><head><title>Lineup Card</title><style>body{font-family:monospace;padding:20px} table{border-collapse:collapse;width:100%} th,td{border:1px solid black;padding:6px}</style></head><body><h2>${vTeam}</h2><table><tr><th>Order</th><th>#</th><th>Name</th><th>Pos</th></tr>`;
-      currentGame.visitor.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number}</td><td>${p.name}</td><td>${p.pos}</td></tr>`);
-      html += `</table><h2>${hTeam}</h2><table><tr><th>Order</th><th>#</th><th>Name</th><th>Pos</th></tr>`;
-      currentGame.home.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number}</td><td>${p.name}</td><td>${p.pos}</td></tr>`);
+      let html = `<html><head><title>Lineup Card</title><style>body{font-family:monospace;padding:20px} table{border-collapse:collapse;width:100%} th,td{border:1px solid black;padding:6px}</style></head><body><h2>${vTeam}</h2><table><tr><th>Order</th><th>Player</th><th>Pos</th></tr>`;
+      currentGame.visitor.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number} ${p.name}</td><td>${p.pos}</td></tr>`);
+      html += `</table><h2>${hTeam}</h2><table><tr><th>Order</th><th>Player</th><th>Pos</th></tr>`;
+      currentGame.home.lineup.forEach((p,i) => html += `<tr><td>${i<9?i+1:i===9?'DH':'P'}</td><td>${p.number} ${p.name}</td><td>${p.pos}</td></tr>`);
       html += `</table></body></html>`;
       const w = window.open();
       w.document.write(html);
