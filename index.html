@@ -79,334 +79,73 @@
       min-height: 72px;
     }
 
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .brand-section { display: flex; align-items: center; gap: 16px; }
+    .logo-main { height: 56px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); background: var(--primary-gold); border-radius: 8px; padding: 4px; }
+    .brand-text h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.3px; }
+    .brand-text p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-gold); }
 
-    .logo-main {
-      height: 56px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-      background: var(--primary-gold);
-      border-radius: 8px;
-      padding: 4px;
-    }
-
-    .brand-text h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-    }
-
-    .brand-text p {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--primary-gold);
-    }
-
-    .timers-area {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .timer-pill {
-      background: rgba(0,0,0,0.35);
-      border: 2px solid var(--accent-red);
-      border-radius: 40px;
-      padding: 8px 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9rem;
-    }
-
-    .timer-label {
-      font-weight: 600;
-      color: var(--primary-gold);
-    }
-
-    .timer-value {
-      font-family: monospace;
-      font-weight: 700;
-      min-width: 45px;
-    }
-
-    .timer-value.red-flash {
-      color: red;
-      animation: flash 0.5s infinite;
-    }
-
+    .timers-area { display: flex; gap: 16px; align-items: center; }
+    .timer-pill { background: rgba(0,0,0,0.35); border: 2px solid var(--accent-red); border-radius: 40px; padding: 8px 18px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    .timer-label { font-weight: 600; color: var(--primary-gold); }
+    .timer-value { font-family: monospace; font-weight: 700; min-width: 45px; }
+    .timer-value.red-flash { color: red; animation: flash 0.5s infinite; }
     @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-    .btn-icon {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      min-height: 40px;
-    }
-
+    .btn-icon { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; min-height: 40px; }
     .btn-icon.green { background: #2e7d32; color: white; }
-
-    .reset-pill {
-      background: var(--accent-red);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 0.8rem;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-
+    .reset-pill { background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 800; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.5px; white-space: nowrap; }
     .reset-pill:active { background: #a01830; }
 
-    .tool-section {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+    .tool-section { display: flex; gap: 12px; align-items: center; }
+    .theme-toggle { background: rgba(0,0,0,0.4); border-radius: 40px; padding: 4px; display: flex; }
+    .theme-btn { background: none; border: none; padding: 6px 14px; border-radius: 32px; cursor: pointer; font-size: 1rem; }
+    .theme-btn.active { background: var(--primary-gold); color: #0a1c3a; }
 
-    .theme-toggle {
-      background: rgba(0,0,0,0.4);
-      border-radius: 40px;
-      padding: 4px;
-      display: flex;
-    }
-
-    .theme-btn {
-      background: none;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 32px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .theme-btn.active {
-      background: var(--primary-gold);
-      color: #0a1c3a;
-    }
-
-    nav {
-      background: #2d3748;
-      display: flex;
-      padding: 0 16px;
-      gap: 4px;
-      flex-shrink: 0;
-      overflow-x: auto;
-    }
-
-    .nav-link {
-      padding: 12px 20px;
-      background: none;
-      border: none;
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      white-space: nowrap;
-      border-bottom: 3px solid transparent;
-    }
-
-    .nav-link.active {
-      color: white;
-      border-bottom-color: var(--primary-gold);
-    }
+    nav { background: #2d3748; display: flex; padding: 0 16px; gap: 4px; flex-shrink: 0; overflow-x: auto; }
+    .nav-link { padding: 12px 20px; background: none; border: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.7); cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
+    .nav-link.active { color: white; border-bottom-color: var(--primary-gold); }
 
     #main-container { flex: 1; overflow: hidden; }
     main { height: 100%; padding: 16px; overflow-y: auto; }
-
     .view-pane { display: none; height: 100%; }
     .view-pane.active { display: block; }
 
     .gameday-container { display: flex; flex-direction: column; height: 100%; gap: 16px; }
-
     .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; min-height: 0; }
-
-    .lineup-card {
-      background: var(--surface-light);
-      border-radius: 24px;
-      border: 1px solid var(--border-light);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-    }
-
-    .card-head {
-      padding: 14px 16px;
-      border-bottom: 2px solid var(--border-light);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-      background: rgba(0,0,0,0.02);
-    }
-
+    .lineup-card { background: var(--surface-light); border-radius: 24px; border: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--card-shadow); }
+    .card-head { padding: 14px 16px; border-bottom: 2px solid var(--border-light); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: rgba(0,0,0,0.02); }
     .card-head.visitor { border-left: 5px solid #3b82f6; }
     .card-head.home { border-left: 5px solid var(--accent-red); }
 
-    .team-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-right: -8px;
-    }
-
-    .team-select-wrapper {
-      position: relative;
-      flex: 2;
-    }
-
-    .team-select-wrapper::after {
-      content: "▼";
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      font-size: 0.7rem;
-      color: var(--team-select-border);
-    }
-
-    .team-select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 16px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      background: var(--team-select-bg);
-      color: var(--team-select-text);
-      border: 2px solid var(--team-select-border);
-      min-height: 48px;
-      appearance: none;
-      -webkit-appearance: none;
-    }
+    .team-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; margin-right: -8px; }
+    .team-select-wrapper { position: relative; flex: 2; }
+    .team-select-wrapper::after { content: "▼"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.7rem; color: var(--team-select-border); }
+    .team-select { width: 100%; padding: 12px; border-radius: 16px; font-weight: 600; font-size: 0.95rem; background: var(--team-select-bg); color: var(--team-select-text); border: 2px solid var(--team-select-border); min-height: 48px; appearance: none; -webkit-appearance: none; }
 
     .lineup-scroll { flex: 1; overflow-y: auto; }
-
     .lineup-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-
-    .lineup-table th {
-      text-align: left;
-      padding: 10px 6px;
-      background: rgba(198, 28, 56, 0.85);
-      color: white;
-      position: sticky;
-      top: 0;
-      font-weight: 700;
-      border-bottom: 2px solid var(--border-light);
-      backdrop-filter: blur(4px);
-    }
-
-    .lineup-table td {
-      padding: 6px 6px;
-      border-bottom: 1px solid var(--border-light);
-      vertical-align: middle;
-      color: var(--text-light);
-    }
-
+    .lineup-table th { text-align: left; padding: 10px 6px; background: rgba(198, 28, 56, 0.85); color: white; position: sticky; top: 0; font-weight: 700; border-bottom: 2px solid var(--border-light); backdrop-filter: blur(4px); }
+    .lineup-table td { padding: 6px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; color: var(--text-light); }
     body.dark-mode .lineup-table td,
     body.dark-mode .lineup-table input,
-    body.dark-mode .lineup-table select {
-      color: var(--text-dark);
-    }
+    body.dark-mode .lineup-table select { color: var(--text-dark); }
 
-    .row-current {
-      background: rgba(230,180,34,0.35) !important;
-      border-left: 6px solid var(--primary-gold);
-    }
-
+    .row-current { background: rgba(230,180,34,0.35) !important; border-left: 6px solid var(--primary-gold); }
     .row-current td { font-weight: 700; }
-
     .row-ondeck { background: rgba(100,116,139,0.12); }
 
-    .atbat-btn {
-      background: transparent;
-      border: 2px solid #2c5282;
-      color: #2c5282;
-      padding: 8px 14px;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.1s;
-      min-width: 70px;
-    }
-
+    .atbat-btn { background: transparent; border: 2px solid #2c5282; color: #2c5282; padding: 8px 14px; border-radius: 40px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: 0.1s; min-width: 70px; }
     .atbat-btn:hover { background: #2c5282; color: white; }
     .atbat-btn:active { transform: scale(0.96); }
 
     .drag-handle { cursor: grab; font-size: 1.2rem; margin-right: 4px; user-select: none; }
 
-    select, input {
-      background: var(--surface-light);
-      border: 1px solid var(--border-light);
-      padding: 10px 8px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      width: 100%;
-      min-height: 44px;
-      color: var(--text-light);
-    }
+    select, input { background: var(--surface-light); border: 1px solid var(--border-light); padding: 10px 8px; border-radius: 12px; font-size: 0.85rem; width: 100%; min-height: 44px; color: var(--text-light); }
 
-    .scorebug {
-      background: rgba(0,0,0,0.8);
-      border-radius: 16px;
-      padding: 10px 16px;
-      color: white;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      font-size: 0.85rem;
-      flex-wrap: wrap;
-    }
-
+    .scorebug { background: rgba(0,0,0,0.8); border-radius: 16px; padding: 10px 16px; color: white; display: flex; gap: 20px; align-items: center; font-size: 0.85rem; flex-wrap: wrap; }
     .scorebug.hidden { display: none; }
-
-    .score-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .scorebug button {
-      background: transparent;
-      border: 2px solid rgba(255,255,255,0.6);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-
+    .score-group { display: flex; align-items: center; gap: 6px; }
+    .scorebug button { background: transparent; border: 2px solid rgba(255,255,255,0.6); color: white; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
     .scorebug button:active { background: var(--accent-red); border-color: var(--accent-red); }
-
-    .scorebug-icon {
-      font-size: 1.2rem;
-      font-weight: bold;
-      display: inline-block;
-      transform: rotate(45deg);
-      border: 2px solid currentColor;
-      width: 18px;
-      height: 18px;
-      line-height: 14px;
-      text-align: center;
-      border-radius: 2px;
-    }
 
     .broadcast-hud {
       background: #020617;
@@ -441,25 +180,13 @@
       gap: 16px;
     }
 
-    .footer-logo {
-      height: 40px;
-      width: auto;
-      background: var(--primary-gold);
-      border-radius: 8px;
-      padding: 4px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
+    .footer-logo { height: 40px; width: auto; background: var(--primary-gold); border-radius: 8px; padding: 4px; position: absolute; left: 50%; transform: translateX(-50%); }
     .footer-left { display: flex; align-items: center; gap: 12px; }
     .footer-right { display: flex; align-items: center; gap: 16px; }
-
     footer a { color: var(--accent-red); text-decoration: none; font-weight: 600; }
     .footer-text { color: var(--accent-red); font-weight: 600; }
     .author-name { color: var(--accent-red); font-weight: 600; }
 
-    /* ----- Footer Clock Presets ----- */
     .clock-footer {
       font-family: 'Share Tech Mono', monospace;
       font-weight: 700;
@@ -467,10 +194,7 @@
       letter-spacing: 1px;
       font-size: 14px;
       border-radius: 6px;
-      background: transparent;
-      color: inherit;
     }
-
     .clock-footer.clock-espn-red    { background: #111; color: #fff; border-bottom: 3px solid var(--accent-red); }
     .clock-footer.clock-modern-blue { background: #1e3a8a; color: #fff; border-bottom: 3px solid var(--primary-gold); }
     .clock-footer.clock-classic     { background: #333; color: #00ff00; border-bottom: 3px solid #00ff00; }
@@ -481,15 +205,7 @@
     .clock-footer.clock-led         { background: #000; color: #0f0; border: 2px solid #333; font-family: 'Courier New', monospace; }
     .clock-footer.clock-pill        { background: linear-gradient(135deg, #2b2b2b, #444); color: #fff; border-radius: 22px; }
 
-    .btn-sm {
-      background: rgba(0,0,0,0.1);
-      border: 1px solid var(--border-light);
-      padding: 8px 14px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
+    .btn-sm { background: rgba(0,0,0,0.1); border: 1px solid var(--border-light); padding: 8px 14px; border-radius: 40px; cursor: pointer; font-weight: 600; }
     .btn-danger { background: var(--accent-red); color: white; }
 
     @media (max-width: 900px) {
@@ -547,38 +263,21 @@
 </nav>
 
 <div id="main-container"><main>
+  <!-- Gameday Card (same as before with lighter dropdowns) -->
   <div id="gameday" class="view-pane active">
     <div class="gameday-container">
       <div class="card-grid">
-        <!-- Visitor -->
         <div class="lineup-card">
           <div class="card-head visitor">
             <span class="team-label">AWAY</span>
-            <div class="team-select-wrapper">
-              <select id="visitorTeamSelect" class="team-select"></select>
-            </div>
-            <button class="btn-sm" onclick="toggleScorebug('visitor')" title="Scorebug">
-              <span style="display:inline-block; transform:rotate(45deg); border:2px solid currentColor; width:16px; height:16px; line-height:12px; text-align:center; border-radius:2px;">⬥</span>
-              SCORE
-            </button>
+            <div class="team-select-wrapper"><select id="visitorTeamSelect" class="team-select"></select></div>
+            <button class="btn-sm" onclick="toggleScorebug('visitor')">◆ SCORE</button>
             <button class="btn-sm" id="clearVisitorBtn">CLEAR</button>
           </div>
           <div class="scorebug hidden" id="visitorScorebug">
-            <div class="score-group">
-              <span>RUNS</span><span id="visitorRunsBug">0</span>
-              <button onclick="adjustScore('visitor','runs',1)">+</button>
-              <button onclick="adjustScore('visitor','runs',-1)">−</button>
-            </div>
-            <div class="score-group">
-              <span>INN</span><span id="visitorInningBug">1</span>
-              <button onclick="adjustScore('visitor','inning',1)">+</button>
-              <button onclick="adjustScore('visitor','inning',-1)">−</button>
-            </div>
-            <div class="score-group">
-              <span>OUTS</span><span id="visitorOutsBug">0</span>
-              <button onclick="adjustScore('visitor','outs',1)">+</button>
-              <button onclick="adjustScore('visitor','outs',-1)">−</button>
-            </div>
+            <div class="score-group"><span>RUNS</span><span id="visitorRunsBug">0</span><button onclick="adjustScore('visitor','runs',1)">+</button><button onclick="adjustScore('visitor','runs',-1)">−</button></div>
+            <div class="score-group"><span>INN</span><span id="visitorInningBug">1</span><button onclick="adjustScore('visitor','inning',1)">+</button><button onclick="adjustScore('visitor','inning',-1)">−</button></div>
+            <div class="score-group"><span>OUTS</span><span id="visitorOutsBug">0</span><button onclick="adjustScore('visitor','outs',1)">+</button><button onclick="adjustScore('visitor','outs',-1)">−</button></div>
             <button class="btn-sm" onclick="resetScorebug('visitor')">↺ Reset</button>
           </div>
           <div class="lineup-scroll">
@@ -588,35 +287,17 @@
             </table>
           </div>
         </div>
-        <!-- Home -->
         <div class="lineup-card">
           <div class="card-head home">
             <span class="team-label">HOME</span>
-            <div class="team-select-wrapper">
-              <select id="homeTeamSelect" class="team-select"></select>
-            </div>
-            <button class="btn-sm" onclick="toggleScorebug('home')" title="Scorebug">
-              <span style="display:inline-block; transform:rotate(45deg); border:2px solid currentColor; width:16px; height:16px; line-height:12px; text-align:center; border-radius:2px;">⬥</span>
-              SCORE
-            </button>
+            <div class="team-select-wrapper"><select id="homeTeamSelect" class="team-select"></select></div>
+            <button class="btn-sm" onclick="toggleScorebug('home')">◆ SCORE</button>
             <button class="btn-sm" id="clearHomeBtn">CLEAR</button>
           </div>
           <div class="scorebug hidden" id="homeScorebug">
-            <div class="score-group">
-              <span>RUNS</span><span id="homeRunsBug">0</span>
-              <button onclick="adjustScore('home','runs',1)">+</button>
-              <button onclick="adjustScore('home','runs',-1)">−</button>
-            </div>
-            <div class="score-group">
-              <span>INN</span><span id="homeInningBug">1</span>
-              <button onclick="adjustScore('home','inning',1)">+</button>
-              <button onclick="adjustScore('home','inning',-1)">−</button>
-            </div>
-            <div class="score-group">
-              <span>OUTS</span><span id="homeOutsBug">0</span>
-              <button onclick="adjustScore('home','outs',1)">+</button>
-              <button onclick="adjustScore('home','outs',-1)">−</button>
-            </div>
+            <div class="score-group"><span>RUNS</span><span id="homeRunsBug">0</span><button onclick="adjustScore('home','runs',1)">+</button><button onclick="adjustScore('home','runs',-1)">−</button></div>
+            <div class="score-group"><span>INN</span><span id="homeInningBug">1</span><button onclick="adjustScore('home','inning',1)">+</button><button onclick="adjustScore('home','inning',-1)">−</button></div>
+            <div class="score-group"><span>OUTS</span><span id="homeOutsBug">0</span><button onclick="adjustScore('home','outs',1)">+</button><button onclick="adjustScore('home','outs',-1)">−</button></div>
             <button class="btn-sm" onclick="resetScorebug('home')">↺ Reset</button>
           </div>
           <div class="lineup-scroll">
@@ -630,6 +311,7 @@
     </div>
   </div>
 
+  <!-- Roster, Script, Admin panes identical to previous but with updated admin -->
   <div id="roster" class="view-pane">
     <div class="roster-layout">
       <div class="team-sidebar"><h3>🏆 TEAM LIBRARY</h3><div id="teamListContainer"></div><button class="btn-sm" id="addTeamBtn" style="margin-top:20px; width:100%;">+ NEW TEAM</button></div>
@@ -656,7 +338,7 @@
   <div id="guide" class="view-pane">
     <div style="background:var(--surface-light); border-radius:24px; padding:24px; max-width:800px;">
       <h2>📘 Quick User Guide</h2>
-      <p><strong>Gameday Card:</strong> Select teams using AWAY/HOME dropdowns. Type player names or pick from roster. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCORE</strong> toggles mini scorebug (◆ diamond icon).</p>
+      <p><strong>Gameday Card:</strong> Select teams using AWAY/HOME dropdowns. Type player names or pick from roster. Drag ☰ to reorder. <strong>AT BAT</strong> highlights batter. <strong>SCORE</strong> toggles mini scorebug.</p>
       <p><strong>Roster Command:</strong> Build teams. Add players, set per‑team colors, export/import CSV.</p>
       <p><strong>Admin Suite:</strong> Customize branding, team dropdown colours, footer clock style, HUD appearance, audio.</p>
       <p style="color:var(--accent-red);">Support: <a href="https://voiceofdfw.com" target="_blank">voiceofdfw.com</a></p>
@@ -760,8 +442,8 @@
 
       const clk = document.getElementById("footerClock");
       clk.className = 'clock-footer clock-' + (settings.clockStyle || 'espn-red');
-      if (settings.clockBg) clk.style.background = settings.clockBg;
-      if (settings.clockText) clk.style.color = settings.clockText;
+      clk.style.background = settings.clockBg || '';
+      clk.style.color = settings.clockText || '';
       clk.style.fontSize = (settings.clockSize || 14) + 'px';
 
       const hud = document.getElementById("hudDisplay");
