@@ -142,27 +142,27 @@
     }
     .lineup-table td:first-child{white-space:nowrap;}
 
-    /* Scorebug: pill-shaped buttons, properly contained */
+    /* ═══ SCOREBUG REDESIGN ═══ */
     .scorebug {
-      display:flex; align-items:center; gap:8px;
-      background:#001a35; border-radius:6px; padding:5px 12px;
+      display:flex; align-items:center; gap:10px;
+      background:#001a35; border-radius:8px; padding:6px 16px;
       border-bottom:3px solid var(--accent-red);
-      font-family:'Share Tech Mono',monospace; flex-shrink:0; height:42px;
+      font-family:'Share Tech Mono',monospace; flex-shrink:0; height:48px;
     }
-    .scorebug .sb-team { display:flex; flex-direction:column; align-items:center; min-width:38px; }
-    .scorebug .sb-abbr { font-size:9px; font-weight:700; text-transform:uppercase; color:var(--primary-gold); letter-spacing:0.5px; }
-    .scorebug .sb-runs-row { display:flex; align-items:center; gap:3px; }
-    .scorebug .sb-runs { font-size:17px; font-weight:700; color:var(--primary-gold); min-width:24px; text-align:center; }
-    .scorebug .sb-inning { display:flex; align-items:center; gap:2px; background:rgba(255,255,255,0.08); border-radius:4px; padding:1px 5px; }
-    .scorebug .sb-inning span { font-size:11px; font-weight:700; color:var(--primary-gold); min-width:28px; text-align:center; }
+    .scorebug .sb-team { display:flex; flex-direction:column; align-items:center; min-width:44px; }
+    .scorebug .sb-abbr { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--primary-gold); letter-spacing:0.5px; }
+    .scorebug .sb-runs-row { display:flex; align-items:center; gap:6px; }
+    .scorebug .sb-runs { font-size:18px; font-weight:700; color:var(--primary-gold); min-width:28px; text-align:center; }
+    .scorebug .sb-inning { display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.06); border-radius:6px; padding:2px 8px; }
+    .scorebug .sb-inning span { font-size:12px; font-weight:700; color:var(--primary-gold); min-width:32px; text-align:center; }
     .scorebug button {
-      background:rgba(255,255,255,0.15); border:2px solid var(--primary-gold); color:#fff;
-      height:32px; width:32px; border-radius:20px; cursor:pointer; font-size:14px; font-weight:700;
+      background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); color:#fff;
+      height:36px; min-width:36px; border-radius:22px; cursor:pointer; font-size:15px; font-weight:600;
       display:inline-flex; align-items:center; justify-content:center;
-      touch-action:manipulation; transition:transform 60ms ease,opacity 60ms ease,background 60ms ease;
-      padding:0;
+      touch-action:manipulation; transition:background 80ms ease,transform 80ms ease;
+      padding:0 8px;
     }
-    .scorebug button:active { background:var(--accent-red); border-color:#fff; opacity:0.7; transform:scale(0.92); }
+    .scorebug button:active { background:var(--accent-red); border-color:#fff; transform:scale(0.93); }
   </style>
 </head>
 <body class="light-mode">
@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <!-- Scorebug: pill-shaped buttons, gold bold runs/inning -->
+  <!-- Scorebug: pill-shaped buttons, properly contained, gold accents -->
   <div class="scorebug" id="headerScorebug">
     <div class="sb-team">
       <span class="sb-abbr" id="scoreAwayAbbr">AWAY</span>
