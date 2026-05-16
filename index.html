@@ -40,7 +40,7 @@
     .brand-section { display:flex; align-items:center; gap:10px; flex-shrink:0; }
     .logo-main { height:42px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3)); background:var(--primary-gold); border-radius:6px; padding:3px; }
     .brand-text h1 { font-size:1.2rem; font-weight:800; letter-spacing:-0.3px; line-height:1.1; white-space:nowrap; }
-    .brand-text p { font-size:0.55rem; text-transform:uppercase; letter-spacing:1px; color:var(--primary-gold); line-height:1.1; white-space:nowrap; }
+    .brand-text p { font-size:0.55rem; text-transform:uppercase; letter-spacing:1px; color:var(--accent-red); line-height:1.1; white-space:nowrap; font-weight:700; }
     .timers-area { display:flex; gap:8px; align-items:center; flex-shrink:0; }
     .timer-pill { background:rgba(0,0,0,0.35); border:2px solid var(--accent-red); border-radius:30px; padding:4px 10px; display:flex; align-items:center; gap:6px; font-size:0.75rem; }
     .timer-label { font-weight:600; color:var(--primary-gold); white-space:nowrap; }
@@ -84,6 +84,8 @@
     body.dark-mode .lineup-table td, body.dark-mode .lineup-table input, body.dark-mode .lineup-table select { color:var(--text-dark); }
     .row-current { background:rgba(230,180,34,0.35)!important; border-left:5px solid var(--primary-gold); }
     .row-current td { font-weight:700; }
+    body.dark-mode .row-current { background:rgba(255,215,0,0.55)!important; border-left-color:#ffd700; }
+    body.dark-mode .row-current td { color:#000!important; }
     .row-ondeck { background:rgba(100,116,139,0.10); }
     .atbat-btn { background:transparent; border:2px solid #3b82f6; color:#3b82f6; padding:6px 10px; border-radius:24px; font-weight:800; font-size:0.7rem; cursor:pointer; min-width:70px; min-height:var(--touch-target); touch-action:manipulation; transition:transform 60ms ease,opacity 60ms ease; }
     .atbat-btn:hover { background:#3b82f6; color:#fff; }
@@ -114,6 +116,7 @@
     footer a { color:var(--accent-red); text-decoration:none; font-weight:600; }
     .footer-text { color:var(--accent-red); font-weight:600; }
     .author-name { color:var(--accent-red); font-weight:600; }
+    .copyright-red { color:var(--accent-red); font-weight:600; }
     .clock-footer { font-family:'Share Tech Mono',monospace; font-weight:700; padding:3px 8px; letter-spacing:1px; font-size:12px; border-radius:4px; }
     .clock-footer.clock-espn-red{background:#111;color:#fff;border-bottom:2px solid var(--accent-red);}
     .clock-footer.clock-modern-blue{background:#1e3a8a;color:#fff;border-bottom:2px solid var(--primary-gold);}
@@ -142,7 +145,7 @@
     }
     .lineup-table td:first-child{white-space:nowrap;}
 
-    /* ═══ SCOREBUG REDESIGN ═══ */
+    /* Scorebug */
     .scorebug {
       display:flex; align-items:center; gap:10px;
       background:#001a35; border-radius:8px; padding:6px 16px;
@@ -192,7 +195,7 @@
     </div>
   </div>
 
-  <!-- Scorebug: pill-shaped buttons, properly contained, gold accents -->
+  <!-- Scorebug -->
   <div class="scorebug" id="headerScorebug">
     <div class="sb-team">
       <span class="sb-abbr" id="scoreAwayAbbr">AWAY</span>
@@ -296,7 +299,7 @@
 
 <footer>
   <div class="footer-left">
-    <span>© 2026 <a href="https://voiceofdfw.com" target="_blank" aria-label="Visit Voice of DFW website">Voice of DFW</a> | <span class="author-name">Clayton E. Greenberg</span></span>
+    <span><span class="copyright-red">© 2026</span> <a href="https://voiceofdfw.com" target="_blank" aria-label="Visit Voice of DFW website">Voice of DFW</a> | <span class="author-name">Clayton E. Greenberg</span></span>
   </div>
   <img src="_logos/Gold4.png" class="footer-logo" id="footerLogo" alt="Voice of DFW Logo"
        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23e6b422%22/%3E%3Ctext x=%2230%22 y=%2265%22 fill=%22%230a1c3a%22 font-size=%2240%22%3EV%3C/text%3E%3C/svg%3E'">
@@ -392,7 +395,25 @@ document.addEventListener('dragstart',function(e){var row=e.target.closest('tr')
 document.addEventListener('dragover',function(e){e.preventDefault();});
 document.addEventListener('drop',function(e){e.preventDefault();var row=e.target.closest('tr');if(!row)return;var tbody=row.parentElement;var side=tbody.id.startsWith('visitor')?'visitor':'home';var from=parseInt(e.dataTransfer.getData('text/plain'));var to=parseInt(row.dataset.index);if(isNaN(from)||isNaN(to)||from===to)return;var lineup=game[side].lineup;var moved=lineup.splice(from,1)[0];lineup.splice(to,0,moved);renderLineupTable(side);saveAll();});
 function markPitch(){var d=new Date();document.getElementById("firstPitchDisplay").innerText=d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});document.getElementById("firstPitchDisplay").classList.remove("red-flash");}
-function setCountdown(){var input=prompt("Enter countdown (HH:MM):");if(!input)return;var p=input.split(':');var t=new Date();t.setHours(parseInt(p[0]),parseInt(p[1]),0,0);if(t<=new Date())t.setDate(t.getDate()+1);countdownTarget=t;if(pitchCountdownInterval)clearInterval(pitchCountdownInterval);var u=function(){var d=countdownTarget-new Date();var dis=document.getElementById("firstPitchDisplay");if(d<=0){dis.innerText="00:00";dis.classList.add("red-flash");clearInterval(pitchCountdownInterval);playAlarm();}else{var m=Math.floor(d/60000),s=Math.floor((d%60000)/1000);dis.innerText=m+':'+(s<10?'0'+s:s);dis.classList.remove("red-flash");}};u();pitchCountdownInterval=setInterval(u,200);}
+function setCountdown(){
+  var input=prompt("Enter countdown (HH:MM):");
+  if(!input) return;
+  var parts=input.split(':');
+  var target=new Date();
+  target.setHours(parseInt(parts[0]),parseInt(parts[1]),0,0);
+  if(target<=new Date()) target.setDate(target.getDate()+1);
+  countdownTarget=target;
+  if(pitchCountdownInterval) clearInterval(pitchCountdownInterval);
+  var update=function(){
+    var diff=countdownTarget-new Date();
+    var display=document.getElementById("firstPitchDisplay");
+    if(!display) return;
+    if(diff<=0){ display.innerText="00:00"; display.classList.add("red-flash"); clearInterval(pitchCountdownInterval); playAlarm(); }
+    else { var m=Math.floor(diff/60000), s=Math.floor((diff%60000)/1000); display.innerText=m+':'+(s<10?'0'+s:s); display.classList.remove("red-flash"); }
+  };
+  update();
+  pitchCountdownInterval=setInterval(update,200);
+}
 function startWx(){if(wxInterval)clearInterval(wxInterval);wxSeconds=1800;var dis=document.getElementById("wxTimerDisplay");dis.classList.remove("red-flash");var u=function(){if(wxSeconds<=0){dis.innerText="00:00";dis.classList.add("red-flash");clearInterval(wxInterval);playAlarm();}else{var m=Math.floor(wxSeconds/60),s=wxSeconds%60;dis.innerText=m+':'+(s<10?'0'+s:s);wxSeconds--;}};u();wxInterval=setInterval(u,1000);}
 function resetWx(){if(wxInterval)clearInterval(wxInterval);wxSeconds=0;document.getElementById("wxTimerDisplay").innerText="--:--";document.getElementById("wxTimerDisplay").classList.remove("red-flash");}
 window.confirmResetGame=function(){if(confirm("Reset game?")){game.visitor.lineup=createEmptyLineup();game.home.lineup=createEmptyLineup();game.visitor.teamId="";game.home.teamId="";game.visitor.runs=0;game.home.runs=0;game.inning=1;game.visitor.battingIdx=-1;game.home.battingIdx=-1;document.getElementById("firstPitchDisplay").innerText="--:--";resetWx();renderLineupTable("visitor");renderLineupTable("home");renderTeamDropdowns();saveAll();}};
